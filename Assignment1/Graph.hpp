@@ -25,6 +25,8 @@ public:
     void printGraph();
 
     bool isEdge(int vertex1, int vertex2);
+
+    int getEdgeWeight(int vertex1, int vertex2);
 };
 
 #endif // GRAPH_HPP

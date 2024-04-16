@@ -63,3 +63,12 @@ bool Graph::isEdge(int vertex1, int vertex2)
     }
     return false;
 }
+
+int Graph::getEdgeWeight(int vertex1, int vertex2)
+{
+    if (vertex1 < this->numVertices && vertex2 < this->numVertices)
+    {
+        return this->adjMatrix[vertex1][vertex2];
+    }
+    return 0;
+}

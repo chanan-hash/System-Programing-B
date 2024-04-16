@@ -4,7 +4,6 @@
 #include "Algorithms.hpp"
 
 using namespace std;
-// using namespace Algorithms;
 
 int main()
 {
@@ -26,6 +25,8 @@ int main()
     cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n" << endl;
     cout << isConnected(g) << endl;
 
+    cout << "Printing the shortest path from 0 to 2\n" << endl;
+    cout << shortestPath(g, 0, 2) << endl;
 
     vector<vector<int>> graph2 = {
         {0, 1, 1, 0, 0},
@@ -40,5 +41,8 @@ int main()
     g.printGraph();
     cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n" << endl;
     cout << isConnected(g) << endl;
+
+    cout << "Printing the shortest path from 0 to 4\n" << endl;
+    cout << shortestPath(g, 0, 4) << endl; // should print -1
     return 0;
 }

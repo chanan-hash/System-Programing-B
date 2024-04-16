@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include "Graph.hpp" // Include the Graph file
+#include <string>
+#include <climits>
 
 bool isConnected(Graph g);
     // Your implementation to check if the graph is connected goes here
@@ -11,14 +13,14 @@ bool isConnected(Graph g);
     
     // Return true if the graph is connected, false otherwise
 
-int static shortestPath(Graph g,int start, int end);
+string shortestPath(Graph g,int start, int end);
     // Your implementation to find the shortest path in the graph goes here
     // You can use any graph traversal algorithm, such as BFS or DFS, to find the shortest path
     
     // Return the shortest path between the start and end vertices
     // If there is no path, return -1
 
-bool static isContainsCycle(Graph g);
+bool isContainsCycle(Graph g);
     // Your implementation to check if the graph contains a cycle goes here
     // You can use any graph traversal algorithm, such as BFS or DFS, to check for cycles
     
