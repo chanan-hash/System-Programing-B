@@ -14,7 +14,7 @@ bool isConnected(Graph g);
     
     // Return true if the graph is connected, false otherwise
 
-string shortestPath(Graph g,int start, int end);
+string shortestPath(Graph &g,int start, int end);
     // Your implementation to find the shortest path in the graph goes here
     // You can use any graph traversal algorithm, such as BFS or DFS, to find the shortest path
     
