@@ -6,7 +6,7 @@ using namespace std;
 
 /**
  * By using the Graph:: and include, we;re refrencing the Graph class and the Graph.hpp file
-*/
+ */
 
 int Graph::getNumVertices()
 {
@@ -36,6 +36,7 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
                     // this->adjMatrix.at(i).at(j) = matrix.at(i).at(j);
                 }
             }
+            // this->adjMatrix = matrix;
             // Update the number of vertices
             this->numVertices = matrix.size();
         }
@@ -48,8 +49,17 @@ void Graph::printGraph()
     {
         for (int j = 0; j < this->numVertices; j++)
         {
-            std::cout << this->adjMatrix[i][j] << " ";
+            cout << this->adjMatrix[i][j] << " ";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
+}
+
+bool Graph::isEdge(int vertex1, int vertex2)
+{
+    if (vertex1 < this->numVertices && vertex2 < this->numVertices)
+    {
+        return this->adjMatrix[vertex1][vertex2] != 0;
+    }
+    return false;
 }

@@ -23,6 +23,8 @@ public:
 
     // Function to print the adjacency matrix
     void printGraph();
+
+    bool isEdge(int vertex1, int vertex2);
 };
 
 #endif // GRAPH_HPP
