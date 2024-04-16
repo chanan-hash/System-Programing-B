@@ -6,6 +6,7 @@
 #include "Graph.hpp" // Include the Graph file
 #include <string>
 #include <climits>
+#include <queue>
 
 bool isConnected(Graph g);
     // Your implementation to check if the graph is connected goes here

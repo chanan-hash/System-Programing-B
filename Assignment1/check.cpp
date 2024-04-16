@@ -22,10 +22,12 @@ int main()
     g.loadGraph(graph);
     g.printGraph();
 
-    cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n" << endl;
+    cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n"
+         << endl;
     cout << isConnected(g) << endl;
 
-    cout << "Printing the shortest path from 0 to 2\n" << endl;
+    cout << "Printing the shortest path from 0 to 2\n"
+         << endl;
     cout << shortestPath(g, 0, 2) << endl;
 
     vector<vector<int>> graph2 = {
@@ -39,10 +41,32 @@ int main()
     cout << "\nPrinting the graph2" << endl;
 
     g.printGraph();
-    cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n" << endl;
+    cout << "Printing is the graph is connected or not: 0 for false, 1 for true\n"
+         << endl;
     cout << isConnected(g) << endl;
 
-    cout << "Printing the shortest path from 0 to 4\n" << endl;
+    cout << "Printing the shortest path from 0 to 4\n"
+         << endl;
     cout << shortestPath(g, 0, 4) << endl; // should print -1
+
+    cout << "\n printing graph3\n"
+         << endl;
+    vector<vector<int>> graph3 = {
+        {0, 1, 2, 0, 0},
+        {1, 0, 3, 0, 0},
+        {2, 3, 0, 4, 0},
+        {0, 0, 4, 0, 5},
+        {0, 0, 0, 5, 0}};
+    g.loadGraph(graph3); // Load the graph to the object.
+
+    g.printGraph(); // Should print: "Graph with 5 vertices and 7 edges."
+    cout << "\n"
+         << endl;
+    cout << isConnected(g) << endl; // Should print: "1" (true).
+
+    cout << "\nPrinting the shortest path from 0 to 4"
+         << endl;
+    cout << shortestPath(g, 0, 4) << endl; // Should print: 0->1->2->3->4.
+
     return 0;
 }

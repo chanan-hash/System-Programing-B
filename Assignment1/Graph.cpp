@@ -70,5 +70,5 @@ int Graph::getEdgeWeight(int vertex1, int vertex2)
     {
         return this->adjMatrix[vertex1][vertex2];
     }
-    return 0;
+    return -1;
 }

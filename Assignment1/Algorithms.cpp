@@ -4,6 +4,7 @@
 #include "Algorithms.hpp"
 #include <string>
 #include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -13,39 +14,74 @@ using namespace std;
  * */
 
 // Depth-first search algorithm
-void dfs(Graph g, int vertex, vector<bool> &visited)
-{
-    visited[vertex] = true;
+// void dfs(Graph g, int vertex, vector<bool> &visited)
+// {
+//     visited[vertex] = true;
 
-    // Traverse all adjacent vertices
-    for (int i = 0; i < g.getNumVertices(); i++)
-    {
-        if (g.isEdge(vertex, i) && !visited[i])
-        {
-            dfs(g, i, visited);
+//     // Traverse all adjacent vertices
+//     for (int i = 0; i < g.getNumVertices(); i++)
+//     {
+//         if (g.isEdge(vertex, i) && !visited[i])
+//         {
+//             dfs(g, i, visited);
+//         }
+//     }
+// }
+
+// bool isConnected(Graph g)
+// {
+//     int numVertices = g.getNumVertices();
+//     vector<bool> visited(numVertices, false);
+
+//     // Perform depth-first search starting from vertex 0
+//     dfs(g, 0, visited);
+
+//     // Check if all vertices were visited
+//     for (bool v : visited)
+//     {
+//         if (!v)
+//         {
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+/**
+ * Using the bfs algorithm to check if the graph is connected.
+ * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
+*/
+
+bool isConnected(Graph graph)
+{
+    // Assuming the graph is undirected
+    int numVertices = graph.getNumVertices();
+    vector<bool> visited(numVertices, false);
+    queue<int> q;
+    q.push(0); // start from the first vertex
+    visited[0] = true;
+
+    while (!q.empty()) {
+        int current = q.front();
+        q.pop();
+
+        vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
+        for (int i = 0; i < numVertices; ++i) {
+            if (adjacencyMatrix[current][i] && !visited[i]) {
+                q.push(i);
+                visited[i] = true;
+            }
         }
     }
-}
-
-bool isConnected(Graph g)
-{
-    int numVertices = g.getNumVertices();
-    vector<bool> visited(numVertices, false);
-
-    // Perform depth-first search starting from vertex 0
-    dfs(g, 0, visited);
-
-    // Check if all vertices were visited
-    for (bool v : visited)
-    {
-        if (!v)
-        {
+    for (bool v : visited) {
+        if (!v) {
             return false;
         }
     }
-
     return true;
 }
+
 
 // bool isContainsCycle(Graph g)
 // {
