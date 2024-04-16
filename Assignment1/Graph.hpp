@@ -12,11 +12,8 @@ private:
     int numVertices;
 
 public:
-    // Constructor
-    Graph(int numVertices);
-
-    // Function to add an edge between vertices u and v with weight w
-    void addEdge(int u, int v, int w);
+    // Empty Constructor
+    Graph();
 
     // Function to load graph from an adjacency matrix
     void loadGraph(vector<vector<int>>& matrix);
