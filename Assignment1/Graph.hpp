@@ -13,10 +13,13 @@ private:
 
 public:
     // Empty Constructor
-    Graph();
+    // Graph();
 
-    // Function to load graph from an adjacency matrix
-    void loadGraph(vector<vector<int>>& matrix);
+    int getNumVertices();
+    vector<vector<int>> getAdjMatrix();
+
+    // Function to load graph from an adjacency matrix, like a set function
+    void loadGraph(vector<vector<int>> &matrix);
 
     // Function to print the adjacency matrix
     void printGraph();
