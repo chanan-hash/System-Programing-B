@@ -2,13 +2,13 @@
 #include <vector>
 #include "Graph.hpp"
 
-using namespace std;
-
+//using namespace std;
+using namespace ariel; 
 /**
  * By using the Graph:: and include, we;re refrencing the Graph class and the Graph.hpp file
  */
 
-int Graph::getNumVertices()
+size_t Graph::getNumVertices()
 {
     return this->numVertices;
 }
@@ -23,14 +23,14 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
     if (!matrix.empty())
     {
         // Check if the matrix is square (number of rows equals number of columns)
-        if (matrix.size() == matrix[0].size()) // mattrix.at(0).size() is the number of columns
+        if (matrix.size() == matrix[(size_t)0].size()) // mattrix.at(0).size() is the number of columns
         {
             // Resize the adjacency matrix to match the input matrix
             this->adjMatrix.resize(matrix.size(), vector<int>(matrix.size()));
             // Assign each value from the input matrix to the adjacency matrix
-            for (int i = 0; i < matrix.size(); i++)
+            for (size_t i = 0; i < matrix.size(); i++)
             {
-                for (int j = 0; j < matrix[i].size(); j++)
+                for (size_t j = 0; j < matrix[i].size(); j++)
                 {
                     this->adjMatrix[i][j] = matrix[i][j];
                     // this->adjMatrix.at(i).at(j) = matrix.at(i).at(j);
@@ -45,9 +45,9 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
 
 void Graph::printGraph()
 {
-    for (int i = 0; i < this->numVertices; i++)
+    for (size_t i = 0; i < this->numVertices; i++)
     {
-        for (int j = 0; j < this->numVertices; j++)
+        for (size_t j = 0; j < this->numVertices; j++)
         {
             cout << this->adjMatrix[i][j] << " ";
         }
@@ -59,7 +59,7 @@ bool Graph::isEdge(int vertex1, int vertex2)
 {
     if (vertex1 < this->numVertices && vertex2 < this->numVertices)
     {
-        return this->adjMatrix[vertex1][vertex2] != 0;
+        return this->adjMatrix[(size_t)vertex1][(size_t)vertex2] != 0;
     }
     return false;
 }
@@ -68,7 +68,7 @@ int Graph::getEdgeWeight(int vertex1, int vertex2)
 {
     if (vertex1 < this->numVertices && vertex2 < this->numVertices)
     {
-        return this->adjMatrix[vertex1][vertex2];
+        return this->adjMatrix[(size_t)vertex1][(size_t)vertex2];
     }
     return -1;
 }

@@ -7,6 +7,7 @@
 #include <queue>
 
 using namespace std;
+using namespace ariel;
 
 /**
  * By given graph as adjacency matrix we want to check if it is a connected graph
@@ -53,21 +54,21 @@ using namespace std;
  * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
 */
 
-bool isConnected(Graph graph)
+bool Algorithms:: isConnected(Graph graph)
 {
     // Assuming the graph is undirected
-    int numVertices = graph.getNumVertices();
+    size_t numVertices = graph.getNumVertices();
     vector<bool> visited(numVertices, false);
-    queue<int> q;
+    queue<size_t> q;
     q.push(0); // start from the first vertex
     visited[0] = true;
 
     while (!q.empty()) {
-        int current = q.front();
+        size_t current = q.front();
         q.pop();
 
         vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
-        for (int i = 0; i < numVertices; ++i) {
+        for (size_t i = 0; i < numVertices; ++i) {
             if (adjacencyMatrix[current][i] && !visited[i]) {
                 q.push(i);
                 visited[i] = true;
@@ -83,22 +84,25 @@ bool isConnected(Graph graph)
 }
 
 
-bool isContainsCycle(Graph g)
-{
-}
-
-string shortestPath(Graph& g, int start, int end) {
-    int numVertices = g.getNumVertices();
-    vector<int> distance(numVertices, INT_MAX);
-    vector<int> predecessor(numVertices, -1);
-    distance[start] = 0;
+// bool Algorithms:: isContainsCycle(Graph g)
+// {
+// }
+/**
+ * Using Bellman-Ford algorithm for shortest path,
+ * beacuse we don't  know if the graph is weighted or not, or negative weights
+*/
+string Algorithms:: shortestPath(Graph& g, int start, int end) {
+    size_t numVertices = g.getNumVertices();
+    vector<size_t> distance(numVertices, INT_MAX);
+    vector<size_t> predecessor(numVertices, (size_t)-1);
+    distance[(size_t)start] = 0;
 
     // Relax edges |V| - 1 times
-    for (int i = 0; i < numVertices - 1; i++) {
-        for (int j = 0; j < numVertices; j++) {
-            for (int k = 0; k < numVertices; k++) {
-                if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + g.getEdgeWeight(j, k) < distance[k]) {
-                    distance[k] = distance[j] + g.getEdgeWeight(j, k);
+    for (size_t i = 0; i < numVertices - 1; i++) {
+        for (size_t j = 0; j < numVertices; j++) {
+            for (size_t k = 0; k < numVertices; k++) {
+                if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k]) {
+                    distance[k] = distance[j] + (size_t)g.getEdgeWeight(j, k);
                     predecessor[k] = j;
                 }
             }
@@ -106,22 +110,22 @@ string shortestPath(Graph& g, int start, int end) {
     }
 
     // Check for negative-weight cycles
-    for (int j = 0; j < numVertices; j++) {
-        for (int k = 0; k < numVertices; k++) {
-            if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + g.getEdgeWeight(j, k) < distance[k]) {
+    for (size_t j = 0; j < numVertices; j++) {
+        for (size_t k = 0; k < numVertices; k++) {
+            if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k]) {
                 return "-1";
             }
         }
     }
 
     // If there is no path from start to end
-    if (distance[end] == INT_MAX) {
+    if (distance[(size_t)end] == INT_MAX) {
         return "-1";
     }
 
     // Build the shortest path from end to start
     string path = to_string(end);
-    for (int v = end; v != start; v = predecessor[v]) {
+    for (size_t v = (size_t)end; v != (size_t)start; v = (size_t)predecessor[v]) {
         path = to_string(predecessor[v]) + " -> " + path;
     }
 

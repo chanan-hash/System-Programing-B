@@ -12,13 +12,13 @@ namespace ariel
     {
     private:
         vector<vector<int>> adjMatrix;
-        int numVertices;
+        size_t numVertices;
 
     public:
         // Empty Constructor
         // Graph();
 
-        int getNumVertices();
+        size_t getNumVertices();
         vector<vector<int>> getAdjMatrix();
 
         // Function to load graph from an adjacency matrix, like a set function
