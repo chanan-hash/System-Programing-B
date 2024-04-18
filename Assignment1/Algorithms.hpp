@@ -12,7 +12,7 @@ namespace ariel
     class Algorithms
     {
     public:
-        static bool isConnected(ariel:: Graph g); // TODO add 'ariel namespace' for all the functions
+        static bool isConnected(Graph g); // TODO add 'ariel namespace' for all the functions
         // Your implementation to check if the graph is connected goes here
         // You can use any graph traversal algorithm, such as BFS or DFS, to check connectivity
 

@@ -2,10 +2,10 @@
 #include <vector>
 #include "Graph.hpp"
 
-//using namespace std;
+using namespace std;
 using namespace ariel; 
 /**
- * By using the Graph:: and include, we;re refrencing the Graph class and the Graph.hpp file
+ * By using the Graph:: and include, we're refrencing the Graph class and the Graph.hpp file
  */
 
 size_t Graph::getNumVertices()

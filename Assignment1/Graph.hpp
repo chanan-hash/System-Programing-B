@@ -5,9 +5,9 @@
 #include <vector>
 
 using namespace std;
+
 namespace ariel
 {
-
     class Graph
     {
     private:
@@ -32,4 +32,5 @@ namespace ariel
         int getEdgeWeight(int vertex1, int vertex2);
     };
 } // namespace ariel
+
 #endif // GRAPH_HPP
