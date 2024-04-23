@@ -96,7 +96,7 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
     path.push(node);
     int n = g.getNumVertices();
     // Visit all adjacent nodes
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
     {
         if (g.getAdjMatrix()[node][i] != 0)
         {
@@ -112,14 +112,22 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
             {
                 // Print the cycle using the path
                 cout << "The cycle is: ";
+
+                stack<int> cycle;
                 while (!path.empty())
                 {
                     int current = path.top();
+                    cycle.push(current);
                     path.pop();
-                    cout << current;
                     if (current == i)
                         break;
-                    cout << "->";
+                }
+                while (!cycle.empty())
+                {
+                    cout << cycle.top();
+                    cycle.pop();
+                    if (!cycle.empty())
+                        cout << "->";
                 }
                 cout << "->" << i << endl;
                 return true;
@@ -140,8 +148,10 @@ bool Algorithms::isContainsCycle(Graph g)
     stack<int> path;
 
     // Iterate through each node and perform DFS if not visited
-    for (int i = 0; i < n; ++i) {
-        if (!visited[i]) {
+    for (int i = 0; i < n; ++i)
+    {
+        if (!visited[i])
+        {
             if (hasCycleDFS(g, i, visited, parent, path)) // Parent is -1 for the starting node
                 return true;
         }
