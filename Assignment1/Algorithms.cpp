@@ -64,32 +64,6 @@ bool Algorithms::isConnected(Graph graph)
  * We can usi the idea of finding which kind of edges we have in the graph
  * if we have back edge then we have a cycle
  */
-
-// bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, int parent)
-// {
-//     visited[node] = true;
-//     int n = g.getNumVertices();
-//     // Visit all adjacent nodes
-//     for (int i = 0; i < n; ++i)
-//     {
-//         if (g.getAdjMatrix()[node][i] != 0)
-//         {
-//             // If the adjacent node is not visited, recursively visit it
-//             if (!visited[i])
-//             {
-//                 if (hasCycleDFS(g, i, visited, node))
-//                 {
-//                     return true;
-//                 }
-//             }
-//             // If the adjacent node is already visited and not the parent of current node, cycle exists
-//             else if (i != parent)
-//                 return true;
-//         }
-//     }
-
-//     return false;
-// }
 bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
 {
     visited[node] = true;
@@ -214,3 +188,77 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 
     return path;
 }
+
+// TODO Check it
+bool Algorithms::isBipartite(Graph g)
+{
+    size_t numVertices = g.getNumVertices();
+    vector<int> color(numVertices, -1);
+    queue<int> q;
+    q.push(0); // start from the first vertex
+    color[0] = 0;
+
+    while (!q.empty())
+    {
+        int current = q.front();
+        q.pop();
+
+        vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
+        for (size_t i = 0; i < numVertices; ++i)
+        {
+            if (adjacencyMatrix[current][i] && color[i] == -1)
+            {
+                color[i] = 1 - color[current];
+                q.push(i);
+            }
+            else if (adjacencyMatrix[current][i] && color[i] == color[current])
+            {
+                return false;
+            }
+        }
+    }
+
+    vector<int> groupA;
+    vector<int> groupB;
+    for (size_t i = 0; i < numVertices; ++i)
+    {
+        if (color[i] == 0)
+        {
+            groupA.push_back(i);
+        }
+        else
+        {
+            groupB.push_back(i);
+        }
+    }
+
+    cout << "The graph is bipartite: A={";
+    for (size_t i = 0; i < groupA.size(); ++i)
+    {
+        cout << groupA[i];
+        if (i != groupA.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}, B={";
+    for (size_t i = 0; i < groupB.size(); ++i)
+    {
+        cout << groupB[i];
+        if (i != groupB.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}." << endl;
+
+    return true;
+}
+
+/**
+ * Using Bellman-Ford algorithm to check if the graph contains a negative cycle
+ */
+
+// bool Algorithms::negativeCycle(Graph g)
+// {
+// }

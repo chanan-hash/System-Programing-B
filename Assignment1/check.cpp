@@ -31,6 +31,7 @@ int main()
           << endl;
      cout << Algorithms::shortestPath(g, 0, 2) << endl;
      cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "0" (false).
+     cout << Algorithms::isBipartite(g) << endl;                     // Should print: "The graph is bipartite: A={0, 2}, B={1}."
 
      vector<vector<int>> graph2 = {
          {0, 1, 1, 0, 0},
@@ -54,6 +55,8 @@ int main()
 
      cout << "\n printing graph3\n"
           << endl;
+     cout << Algorithms::isBipartite(g) << endl; // Should print: "0" (false).
+
      vector<vector<int>> graph3 = {
          {0, 1, 2, 0, 0},
          {1, 0, 3, 0, 0},
@@ -70,7 +73,9 @@ int main()
      cout << "\nPrinting the shortest path from 0 to 4"
           << endl;
      cout << Algorithms::shortestPath(g, 0, 4) << endl;              // Should print: 0->1->2->3->4.
-     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "0" true.
+     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "1" true.
+     cout << Algorithms::isBipartite(g) << endl;                     // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
+                                                                     // to make it bipart we need to change there the 2 to 0
 
      return 0;
 }
