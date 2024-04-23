@@ -3,7 +3,7 @@
 #include "Graph.hpp"
 #include "Algorithms.hpp"
 
-using namespace ariel::Algorithms;
+using namespace ariel;
 using namespace std;
 
 int main()
@@ -30,7 +30,7 @@ int main()
      cout << "Printing the shortest path from 0 to 2\n"
           << endl;
      cout << Algorithms::shortestPath(g, 0, 2) << endl;
-     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl;
+     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "0" (false).
 
      vector<vector<int>> graph2 = {
          {0, 1, 1, 0, 0},
@@ -49,7 +49,8 @@ int main()
 
      cout << "Printing the shortest path from 0 to 4\n"
           << endl;
-     cout << Algorithms::shortestPath(g, 0, 4) << endl; // should print -1
+     cout << Algorithms::shortestPath(g, 0, 4) << endl;              // should print -1
+     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "1" true.
 
      cout << "\n printing graph3\n"
           << endl;
@@ -68,7 +69,8 @@ int main()
 
      cout << "\nPrinting the shortest path from 0 to 4"
           << endl;
-     cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: 0->1->2->3->4.
+     cout << Algorithms::shortestPath(g, 0, 4) << endl;              // Should print: 0->1->2->3->4.
+     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl; // Should print: "0" true.
 
      return 0;
 }

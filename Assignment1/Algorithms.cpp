@@ -5,6 +5,7 @@
 #include <string>
 #include <climits>
 #include <queue>
+#include <stack>
 
 using namespace std;
 using namespace ariel;
@@ -13,41 +14,6 @@ using namespace ariel;
  * By given graph as adjacency matrix we want to check if it is a connected graph
  * The main idea is to run dfs, traves the graph and run it again from the first vertex
  * */
-
-// Depth-first search algorithm
-// void dfs(Graph g, int vertex, vector<bool> &visited)
-// {
-//     visited[vertex] = true;
-
-//     // Traverse all adjacent vertices
-//     for (int i = 0; i < g.getNumVertices(); i++)
-//     {
-//         if (g.isEdge(vertex, i) && !visited[i])
-//         {
-//             dfs(g, i, visited);
-//         }
-//     }
-// }
-
-// bool isConnected(Graph g)
-// {
-//     int numVertices = g.getNumVertices();
-//     vector<bool> visited(numVertices, false);
-
-//     // Perform depth-first search starting from vertex 0
-//     dfs(g, 0, visited);
-
-//     // Check if all vertices were visited
-//     for (bool v : visited)
-//     {
-//         if (!v)
-//         {
-//             return false;
-//         }
-//     }
-
-//     return true;
-// }
 
 /**
  * Using the bfs algorithm to check if the graph is connected.
@@ -88,68 +54,101 @@ bool Algorithms::isConnected(Graph graph)
     return true;
 }
 
-// bool Algorithms:: isContainsCycle(Graph g)
-// {
-// }
-
 /**
  * To check if a graph contains a cycle,
  * we'll depth-first search (DFS) with a slight modification.
  * The idea is to keep track of the vertices currently in the recursion stack of function for DFS traversal.
  * If a vertex is reached that is already in the recursion stack,
  * then there is a cycle in the tree.
- * 
+ *
  * We can usi the idea of finding which kind of edges we have in the graph
  * if we have back edge then we have a cycle
-*/
-bool isCyclicUtil(Graph g, int v, vector<bool> &visited, vector<bool> &recStack)
-{
-    if (!visited[v])
-    {
-        visited[v] = true;
-        recStack[v] = true;
+ */
 
-        for (int i = 0; i < g.getNumVertices(); ++i)
+// bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, int parent)
+// {
+//     visited[node] = true;
+//     int n = g.getNumVertices();
+//     // Visit all adjacent nodes
+//     for (int i = 0; i < n; ++i)
+//     {
+//         if (g.getAdjMatrix()[node][i] != 0)
+//         {
+//             // If the adjacent node is not visited, recursively visit it
+//             if (!visited[i])
+//             {
+//                 if (hasCycleDFS(g, i, visited, node))
+//                 {
+//                     return true;
+//                 }
+//             }
+//             // If the adjacent node is already visited and not the parent of current node, cycle exists
+//             else if (i != parent)
+//                 return true;
+//         }
+//     }
+
+//     return false;
+// }
+bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
+{
+    visited[node] = true;
+    path.push(node);
+    int n = g.getNumVertices();
+    // Visit all adjacent nodes
+    for (int i = 0; i < n; i++)
+    {
+        if (g.getAdjMatrix()[node][i] != 0)
         {
-            if (g.isEdge(v, i))
+            // If the adjacent node is not visited, recursively visit it
+            if (!visited[i])
             {
-                if (!visited[i] && isCyclicUtil(g, i, visited, recStack))
-                {
+                parent[i] = node;
+                if (hasCycleDFS(g, i, visited, parent, path))
                     return true;
-                }
-                else if (recStack[i])
+            }
+            // If the adjacent node is already visited and not the parent of current node, cycle exists
+            else if (i != parent[node])
+            {
+                // Print the cycle using the path
+                cout << "The cycle is: ";
+                while (!path.empty())
                 {
-                    return true;
+                    int current = path.top();
+                    path.pop();
+                    cout << current;
+                    if (current == i)
+                        break;
+                    cout << "->";
                 }
+                cout << "->" << i << endl;
+                return true;
             }
         }
     }
-    recStack[v] = false;
+
+    path.pop(); // Remove the current node from the path as we backtrack
     return false;
 }
 
+// Function to check if the graph has a cycle
 bool Algorithms::isContainsCycle(Graph g)
 {
-    int numVertices = g.getNumVertices();
-    vector<bool> visited(numVertices, false);
-    vector<bool> recStack(numVertices, false);
+    int n = g.getNumVertices();
+    vector<bool> visited(n, false);
+    vector<int> parent(n, -1); // Array to keep track of parent nodes in DFS
+    stack<int> path;
 
-    for (int i = 0; i < numVertices; i++)
-    {
-        if (isCyclicUtil(g, i, visited, recStack))
-        {
-            return true;
+    // Iterate through each node and perform DFS if not visited
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i]) {
+            if (hasCycleDFS(g, i, visited, parent, path)) // Parent is -1 for the starting node
+                return true;
         }
     }
 
     return false;
 }
-
-
-
-
-
-
 
 /**
  * Using Bellman-Ford algorithm for shortest path,
