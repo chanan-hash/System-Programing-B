@@ -270,7 +270,7 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 }
 
 // TODO Check it
-bool Algorithms::isBipartite(Graph g)
+string Algorithms::isBipartite(Graph g)
 {
     size_t numVertices = g.getNumVertices();
     vector<int> color(numVertices, -1);
@@ -293,7 +293,8 @@ bool Algorithms::isBipartite(Graph g)
             }
             else if (adjacencyMatrix[current][i] && color[i] == color[current])
             {
-                return false;
+                // return false;
+                return "0";
             }
         }
     }
@@ -332,7 +333,7 @@ bool Algorithms::isBipartite(Graph g)
     }
     cout << "}." << endl;
 
-    return true;
+    // return true;
 }
 
 /**
@@ -342,40 +343,6 @@ bool Algorithms::isBipartite(Graph g)
 // TODO check it AND add a  bool variable
 bool Algorithms::negativeCycle(Graph g)
 {
-    // size_t numVertices = g.getNumVertices();
-    // vector<size_t> distance(numVertices, INT_MAX);
-    // // vector<size_t> predecessor(numVertices, (size_t)-1);
-    // distance[(size_t)g.getAdjMatrix()[0][0]] = 0;
-
-    // // Relax edges |V| - 1 times
-    // for (size_t i = 0; i < numVertices - 1; i++)
-    // {
-    //     for (size_t j = 0; j < numVertices; j++)
-    //     {
-    //         for (size_t k = 0; k < numVertices; k++)
-    //         {
-    //             if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
-    //             {
-    //                 distance[k] = distance[j] + (size_t)g.getEdgeWeight(j, k);
-    //                 // predecessor[k] = j;
-    //             }
-    //         }
-    //     }
-    // }
-
-    // // Check for negative-weight cycles
-    // for (size_t j = 0; j < numVertices; j++)
-    // {
-    //     for (size_t k = 0; k < numVertices; k++)
-    //     {
-    //         if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
-    //         {
-    //             return true;
-    //         }
-    //     }
-    // }
-    // return false;
-
     bool isNegativeCycle = false;
     if (shortestPath(g, 0, 0) == "Negative cycle detected") // instead doing the whole bellman-ford algorithm again, we can just check if the shortest path from a vertex to itself is -1
     {

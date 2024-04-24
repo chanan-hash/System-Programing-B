@@ -1,7 +1,12 @@
 #include "doctest.h"
 #include "Algorithms.hpp"
 #include "Graph.hpp"
+#include <iostream>
+#include <vector>
+#include <string>
 
+using namespace doctest;
+using namespace ariel;
 using namespace std;
 
 TEST_CASE("Test isConnected")
@@ -90,6 +95,7 @@ TEST_CASE("Test isBipartite")
     g.loadGraph(graph3);
     CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}");
 }
+
 TEST_CASE("Test invalid graph")
 {
     ariel::Graph g;

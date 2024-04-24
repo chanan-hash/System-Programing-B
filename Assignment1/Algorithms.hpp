@@ -31,7 +31,7 @@ namespace ariel
 
         // Return true if the graph contains a cycle, false otherwise
 
-        static bool isBipartite(Graph g);
+        static string isBipartite(Graph g);
         // Your implementation to check if the graph is bipartite goes here
         // You can use any graph traversal algorithm, such as BFS or DFS, to check bipartiteness
 
