@@ -20,39 +20,91 @@ using namespace ariel;
  * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
  */
 
-bool Algorithms::isConnected(Graph graph)
+void dfs1(Graph g, int x, vector<bool> &vis1)
 {
-    // Assuming the graph is undirected
-    size_t numVertices = graph.getNumVertices();
-    vector<bool> visited(numVertices, false);
-    queue<size_t> q;
-    q.push(0); // start from the first vertex
-    visited[0] = true;
+    vis1[x] = true;
 
-    while (!q.empty())
+    for (int i = 0; i < g.getNumVertices(); ++i)
     {
-        size_t current = q.front();
-        q.pop();
-
-        vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
-        for (size_t i = 0; i < numVertices; ++i)
+        if (g.isEdge(x, i) && !vis1[i])
         {
-            if (adjacencyMatrix[current][i] && !visited[i])
-            {
-                q.push(i);
-                visited[i] = true;
-            }
+            dfs1(g, i, vis1);
         }
     }
-    for (bool v : visited)
+}
+
+void dfs2(Graph g, int x, vector<bool> &vis2)
+{
+    vis2[x] = true;
+
+    for (int i = 0; i < g.getNumVertices(); ++i)
     {
-        if (!v)
+        if (g.isEdge(i, x) && !vis2[i])
+        {
+            dfs2(g, i, vis2);
+        }
+    }
+}
+
+bool Algorithms::isConnected(Graph g)
+{
+    int numVertices = g.getNumVertices();
+    vector<bool> vis1(numVertices, false);
+    vector<bool> vis2(numVertices, false);
+
+    // Call for correct direction
+    dfs1(g, 0, vis1);
+
+    // Call for reverse direction
+    dfs2(g, 0, vis2);
+
+    for (int i = 0; i < numVertices; i++)
+    {
+        // If any vertex it not visited in any direction
+        // Then graph is not connected
+        if (!vis1[i] && !vis2[i])
         {
             return false;
         }
     }
+
+    // If graph is connected
     return true;
 }
+
+// bool Algorithms::isConnected(Graph graph)
+// {
+//     // Assuming the graph is undirected
+//     size_t numVertices = graph.getNumVertices();
+//     vector<bool> visited(numVertices, false);
+//     queue<size_t> q;
+//     q.push(0); // start from the first vertex
+//     visited[0] = true;
+
+//     while (!q.empty())
+//     {
+//         size_t current = q.front();
+//         q.pop();
+
+//         vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
+//         for (size_t i = 0; i < numVertices; ++i)
+//         {
+//             if (adjacencyMatrix[current][i] && !visited[i])
+//             {
+//                 q.push(i);
+//                 visited[i] = true;
+//             }
+//         }
+//     }
+//     for (bool v : visited)
+//     {
+//         if (!v)
+//         {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
 /**
  * To check if a graph contains a cycle,
@@ -257,8 +309,57 @@ bool Algorithms::isBipartite(Graph g)
 
 /**
  * Using Bellman-Ford algorithm to check if the graph contains a negative cycle
+ * we need to do the bellman-fird because sometimes we just want to know if the graph contains a negative cycle, with finding  shortest path
  */
+// TODO check it AND add a  bool variable
+bool Algorithms::negativeCycle(Graph g)
+{
+    // size_t numVertices = g.getNumVertices();
+    // vector<size_t> distance(numVertices, INT_MAX);
+    // // vector<size_t> predecessor(numVertices, (size_t)-1);
+    // distance[(size_t)g.getAdjMatrix()[0][0]] = 0;
 
-// bool Algorithms::negativeCycle(Graph g)
-// {
-// }
+    // // Relax edges |V| - 1 times
+    // for (size_t i = 0; i < numVertices - 1; i++)
+    // {
+    //     for (size_t j = 0; j < numVertices; j++)
+    //     {
+    //         for (size_t k = 0; k < numVertices; k++)
+    //         {
+    //             if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+    //             {
+    //                 distance[k] = distance[j] + (size_t)g.getEdgeWeight(j, k);
+    //                 // predecessor[k] = j;
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // Check for negative-weight cycles
+    // for (size_t j = 0; j < numVertices; j++)
+    // {
+    //     for (size_t k = 0; k < numVertices; k++)
+    //     {
+    //         if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+    //         {
+    //             return true;
+    //         }
+    //     }
+    // }
+    // return false;
+
+    bool isNegativeCycle = false;
+    if (shortestPath(g, 0, 0) == "-1") // instead doing the whole bellman-ford algorithm again, we can just check if the shortest path from a vertex to itself is -1
+    {
+        isNegativeCycle = true;
+        return isNegativeCycle;
+    }
+
+    // if (shortestPath(g, 0, 0).compare("-1") == 0)
+    // {
+    //     return true;
+    // }
+    // return false;
+
+    return isNegativeCycle;
+}
