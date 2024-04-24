@@ -193,34 +193,62 @@ bool Algorithms::isContainsCycle(Graph g)
 string Algorithms::shortestPath(Graph &g, int start, int end)
 {
     size_t numVertices = g.getNumVertices();
-    vector<size_t> distance(numVertices, INT_MAX);
-    vector<size_t> predecessor(numVertices, (size_t)-1);
+    vector<int> distance(numVertices, INT_MAX);
+    vector<int> predecessor(numVertices, -1);
     distance[(size_t)start] = 0;
 
-    // Relax edges |V| - 1 times
+    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
     for (size_t i = 0; i < numVertices - 1; i++)
     {
         for (size_t j = 0; j < numVertices; j++)
         {
             for (size_t k = 0; k < numVertices; k++)
             {
-                if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+                if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
                 {
-                    distance[k] = distance[j] + (size_t)g.getEdgeWeight(j, k);
+                    distance[k] = distance[j] + adjacencyMatrix[j][k];
                     predecessor[k] = j;
                 }
             }
         }
     }
+    
+    // // Relax edges |V| - 1 times
+    // for (size_t i = 0; i < numVertices - 1; i++)
+    // {
+    //     for (size_t j = 0; j < numVertices; j++)
+    //     {
+    //         for (size_t k = 0; k < numVertices; k++)
+    //         {
+    //             if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+    //             {
+    //                 distance[k] = distance[j] + (size_t)g.getEdgeWeight(j, k);
+    //                 predecessor[k] = j;
+    //             }
+    //         }
+    //     }
+    // }
+
+    // Check for negative-weight cycles
+    // for (size_t j = 0; j < numVertices; j++)
+    // {
+    //     for (size_t k = 0; k < numVertices; k++)
+    //     {
+    //         if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+    //         {
+    //             return "Negative cycle detected";
+    //         }
+    //     }
+    // }
 
     // Check for negative-weight cycles
     for (size_t j = 0; j < numVertices; j++)
     {
         for (size_t k = 0; k < numVertices; k++)
         {
-            if (g.isEdge(j, k) && distance[j] != INT_MAX && distance[j] + (size_t)g.getEdgeWeight(j, k) < distance[k])
+            if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
             {
-                return "-1";
+                return "Negative cycle detected";
             }
         }
     }
@@ -349,13 +377,13 @@ bool Algorithms::negativeCycle(Graph g)
     // return false;
 
     bool isNegativeCycle = false;
-    if (shortestPath(g, 0, 0) == "-1") // instead doing the whole bellman-ford algorithm again, we can just check if the shortest path from a vertex to itself is -1
+    if (shortestPath(g, 0, 0) == "Negative cycle detected") // instead doing the whole bellman-ford algorithm again, we can just check if the shortest path from a vertex to itself is -1
     {
         isNegativeCycle = true;
         return isNegativeCycle;
     }
 
-    // if (shortestPath(g, 0, 0).compare("-1") == 0)
+    // if (shortestPath(g, 0, 0).compare("Negative cycle detected") == 0)
     // {
     //     return true;
     // }

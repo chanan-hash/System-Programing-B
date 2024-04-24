@@ -108,8 +108,8 @@ int main()
      g.printGraph();
      cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl;
      cout << Algorithms::isConnected(g) << endl;
-     // cout << Algorithms::shortestPath(g, 2, 3) << endl;
-     // cout << Algorithms::negativeCycle(g) << endl; // yes
+     cout << Algorithms::shortestPath(g, 2, 3) << endl;
+     cout << Algorithms::negativeCycle(g) << endl; // yes
 
      return 0;
 }
