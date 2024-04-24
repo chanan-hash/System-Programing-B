@@ -3,7 +3,7 @@
 #include "Graph.hpp"
 
 using namespace std;
-using namespace ariel; 
+using namespace ariel;
 /**
  * By using the Graph:: and include, we're refrencing the Graph class and the Graph.hpp file
  */
@@ -18,6 +18,12 @@ vector<vector<int>> Graph::getAdjMatrix()
     return this->adjMatrix;
 }
 
+bool Graph::getDirected()
+{
+    return this->isDirected;
+}
+
+// to do also check if the graph is directed or not by using the isSymmetric function and input from the user
 void Graph::loadGraph(vector<vector<int>> &matrix)
 {
     if (!matrix.empty())
@@ -39,6 +45,10 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
             // this->adjMatrix = matrix;
             // Update the number of vertices
             this->numVertices = matrix.size();
+        }
+        else
+        { // Throw an exception if the matrix is not square
+            throw invalid_argument("The matrix is not square");
         }
     }
 }
@@ -71,4 +81,19 @@ int Graph::getEdgeWeight(int vertex1, int vertex2)
         return this->adjMatrix[(size_t)vertex1][(size_t)vertex2];
     }
     return -1;
+}
+
+bool Graph::isSymmetric(vector<vector<int>> &matrix) // for graph being undirected it first need to be symmetric
+{
+    for (size_t i = 0; i < matrix.size(); i++)
+    {
+        for (size_t j = 0; j < matrix[i].size(); j++)
+        {
+            if (matrix[i][j] != matrix[j][i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }

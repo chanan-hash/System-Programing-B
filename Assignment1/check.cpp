@@ -76,9 +76,6 @@ int main()
      // cout << Algorithms::isBipartite(g) << endl;                     // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
      // to make it bipart we need to change there the 2 to 0
 
-
-
-
      // vector<vector<int>> graph = {{0, 0, 1, 2, 3},
      //                              {0, 0, 1, 0, 0},
      //                              {1, 0, 0, 1, 0},
@@ -114,5 +111,14 @@ int main()
      // cout << Algorithms::shortestPath(g, 2, 3) << endl;
      // cout << Algorithms::negativeCycle(g) << endl; // yes
 
+     vector<vector<int>> graph5 = {{0, 1}, {1, 0}};
+     // doesn't detect a cycle
+     // vector<vector<int>> graph5 = {{0, 1}, {-1, 0}};
+     // vector<vector<int>> graph5 = {{0, 1}, {2, 0}};
+
+     g.loadGraph(graph5);
+     g.printGraph();
+     cout << "is cycle: " << Algorithms::isContainsCycle(g) << endl;
+     cout << Algorithms::shortestPath(g, 0, 1) << endl; 
      return 0;
 }
