@@ -333,14 +333,14 @@ using namespace ariel;
 //     return shortestPath(g, 0, 0) == "Negative cycle detected";
 // }
 
-
 /*******************  This part for now will hadle undirect graph we'll ************************/
 /**
  * Using the bfs algorithm to check if the graph is connected.
  * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
  */
 
-bool Algorithms::isConnected(Graph graph){
+bool Algorithms::isConnected(Graph graph)
+{
     // Assuming the graph is undirected
     size_t numVertices = graph.getNumVertices();
     vector<bool> visited(numVertices, false);
@@ -384,7 +384,8 @@ bool Algorithms::isConnected(Graph graph){
  * if we have back edge then we have a cycle
  */
 
-bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path){
+bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
+{
     visited[node] = true;
     path.push(node);
     int n = g.getNumVertices();
@@ -433,7 +434,8 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
 }
 
 // Function to check if the graph has a cycle
-bool Algorithms::isContainsCycle(Graph g){
+bool Algorithms::isContainsCycle(Graph g)
+{
     int n = g.getNumVertices();
     vector<bool> visited(n, false);
     vector<int> parent(n, -1); // Array to keep track of parent nodes in DFS
@@ -452,5 +454,148 @@ bool Algorithms::isContainsCycle(Graph g){
     return false;
 }
 
-
 // TODO check the function for undirected graphs
+
+/** for shortest path we'll check what kind of a graph it is:
+ * 1. if it is an unweighted graph we'll use BFS
+ * 2. if it is a non-negatiive weighted graph we'll use Dijkstra's algorithm
+ * 3. if it is a negative weighted graph we'll use Bellman-Ford algorithm
+ *
+ * for now we'll handle the unweighted and undirect graph
+ * if we have only 0 and 1, it is an unweighted graph --> return 1
+ * if we have not only 0, 1, it is a weighted graph --> return 2
+ * if we have less than it is a negative weighted graph --> return 3
+ */
+int whatGraph(Graph g)
+{
+    vector<vector<int>> matrix = g.getAdjMatrix();
+    int n = matrix.size();
+    int kind = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (matrix[i][j] < 0)
+            {
+                return 3; // we knwo it is a negative weighted graph and can return
+            }
+            else if (matrix[i][j] > 1)
+            {
+                kind = 2; // and return only in the end
+            }
+        }
+    }
+    return kind;
+}
+
+string bfsUndirect(Graph &g, int start, int end)
+{
+
+    int V = g.getNumVertices();
+    if (start > V || end > V) // no vertice like this
+    {
+        return "No path found";
+    }
+
+    vector<bool> visited(V, false);
+    vector<int> parent(V, -1);
+    queue<int> q;
+
+    q.push(start);
+    visited[start] = true;
+
+    while (!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+
+        if (u == end)
+        {
+            // Reconstruct the path from end to start
+            string path = to_string(end);
+            while (parent[end] != -1)
+            {
+                path = to_string(parent[end]) + " -> " + path;
+                end = parent[end];
+            }
+            return path;
+        }
+
+        for (int i = 0; i < V; ++i)
+        {
+            if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
+            {
+                q.push(i);
+                visited[i] = true;
+                parent[i] = u;
+            }
+        }
+    }
+
+    return "No path found";
+}
+
+// Different algorithms for shortest path
+string dijksra(Graph &g, int start, int end){
+    int n = g.getNumVertices();
+    vector<int> dist(n, INT_MAX);
+    vector<int> parent(n, -1);
+    vector<bool> visited(n, false);
+
+    // The priority queue will contain pairs of (distance, vertex)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+    // The distance from start to itself is 0
+    dist[start] = 0;
+    pq.push({0, start});
+
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+
+        visited[u] = true;
+
+        if (u == end) {
+            // Reconstruct the path from end to start
+            string path = to_string(end);
+            while (parent[end] != -1) {
+                path = to_string(parent[end]) + " -> " + path;
+                end = parent[end];
+            }
+            return path;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            if (g.getAdjMatrix()[u][i] != 0 && !visited[i]) {
+                int newDist = dist[u] + g.getAdjMatrix()[u][i];
+                if (newDist < dist[i]) {
+                    dist[i] = newDist;
+                    parent[i] = u;
+                    pq.push({dist[i], i});
+                }
+            }
+        }
+    }
+
+    return "No path found";
+}
+
+
+
+// According to what is returning  form graph kind we'll use the correct algorithm
+string Algorithms::shortestPath(Graph &g, int start, int end)
+{
+    int kind = whatGraph(g);
+
+    switch (kind)
+    {
+    case 1:
+        return bfsUndirect(g, start, end);
+        break;
+        case 2:
+        return dijksra(g, start, end);
+        // case 3:
+    }
+
+    return "No path found";
+}

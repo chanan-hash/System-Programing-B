@@ -42,6 +42,9 @@ namespace ariel
         // You can use any graph traversal algorithm, such as Bellman-Ford, to check for negative cycles
 
         // Return true if the graph contains a negative cycle, false otherwise
+
+        // just for checking the graph type
+        // static int whatGraph(Graph g);
     };
 }
 
