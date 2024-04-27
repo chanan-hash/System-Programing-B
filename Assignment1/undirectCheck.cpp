@@ -81,17 +81,64 @@ int main()
     //     // if we'll change place [3][1] = 0 we'll get 0 -> 1 -> 3 -> 4
 
     // have negative cycle
-    vector<vector<int>> graph6 = {
-        {0, -1, 0, -1, 0},
-        {-1, 0, -1, 0, 0},
-        {0, -1, 0, 0, -1},
-        {-1, 0, 0, 0, -1},
-        {0, 0, -1, -1, 0}};
-    g.loadGraph(graph6);
+    // vector<vector<int>> graph6 = {
+    //     {0, -1, 0, -1, 0},
+    //     {-1, 0, -1, 0, 0},
+    //     {0, -1, 0, 0, -1},
+    //     {-1, 0, 0, 0, -1},
+    //     {0, 0, -1, -1, 0}};
+    // g.loadGraph(graph6);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;     // true
+    // cout << Algorithms::isContainsCycle(g) << endl; // true
+    // cout << Algorithms::shortestPath(g, 2, 4) << endl; // we have a negative cycle, because we can go from vertex 1 to 3 (2 to 4) as many times as we want
+    // cout << Algorithms::negativeCycle(g) << endl; // true
+
+    // vector<vector<int>> graph7 = {
+    //     {0, 1, 0, 1, 0, 0},
+    //     {1, 0, 1, 0, 0, 0},
+    //     {0, 1, 0, 1, 0, 0},
+    //     {1, 0, 1, 0, 1, 0},
+    //     {0, 0, 0, 1, 0, 1},
+    //     {0, 0, 0, 0, 1, 0}};
+
+    // g.loadGraph(graph7);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // true
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 3 -> 4
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // {1,3,5} {0,2,4}
+
+    // vector<vector<int>> graph7 = {
+    //     {0, 1, 1},
+    //     {1, 0, 1},
+    //     {1, 1, 0}};
+
+    // g.loadGraph(graph7);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // true
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; // not found
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 2
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // not bipartite
+
+    vector<vector<int>> graph8 = {
+        {0, 1, 1, 1, 0},
+        {1, 0, 1, 0, 1},
+        {1, 1, 0, 1, 1},
+        {1, 0, 1, 0, 0},
+        {0, 1, 1, 0, 0}};
+
+    g.loadGraph(graph8);
     g.printGraph();
-    cout << Algorithms::isConnected(g) << endl;     // true
-    cout << Algorithms::isContainsCycle(g) << endl; // true
-    cout << Algorithms::shortestPath(g, 2, 4) << endl; // we have a negative cycle, because we can go from vertex 1 to 3 (2 to 4) as many times as we want
-    cout << Algorithms::negativeCycle(g) << endl; // true
+    cout << Algorithms::isConnected(g) << endl;        // true
+    cout << Algorithms::isContainsCycle(g) << endl;    // true
+    cout << Algorithms::shortestPath(g, 0, 4) << endl; // not found
+    cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 2
+    cout << Algorithms::negativeCycle(g) << endl;      // false
+    cout << Algorithms::isBipartite(g) << endl;        // not bipartite
+
     return 0;
 }

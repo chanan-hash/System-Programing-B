@@ -666,3 +666,81 @@ bool Algorithms::negativeCycle(Graph g)
     // return whatGraph(g) == 3; // in undirected graph, the minimum we've found a negative edge we can have a negative cycle.
     // Because we can go back and forth between the two vertices, and reduce the path weight
 }
+
+string Algorithms::isBipartite(Graph g)
+{
+    int n = g.getNumVertices();
+    vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors
+    vector<vector<int>> groups(2); // groups[0] and groups[1] are the two groups of vertices
+
+    for (int start = 0; start < n; ++start)
+    {
+        if (color[start] == -1)
+        {
+            queue<int> q;
+            q.push(start);
+            color[start] = 0;
+            groups[0].push_back(start);
+
+            while (!q.empty())
+            {
+                int node = q.front();
+                q.pop();
+
+                for (int i = 0; i < n; ++i)
+                {
+                    if (g.getAdjMatrix()[node][i] != 0)
+                    {
+                        if (color[i] == -1)
+                        {
+                            // If the node has not been colored, color it with the opposite color and add it to the corresponding group
+                            color[i] = 1 - color[node];
+                            groups[color[i]].push_back(i);
+                            q.push(i);
+                        }
+                        else if (color[i] == color[node])
+                        {
+                            // If the node has been colored and its color is the same as the current node, the graph is not bipartite
+                            return "The graph is not bipartite";
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    vector<int> groupA;
+    vector<int> groupB;
+    for (size_t i = 0; i < n; ++i)
+    {
+        if (color[i] == 0)
+        {
+            groupA.push_back(i);
+        }
+        else
+        {
+            groupB.push_back(i);
+        }
+    }
+
+    cout << "The graph is bipartite: A={";
+    for (size_t i = 0; i < groupA.size(); ++i)
+    {
+        cout << groupA[i];
+        if (i != groupA.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}, B={";
+    for (size_t i = 0; i < groupB.size(); ++i)
+    {
+        cout << groupB[i];
+        if (i != groupB.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}." << endl;
+    return "";
+}
