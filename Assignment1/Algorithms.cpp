@@ -536,7 +536,8 @@ string bfsUndirect(Graph &g, int start, int end)
 }
 
 // Different algorithms for shortest path
-string dijksra(Graph &g, int start, int end){
+string dijksra(Graph &g, int start, int end)
+{
     int n = g.getNumVertices();
     vector<int> dist(n, INT_MAX);
     vector<int> parent(n, -1);
@@ -549,26 +550,32 @@ string dijksra(Graph &g, int start, int end){
     dist[start] = 0;
     pq.push({0, start});
 
-    while (!pq.empty()) {
+    while (!pq.empty())
+    {
         int u = pq.top().second;
         pq.pop();
 
         visited[u] = true;
 
-        if (u == end) {
+        if (u == end)
+        {
             // Reconstruct the path from end to start
             string path = to_string(end);
-            while (parent[end] != -1) {
+            while (parent[end] != -1)
+            {
                 path = to_string(parent[end]) + " -> " + path;
                 end = parent[end];
             }
             return path;
         }
 
-        for (int i = 0; i < n; ++i) {
-            if (g.getAdjMatrix()[u][i] != 0 && !visited[i]) {
+        for (int i = 0; i < n; ++i)
+        {
+            if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
+            {
                 int newDist = dist[u] + g.getAdjMatrix()[u][i];
-                if (newDist < dist[i]) {
+                if (newDist < dist[i])
+                {
                     dist[i] = newDist;
                     parent[i] = u;
                     pq.push({dist[i], i});
@@ -580,7 +587,56 @@ string dijksra(Graph &g, int start, int end){
     return "No path found";
 }
 
+string bellmanFord(Graph &g, int start, int end)
+{
+    size_t numVertices = g.getNumVertices();
+    vector<int> distance(numVertices, INT_MAX);
+    vector<int> predecessor(numVertices, -1);
+    distance[(size_t)start] = 0;
 
+    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
+    for (size_t i = 0; i < numVertices - 1; i++)
+    {
+        for (size_t j = 0; j < numVertices; j++)
+        {
+            for (size_t k = 0; k < numVertices; k++)
+            {
+                if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+                {
+                    distance[k] = distance[j] + adjacencyMatrix[j][k];
+                    predecessor[k] = j;
+                }
+            }
+        }
+    }
+
+    // Check for negative-weight cycles
+    for (size_t j = 0; j < numVertices; j++)
+    {
+        for (size_t k = 0; k < numVertices; k++)
+        {
+            if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+            {
+                return "Negative cycle detected";
+            }
+        }
+    }
+
+    // If there is no path from start to end
+    if (distance[(size_t)end] == INT_MAX)
+    {
+        return "No path found";
+    }
+
+    // Build the shortest path from end to start
+    string path = to_string(end);
+    for (size_t v = (size_t)end; v != (size_t)start; v = (size_t)predecessor[v])
+    {
+        path = to_string(predecessor[v]) + " -> " + path;
+    }
+
+    return path;
+}
 
 // According to what is returning  form graph kind we'll use the correct algorithm
 string Algorithms::shortestPath(Graph &g, int start, int end)
@@ -592,9 +648,12 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
     case 1:
         return bfsUndirect(g, start, end);
         break;
-        case 2:
+    case 2:
         return dijksra(g, start, end);
-        // case 3:
+        break;
+    case 3:
+        return bellmanFord(g, start, end);
+        break;
     }
 
     return "No path found";
