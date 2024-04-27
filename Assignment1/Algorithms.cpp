@@ -658,3 +658,11 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 
     return "No path found";
 }
+
+// To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
+bool Algorithms::negativeCycle(Graph g)
+{
+    return shortestPath(g, 0, 0) == "Negative cycle detected";
+    // return whatGraph(g) == 3; // in undirected graph, the minimum we've found a negative edge we can have a negative cycle.
+    // Because we can go back and forth between the two vertices, and reduce the path weight
+}
