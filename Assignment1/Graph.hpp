@@ -17,7 +17,7 @@ namespace ariel
 
     public:
         // Empty Constructor
-        Graph(bool isDirected = false); // default constructor by creating the graph we'll check if it is directed or not
+        // Graph(bool isDirected = false); // default constructor by creating the graph we'll check if it is directed or not
 
         size_t getNumVertices();
         vector<vector<int>> getAdjMatrix();
