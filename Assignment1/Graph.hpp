@@ -17,7 +17,7 @@ namespace ariel
 
     public:
         // Empty Constructor
-        // Graph();
+        Graph(bool isDirected = false); // default constructor by creating the graph we'll check if it is directed or not
 
         size_t getNumVertices();
         vector<vector<int>> getAdjMatrix();
@@ -29,9 +29,6 @@ namespace ariel
         // Function to print the adjacency matrix
         void printGraph();
 
-        bool isEdge(int vertex1, int vertex2);
-
-        int getEdgeWeight(int vertex1, int vertex2);
         static bool isSymmetric(vector<vector<int>> &matrix); // getting a matrix and return if it is symmetric
     };
 } // namespace ariel

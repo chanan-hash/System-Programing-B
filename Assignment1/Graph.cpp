@@ -26,6 +26,11 @@ bool Graph::getDirected()
 // to do also check if the graph is directed or not by using the isSymmetric function and input from the user
 void Graph::loadGraph(vector<vector<int>> &matrix)
 {
+    // if (!isSymmetric(matrix) && this->isDirected)
+    // {
+    //     throw invalid_argument("The graph is not directed");
+    // }
+
     if (!matrix.empty())
     {
         // Check if the matrix is square (number of rows equals number of columns)
@@ -63,24 +68,6 @@ void Graph::printGraph()
         }
         cout << endl;
     }
-}
-
-bool Graph::isEdge(int vertex1, int vertex2)
-{
-    if (vertex1 < this->numVertices && vertex2 < this->numVertices)
-    {
-        return this->adjMatrix[(size_t)vertex1][(size_t)vertex2] != 0;
-    }
-    return false;
-}
-
-int Graph::getEdgeWeight(int vertex1, int vertex2)
-{
-    if (vertex1 < this->numVertices && vertex2 < this->numVertices)
-    {
-        return this->adjMatrix[(size_t)vertex1][(size_t)vertex2];
-    }
-    return -1;
 }
 
 bool Graph::isSymmetric(vector<vector<int>> &matrix) // for graph being undirected it first need to be symmetric
