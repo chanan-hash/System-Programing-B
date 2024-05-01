@@ -141,21 +141,83 @@ int main()
     // cout << Algorithms::isBipartite(g) << endl;        // not bipartite
 
     // A graph the non- of the vertices are connected
-    vector<vector<int>> graph9 = {
-        {0,0,0,0},
-        {0,0,0,0},
-        {0,0,0,0},
-        {0,0,0,0}
-    };
+    // vector<vector<int>> graph9 = {
+    //     {0,0,0,0},
+    //     {0,0,0,0},
+    //     {0,0,0,0},
+    //     {0,0,0,0}
+    // };
 
-    g.loadGraph(graph9);
+    // g.loadGraph(graph9);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // false
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 3) << endl; // not found
+    // cout << Algorithms::shortestPath(g, 0, 0) << endl; // not found
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // bipartite in how many ways
+
+    // checking the graph with 1 vertex
+    // vector<vector<int>> graph10 = {
+    //     {0}};
+    // g.loadGraph(graph10);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 0) << endl; // 0
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl;
+    // cout << Algorithms::negativeCycle(g) << endl; // false
+    // cout << Algorithms::isBipartite(g) << endl;   // only one vertex
+
+    // checking the graph with 1 vertex that is not connected
+
+    // vector<vector<int>> graph11 = {
+    //     {0, 1, 0},
+    //     {1, 0, 0},
+    //     {0, 0, 0}};
+
+    // g.loadGraph(graph11);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // false
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // not found
+    // cout << Algorithms::shortestPath(g, 1, 0) << endl; // 1->0
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // {0, 2} {1}
+
+    //    checking the graph with 5 vertices that has 2 connected components
+    // vector<vector<int>> graph12 = {
+    //     {0, 1, 0, 0, 0},
+    //     {1, 0, 0, 0, 0},
+    //     {0, 0, 0, 1, 2},
+    //     {0, 0, 1, 0, 0},
+    //     {0, 0, 2, 0, 0}};
+    // g.loadGraph(graph12);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // false
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; // not found
+    // cout << Algorithms::shortestPath(g, 1, 2) << endl; // not found
+    // cout << Algorithms::shortestPath(g, 4, 3) << endl; // 4 -> 2 -> 3
+    // cout << Algorithms::shortestPath(g, 1, 0) << endl; // 1 -> 0
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2}, B={1, 3, 4}
+
+    // checking the graph with 5 vertices that 2 of them are not connected to any other vertex
+    vector<vector<int>> graph13 = {
+        {0, 1, 0, 1, 0},
+        {1, 0, 0, 2, 0},
+        {0, 0, 0, 0, 0},
+        {1, 2, 0, 0, 0},
+        {0, 0, 0, 0, 0}};
+    g.loadGraph(graph13);
     g.printGraph();
     cout << Algorithms::isConnected(g) << endl;        // false
-    cout << Algorithms::isContainsCycle(g) << endl;    // false
-    cout << Algorithms::shortestPath(g, 0, 3) << endl; // not found
-    cout << Algorithms::shortestPath(g, 0, 0) << endl; // not found
+    cout << Algorithms::isContainsCycle(g) << endl;    // true 0 -> 1 -> 3 -> 0
+    cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 3
+    cout << Algorithms::shortestPath(g, 1, 2) << endl; // not found
     cout << Algorithms::negativeCycle(g) << endl;      // false
-    cout << Algorithms::isBipartite(g) << endl;        // bipartite in how many ways
+    cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1,3}
 
     return 0;
 }
