@@ -7,6 +7,8 @@
 #include <string>
 #include <climits>
 #include <queue>
+#include <stack>
+
 namespace ariel
 {
     class Algorithms

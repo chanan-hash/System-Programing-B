@@ -23,7 +23,9 @@ bool Graph::getDirected()
     return this->isDirected;
 }
 
-// to do also check if the graph is directed or not by using the isSymmetric function and input from the user
+// TODO also check if the graph is directed or not by using the isSymmetric function and input from the user
+// TODO check if every column and row has the same number of elements, if not throw an exception
+// check that the diagonal is all 0's
 void Graph::loadGraph(vector<vector<int>> &matrix)
 {
     // if (!isSymmetric(matrix) && this->isDirected)

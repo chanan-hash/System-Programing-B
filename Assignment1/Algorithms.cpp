@@ -11,6 +11,39 @@ using namespace std;
 using namespace ariel;
 
 /*******************  This part for now will hadle direct graph we'll ************************/
+
+/** for shortest path we'll check what kind of a graph it is:
+ * 1. if it is an unweighted graph we'll use BFS
+ * 2. if it is a non-negatiive weighted graph we'll use Dijkstra's algorithm
+ * 3. if it is a negative weighted graph we'll use Bellman-Ford algorithm
+ *
+ * for now we'll handle the unweighted and undirect graph
+ * if we have only 0 and 1, it is an unweighted graph --> return 1
+ * if we have not only 0, 1, it is a weighted graph --> return 2
+ * if we have less than it is a negative weighted graph --> return 3
+ */
+int whatGraph(Graph g)
+{
+    vector<vector<int>> matrix = g.getAdjMatrix();
+    int n = matrix.size();
+    int kind = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (matrix[i][j] < 0)
+            {
+                return 3; // we knwo it is a negative weighted graph and can return
+            }
+            else if (matrix[i][j] > 1)
+            {
+                kind = 2; // and return only in the end
+            }
+        }
+    }
+    return kind;
+}
+
 // The issue arises because the isCyclicUtil function checks for cycles that include the parent node. In a directed graph,
 // we don't need to consider the parent node because the direction of the edges matters.
 bool isCyclicUtil(int v, vector<bool> &visited, vector<int> &cycle, Graph &g)
@@ -64,15 +97,6 @@ bool Algorithms::isContainsCycle(Graph g)
 
     return false;
 }
-
-
-
-
-
-
-
-
-
 
 
 /*******************  This part for now will hadle undirect graph we'll ************************/
@@ -194,40 +218,6 @@ bool Algorithms::isContainsCycle(Graph g)
 //     }
 
 //     return false;
-// }
-
-// // TODO check the function for undirected graphs
-
-// /** for shortest path we'll check what kind of a graph it is:
-//  * 1. if it is an unweighted graph we'll use BFS
-//  * 2. if it is a non-negatiive weighted graph we'll use Dijkstra's algorithm
-//  * 3. if it is a negative weighted graph we'll use Bellman-Ford algorithm
-//  *
-//  * for now we'll handle the unweighted and undirect graph
-//  * if we have only 0 and 1, it is an unweighted graph --> return 1
-//  * if we have not only 0, 1, it is a weighted graph --> return 2
-//  * if we have less than it is a negative weighted graph --> return 3
-//  */
-// int whatGraph(Graph g)
-// {
-//     vector<vector<int>> matrix = g.getAdjMatrix();
-//     int n = matrix.size();
-//     int kind = 1;
-//     for (int i = 0; i < n; i++)
-//     {
-//         for (int j = 0; j < n; j++)
-//         {
-//             if (matrix[i][j] < 0)
-//             {
-//                 return 3; // we knwo it is a negative weighted graph and can return
-//             }
-//             else if (matrix[i][j] > 1)
-//             {
-//                 kind = 2; // and return only in the end
-//             }
-//         }
-//     }
-//     return kind;
 // }
 
 // string bfsUndirect(Graph &g, int start, int end)
@@ -409,80 +399,80 @@ bool Algorithms::isContainsCycle(Graph g)
 //     // Because we can go back and forth between the two vertices, and reduce the path weight
 // }
 
-// string Algorithms::isBipartite(Graph g)
-// {
-//     int n = g.getNumVertices();
-//     vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors
-//     vector<vector<int>> groups(2); // groups[0] and groups[1] are the two groups of vertices
+string Algorithms::isBipartite(Graph g)
+{
+    int n = g.getNumVertices();
+    vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors
+    vector<vector<int>> groups(2); // groups[0] and groups[1] are the two groups of vertices
 
-//     for (int start = 0; start < n; ++start)
-//     {
-//         if (color[start] == -1)
-//         {
-//             queue<int> q;
-//             q.push(start);
-//             color[start] = 0;
-//             groups[0].push_back(start);
+    for (int start = 0; start < n; ++start)
+    {
+        if (color[start] == -1)
+        {
+            queue<int> q;
+            q.push(start);
+            color[start] = 0;
+            groups[0].push_back(start);
 
-//             while (!q.empty())
-//             {
-//                 int node = q.front();
-//                 q.pop();
+            while (!q.empty())
+            {
+                int node = q.front();
+                q.pop();
 
-//                 for (int i = 0; i < n; ++i)
-//                 {
-//                     if (g.getAdjMatrix()[node][i] != 0)
-//                     {
-//                         if (color[i] == -1)
-//                         {
-//                             // If the node has not been colored, color it with the opposite color and add it to the corresponding group
-//                             color[i] = 1 - color[node];
-//                             groups[color[i]].push_back(i);
-//                             q.push(i);
-//                         }
-//                         else if (color[i] == color[node])
-//                         {
-//                             // If the node has been colored and its color is the same as the current node, the graph is not bipartite
-//                             return "The graph is not bipartite";
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
+                for (int i = 0; i < n; ++i)
+                {
+                    if (g.getAdjMatrix()[node][i] != 0)
+                    {
+                        if (color[i] == -1)
+                        {
+                            // If the node has not been colored, color it with the opposite color and add it to the corresponding group
+                            color[i] = 1 - color[node];
+                            groups[color[i]].push_back(i);
+                            q.push(i);
+                        }
+                        else if (color[i] == color[node])
+                        {
+                            // If the node has been colored and its color is the same as the current node, the graph is not bipartite
+                            return "The graph is not bipartite";
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-//     vector<int> groupA;
-//     vector<int> groupB;
-//     for (size_t i = 0; i < n; ++i)
-//     {
-//         if (color[i] == 0)
-//         {
-//             groupA.push_back(i);
-//         }
-//         else
-//         {
-//             groupB.push_back(i);
-//         }
-//     }
+    vector<int> groupA;
+    vector<int> groupB;
+    for (size_t i = 0; i < n; ++i)
+    {
+        if (color[i] == 0)
+        {
+            groupA.push_back(i);
+        }
+        else
+        {
+            groupB.push_back(i);
+        }
+    }
 
-//     cout << "The graph is bipartite: A={";
-//     for (size_t i = 0; i < groupA.size(); ++i)
-//     {
-//         cout << groupA[i];
-//         if (i != groupA.size() - 1)
-//         {
-//             cout << ", ";
-//         }
-//     }
-//     cout << "}, B={";
-//     for (size_t i = 0; i < groupB.size(); ++i)
-//     {
-//         cout << groupB[i];
-//         if (i != groupB.size() - 1)
-//         {
-//             cout << ", ";
-//         }
-//     }
-//     cout << "}." << endl;
-//     return "";
-// }
+    cout << "The graph is bipartite: A={";
+    for (size_t i = 0; i < groupA.size(); ++i)
+    {
+        cout << groupA[i];
+        if (i != groupA.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}, B={";
+    for (size_t i = 0; i < groupB.size(); ++i)
+    {
+        cout << groupB[i];
+        if (i != groupB.size() - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << "}." << endl;
+    return "";
+}
