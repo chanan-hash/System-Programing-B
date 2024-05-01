@@ -35,9 +35,15 @@ int main()
     // cout << Algorithms::whatGraph(g) << endl; // false
 
     // vector<vector<int>> graph2 = {
-    //     {0, 1, 0},
-    //     {1, 0, 1},
-    //     {0, 1, 0}};
+    //     {0, 1},
+    //     {1, 0}};
+    // g.loadGraph(graph2);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 1) << endl; // 0->1
+    // cout << Algorithms::shortestPath(g, 1, 0) << endl; // 0->1
+    // cout << Algorithms::isBipartite(g) << endl;        // {0} {1}
 
     // vector<vector<int>> graph3{
     //     {0, 1, 0, 1, 0},
@@ -204,20 +210,33 @@ int main()
     // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2}, B={1, 3, 4}
 
     // checking the graph with 5 vertices that 2 of them are not connected to any other vertex
-    vector<vector<int>> graph13 = {
-        {0, 1, 0, 1, 0},
-        {1, 0, 0, 2, 0},
-        {0, 0, 0, 0, 0},
-        {1, 2, 0, 0, 0},
-        {0, 0, 0, 0, 0}};
-    g.loadGraph(graph13);
+    // vector<vector<int>> graph13 = {
+    //     {0, 1, 0, 1, 0},
+    //     {1, 0, 0, 2, 0},
+    //     {0, 0, 0, 0, 0},
+    //     {1, 2, 0, 0, 0},
+    //     {0, 0, 0, 0, 0}};
+    // g.loadGraph(graph13);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // false
+    // cout << Algorithms::isContainsCycle(g) << endl;    // true 0 -> 1 -> 3 -> 0
+    // cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 3
+    // cout << Algorithms::shortestPath(g, 1, 2) << endl; // not found
+    // cout << Algorithms::negativeCycle(g) << endl;      // false
+    // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1,3}
+
+    // TODO need to be checked
+    vector<vector<int>> graph14 = {
+        {0, 1, 0, 0, 0},
+        {1, 0, 2, 0, 0},
+        {0, 2, 0, 3, 0},
+        {0, 0, 3, 0, 4},
+        {0, 0, 0, 4, 0}
+    };
+    g.loadGraph(graph14);
     g.printGraph();
-    cout << Algorithms::isConnected(g) << endl;        // false
-    cout << Algorithms::isContainsCycle(g) << endl;    // true 0 -> 1 -> 3 -> 0
-    cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 3
-    cout << Algorithms::shortestPath(g, 1, 2) << endl; // not found
-    cout << Algorithms::negativeCycle(g) << endl;      // false
-    cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1,3}
+    cout << Algorithms::isConnected(g) << endl;        // true
+    cout << Algorithms::isContainsCycle(g) << endl;    // false
 
     return 0;
 }
