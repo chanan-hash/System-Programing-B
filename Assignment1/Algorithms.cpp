@@ -313,56 +313,56 @@ string dijksra(Graph &g, int start, int end)
     return "No path found";
 }
 
-// string bellmanFord(Graph &g, int start, int end)
-// {
-//     size_t numVertices = g.getNumVertices();
-//     vector<int> distance(numVertices, INT_MAX);
-//     vector<int> predecessor(numVertices, -1);
-//     distance[(size_t)start] = 0;
+string bellmanFord(Graph &g, int start, int end)
+{
+    size_t numVertices = g.getNumVertices();
+    vector<int> distance(numVertices, INT_MAX);
+    vector<int> predecessor(numVertices, -1);
+    distance[(size_t)start] = 0;
 
-//     vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
-//     for (size_t i = 0; i < numVertices - 1; i++)
-//     {
-//         for (size_t j = 0; j < numVertices; j++)
-//         {
-//             for (size_t k = 0; k < numVertices; k++)
-//             {
-//                 if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
-//                 {
-//                     distance[k] = distance[j] + adjacencyMatrix[j][k];
-//                     predecessor[k] = j;
-//                 }
-//             }
-//         }
-//     }
+    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
+    for (size_t i = 0; i < numVertices - 1; i++)
+    {
+        for (size_t j = 0; j < numVertices; j++)
+        {
+            for (size_t k = 0; k < numVertices; k++)
+            {
+                if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+                {
+                    distance[k] = distance[j] + adjacencyMatrix[j][k];
+                    predecessor[k] = j;
+                }
+            }
+        }
+    }
 
-//     // Check for negative-weight cycles
-//     for (size_t j = 0; j < numVertices; j++)
-//     {
-//         for (size_t k = 0; k < numVertices; k++)
-//         {
-//             if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
-//             {
-//                 return "Negative cycle detected";
-//             }
-//         }
-//     }
+    // Check for negative-weight cycles
+    for (size_t j = 0; j < numVertices; j++)
+    {
+        for (size_t k = 0; k < numVertices; k++)
+        {
+            if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+            {
+                return "Negative cycle detected";
+            }
+        }
+    }
 
-//     // If there is no path from start to end
-//     if (distance[(size_t)end] == INT_MAX)
-//     {
-//         return "No path found";
-//     }
+    // If there is no path from start to end
+    if (distance[(size_t)end] == INT_MAX)
+    {
+        return "No path found";
+    }
 
-//     // Build the shortest path from end to start
-//     string path = to_string(end);
-//     for (size_t v = (size_t)end; v != (size_t)start; v = (size_t)predecessor[v])
-//     {
-//         path = to_string(predecessor[v]) + " -> " + path;
-//     }
+    // Build the shortest path from end to start
+    string path = to_string(end);
+    for (size_t v = (size_t)end; v != (size_t)start; v = (size_t)predecessor[v])
+    {
+        path = to_string(predecessor[v]) + " -> " + path;
+    }
 
-//     return path;
-// }
+    return path;
+}
 
 // According to what is returning  form graph kind we'll use the correct algorithm
 string Algorithms::shortestPath(Graph &g, int start, int end)
@@ -382,15 +382,15 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
     case 2:
         return dijksra(g, start, end);
         break;
-        //     case 3:
-        //         return bellmanFord(g, start, end);
-        //         break;
+    case 3:
+        return bellmanFord(g, start, end);
+        break;
     }
 
     return "No path found";
 }
 
-// // To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
+// To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
 // bool Algorithms::negativeCycle(Graph g)
 // {
 //     return shortestPath(g, 0, 0) == "Negative cycle detected";

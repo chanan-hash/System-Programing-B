@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/chanan/Desktop/System-Programing-B/Assignment1",
-      "program": "/home/chanan/Desktop/System-Programing-B/Assignment1/build/Debug/outDebug",
+      "program": "/home/chanan/Desktop/System-Programing-B/Assignment1/build/Release/outRelease",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

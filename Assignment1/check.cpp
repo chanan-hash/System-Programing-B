@@ -121,18 +121,18 @@ int main()
     // cout << Algorithms::shortestPath(g, 3, 5) << endl; // 3 -> 4 -> 5
     // cout << Algorithms::isBipartite(g) << endl; // A={0, 2, 3, 5, 6, 8}, B={1, 4, 7}.
 
-    vector<vector<int>> graph58 = {
-        {0, 2, 4, 0, 0},
-        {9, 0, 3, 0, 0},
-        {5, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0}};
+    // vector<vector<int>> graph58 = {
+    //     {0, 2, 4, 0, 0},
+    //     {9, 0, 3, 0, 0},
+    //     {5, 0, 0, 0, 0},
+    //     {0, 0, 0, 0, 0},
+    //     {0, 0, 0, 0, 0}};
 
-    g.loadGraph(graph58);
-    cout << Algorithms::shortestPath(g, 4, 3) << endl; // no path
-    cout << Algorithms::shortestPath(g, 3, 0) << endl; // no path
-    cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 2
-    cout << Algorithms::shortestPath(g, 1, 0) << endl; // 1 -> 2 -> 0
+    // g.loadGraph(graph58);
+    // cout << Algorithms::shortestPath(g, 4, 3) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 3, 0) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 2
+    // cout << Algorithms::shortestPath(g, 1, 0) << endl; // 1 -> 2 -> 0
 
     /****** unwighted directed graphs: *******/
 
@@ -193,5 +193,35 @@ int main()
 
     // graph with few connected components
 
+    /****** negative weights directed graphs: *******/
+
+    // vector<vector<int>> graph10 = {
+    //     {0, 3, 2},
+    //     {0, 0, -2},
+    //     {0, 0, 0}};
+    // g.loadGraph(graph10);
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
+
+    // vector<vector<int>> graph11 = {
+    //     {0, -1, 2},
+    //     {0, 0, -3},
+    //     {0, 0, 0}};
+    // g.loadGraph(graph11);
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
+
+    vector<vector<int>> graph12 = {
+        {0, -1, 2, 0, 0, 0},
+        {0, 0, -3, 4, 0, 0},
+        {0, 0, 0, 0, -2, 0},
+        {0, 0, 0, 0, 0, 5},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0}};
+    g.loadGraph(graph12);
+    cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 1 -> 2 -> 4
+    cout << Algorithms::shortestPath(g, 3, 1) << endl; // no path
+    cout << Algorithms::shortestPath(g, 4, 5) << endl; // no path
+    cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 1 -> 3
+    
+    
     return 0;
 }
