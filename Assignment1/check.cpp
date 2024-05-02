@@ -209,19 +209,26 @@ int main()
     // g.loadGraph(graph11);
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
 
-    vector<vector<int>> graph12 = {
-        {0, -1, 2, 0, 0, 0},
-        {0, 0, -3, 4, 0, 0},
-        {0, 0, 0, 0, -2, 0},
-        {0, 0, 0, 0, 0, 5},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0}};
-    g.loadGraph(graph12);
-    cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 1 -> 2 -> 4
-    cout << Algorithms::shortestPath(g, 3, 1) << endl; // no path
-    cout << Algorithms::shortestPath(g, 4, 5) << endl; // no path
-    cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 1 -> 3
-    
+    // vector<vector<int>> graph12 = {
+    //     {0, -1, 2, 0, 0, 0},
+    //     {0, 0, -3, 4, 0, 0},
+    //     {0, 0, 0, 0, -2, 0},
+    //     {0, 0, 0, 0, 0, 5},
+    //     {0, 0, 0, 0, 0, 0},
+    //     {0, 0, 0, 0, 0, 0}};
+    // g.loadGraph(graph12);
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 1 -> 2 -> 4
+    // cout << Algorithms::shortestPath(g, 3, 1) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 4, 5) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0 -> 1 -> 3
+
+    vector<vector<int>> graph13 = {
+        {0, 1, 0, 0},
+        {0, 0, -1, 0},
+        {0, 0, 0, -2},
+        {1, 0, 0, 0}};
+    g.loadGraph(graph13);
+    cout << Algorithms::shortestPath(g, 0, 3) << endl; // negative cycle dedected
     
     return 0;
 }
