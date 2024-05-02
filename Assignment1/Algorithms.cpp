@@ -81,11 +81,11 @@ bool Algorithms::isContainsCycle(Graph g)
 
     for (int i = 0; i < g.getNumVertices(); ++i)
     {
-        if (!visited[i])
+        if (!visited[i]) // if haven't visited yet
         {
             if (isCyclicUtil(i, visited, cycle, g))
             {
-                for (int j = 0; j < cycle.size() - 1; ++j)
+                for (int j = 1; j < cycle.size() - 1; ++j)
                 {
                     cout << cycle[j] << "->";
                 }
@@ -220,52 +220,51 @@ bool Algorithms::isContainsCycle(Graph g)
 //     return false;
 // }
 
-// string bfsUndirect(Graph &g, int start, int end)
-// {
+string BFS(Graph &g, int start, int end)
+{
 
-//     int V = g.getNumVertices();
-//     if (start > V || end > V) // no vertice like this
-//     {
-//         return "No path found";
-//     }
+    int V = g.getNumVertices();
+    if (start > V || end > V) // no vertice like this
+    {
+        return "No path found";
+    }
 
-//     vector<bool> visited(V, false);
-//     vector<int> parent(V, -1);
-//     queue<int> q;
+    vector<bool> visited(V, false);
+    vector<int> parent(V, -1);
+    queue<int> q;
 
-//     q.push(start);
-//     visited[start] = true;
+    q.push(start);
+    visited[start] = true;
 
-//     while (!q.empty())
-//     {
-//         int u = q.front();
-//         q.pop();
+    while (!q.empty())
+    {
+        int u = q.front();
+        q.pop();
 
-//         if (u == end)
-//         {
-//             // Reconstruct the path from end to start
-//             string path = to_string(end);
-//             while (parent[end] != -1)
-//             {
-//                 path = to_string(parent[end]) + " -> " + path;
-//                 end = parent[end];
-//             }
-//             return path;
-//         }
+        if (u == end)
+        {
+            // Reconstruct the path from end to start
+            string path = to_string(end);
+            while (parent[end] != -1)
+            {
+                path = to_string(parent[end]) + " -> " + path;
+                end = parent[end];
+            }
+            return path;
+        }
 
-//         for (int i = 0; i < V; ++i)
-//         {
-//             if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
-//             {
-//                 q.push(i);
-//                 visited[i] = true;
-//                 parent[i] = u;
-//             }
-//         }
-//     }
-
-//     return "No path found";
-// }
+        for (int i = 0; i < V; ++i)
+        {
+            if (g.getAdjMatrix()[u][i] != 0 && !visited[i]) // if there's no edge and we havent visieted him
+            {
+                q.push(i);
+                visited[i] = true; // mark as visited
+                parent[i] = u; // set the parent
+            }
+        }
+    }
+    return "No path found";
+}
 
 // // Different algorithms for shortest path
 // string dijksra(Graph &g, int start, int end)
@@ -370,26 +369,26 @@ bool Algorithms::isContainsCycle(Graph g)
 //     return path;
 // }
 
-// // According to what is returning  form graph kind we'll use the correct algorithm
-// string Algorithms::shortestPath(Graph &g, int start, int end)
-// {
-//     int kind = whatGraph(g);
+// According to what is returning  form graph kind we'll use the correct algorithm
+string Algorithms::shortestPath(Graph &g, int start, int end)
+{
+    int kind = whatGraph(g);
 
-//     switch (kind)
-//     {
-//     case 1:
-//         return bfsUndirect(g, start, end);
-//         break;
+    switch (kind)
+    {
+    case 1:
+        return BFS(g, start, end);
+        break;
 //     case 2:
 //         return dijksra(g, start, end);
 //         break;
 //     case 3:
 //         return bellmanFord(g, start, end);
 //         break;
-//     }
+    }
 
-//     return "No path found";
-// }
+    return "No path found";
+}
 
 // // To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
 // bool Algorithms::negativeCycle(Graph g)
