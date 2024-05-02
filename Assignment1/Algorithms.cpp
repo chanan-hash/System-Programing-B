@@ -98,7 +98,6 @@ bool Algorithms::isContainsCycle(Graph g)
     return false;
 }
 
-
 /*******************  This part for now will hadle undirect graph we'll ************************/
 /**
  * Using the bfs algorithm to check if the graph is connected.
@@ -223,12 +222,7 @@ bool Algorithms::isContainsCycle(Graph g)
 string BFS(Graph &g, int start, int end)
 {
 
-    int V = g.getNumVertices();
-    if (start > V || end > V) // no vertice like this
-    {
-        return "No path found";
-    }
-
+    size_t V = g.getNumVertices();
     vector<bool> visited(V, false);
     vector<int> parent(V, -1);
     queue<int> q;
@@ -259,64 +253,65 @@ string BFS(Graph &g, int start, int end)
             {
                 q.push(i);
                 visited[i] = true; // mark as visited
-                parent[i] = u; // set the parent
+                parent[i] = u;     // set the parent
             }
         }
     }
     return "No path found";
 }
 
-// // Different algorithms for shortest path
-// string dijksra(Graph &g, int start, int end)
-// {
-//     int n = g.getNumVertices();
-//     vector<int> dist(n, INT_MAX);
-//     vector<int> parent(n, -1);
-//     vector<bool> visited(n, false);
+// Dijkstra algorithm for shortest path, on weighted graph
+string dijksra(Graph &g, int start, int end)
+{
 
-//     // The priority queue will contain pairs of (distance, vertex)
-//     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    int n = g.getNumVertices();
+    vector<int> dist(n, INT_MAX);
+    vector<int> parent(n, -1);
+    vector<bool> visited(n, false);
 
-//     // The distance from start to itself is 0
-//     dist[start] = 0;
-//     pq.push({0, start});
+    // The priority queue will contain pairs of (distance, vertex)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
-//     while (!pq.empty())
-//     {
-//         int u = pq.top().second;
-//         pq.pop();
+    // The distance from start to itself is 0
+    dist[start] = 0;
+    pq.push({0, start});
 
-//         visited[u] = true;
+    while (!pq.empty())
+    {
+        int u = pq.top().second;
+        pq.pop();
 
-//         if (u == end)
-//         {
-//             // Reconstruct the path from end to start
-//             string path = to_string(end);
-//             while (parent[end] != -1)
-//             {
-//                 path = to_string(parent[end]) + " -> " + path;
-//                 end = parent[end];
-//             }
-//             return path;
-//         }
+        visited[u] = true;
 
-//         for (int i = 0; i < n; ++i)
-//         {
-//             if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
-//             {
-//                 int newDist = dist[u] + g.getAdjMatrix()[u][i];
-//                 if (newDist < dist[i])
-//                 {
-//                     dist[i] = newDist;
-//                     parent[i] = u;
-//                     pq.push({dist[i], i});
-//                 }
-//             }
-//         }
-//     }
+        if (u == end)
+        {
+            // Reconstruct the path from end to start
+            string path = to_string(end);
+            while (parent[end] != -1)
+            {
+                path = to_string(parent[end]) + " -> " + path;
+                end = parent[end];
+            }
+            return path;
+        }
 
-//     return "No path found";
-// }
+        for (int i = 0; i < n; ++i)
+        {
+            if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
+            {
+                int newDist = dist[u] + g.getAdjMatrix()[u][i];
+                if (newDist < dist[i])
+                {
+                    dist[i] = newDist;
+                    parent[i] = u;
+                    pq.push({dist[i], i});
+                }
+            }
+        }
+    }
+
+    return "No path found";
+}
 
 // string bellmanFord(Graph &g, int start, int end)
 // {
@@ -372,6 +367,11 @@ string BFS(Graph &g, int start, int end)
 // According to what is returning  form graph kind we'll use the correct algorithm
 string Algorithms::shortestPath(Graph &g, int start, int end)
 {
+    if (start < 0 || start >= g.getNumVertices() || end < 0 || end >= g.getNumVertices())
+    {
+        return "No path found";
+    }
+
     int kind = whatGraph(g);
 
     switch (kind)
@@ -379,12 +379,12 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
     case 1:
         return BFS(g, start, end);
         break;
-//     case 2:
-//         return dijksra(g, start, end);
-//         break;
-//     case 3:
-//         return bellmanFord(g, start, end);
-//         break;
+    case 2:
+        return dijksra(g, start, end);
+        break;
+        //     case 3:
+        //         return bellmanFord(g, start, end);
+        //         break;
     }
 
     return "No path found";
