@@ -316,3 +316,4 @@ bool Algorithms::negativeCycle(Graph g)
     // return isNegativeCycle;
     return shortestPath(g, 0, 0) == "Negative cycle detected";
 }
+

@@ -10,6 +10,11 @@
 using namespace std;
 using namespace ariel;
 
+// For running the DFS visit in the graph as we had in algo-1 course
+#define WHITE 1
+#define GRAY 2
+#define BLACK 3
+
 /*******************  This part for now will hadle direct graph we'll ************************/
 
 /** for shortest path we'll check what kind of a graph it is:
@@ -44,57 +49,78 @@ int whatGraph(Graph g)
     return kind;
 }
 
-// The issue arises because the isCyclicUtil function checks for cycles that include the parent node. In a directed graph,
-// we don't need to consider the parent node because the direction of the edges matters.
-bool isCyclicUtil(int v, vector<bool> &visited, vector<int> &cycle, Graph &g)
+string writingCycle(vector<int> &path, vector<int> &parents, int start)
 {
-    visited[v] = true;
-    cycle.push_back(v);
-
-    for (int i = 0; i < g.getNumVertices(); ++i)
+    string cycle;
+    size_t Cstart = 0; // variable for the start of the cycle
+    for (Cstart = 0; Cstart < path.size(); ++Cstart)
     {
-        if (g.getAdjMatrix()[v][i] != 0)
+        if (path[Cstart] == start) // find the start of the cycle
         {
-            if (!visited[i])
-            {
-                if (isCyclicUtil(i, visited, cycle, g))
+            break;
+        }
+    }
+    for (size_t j = Cstart; j < path.size(); ++j)
+    {
+        cycle += to_string(path[j]) + "->";
+    }
+    cycle += to_string(start); // to complete the cycle
+    return cycle;
+}
+
+// The DFS visit in the graph for checking cycle if we've found a gray vertex we have a cycle
+// we're passing pointers because we want to keep the change themselves
+string isContainsCycleUtil(Graph &g, size_t src, vector<int> *colors, vector<int> *parents, vector<int> *path)
+{
+    size_t n = g.getNumVertices();
+    (*colors)[src] = GRAY; // we are visitng this vertex
+    path->push_back(src);  // add the vertex to the path
+
+    for (size_t v = 0; v < n; v++) // visit all the vertices
+    {
+        if (g.getAdjMatrix()[src][v] != 0)
+        { // there is an edge
+            if ((*colors)[v] == WHITE)
+            { // mean we came from here to the vertex
+                (*parents)[v] = (int)src;
+                string cycle = isContainsCycleUtil(g, v, colors, parents, path); // visit
+                if (!cycle.empty())
                 {
-                    return true;
+                    return cycle;
                 }
             }
-            else
+            else if ((*colors)[v] == GRAY) // we've a gray reached a gray vertex from which we came
+                                           // means there is a cycle
             {
-                cycle.push_back(i);
-                return true;
+                return writingCycle(*path, *parents, v);
             }
         }
     }
-
-    cycle.pop_back();
-    return false;
+    (*colors)[src] = BLACK; // we've finished visiting this vertex
+    path->pop_back();       // remove the vertex from the path because we are done with it
+    return "";
 }
 
 bool Algorithms::isContainsCycle(Graph g)
 {
-    vector<bool> visited(g.getNumVertices(), false);
-    vector<int> cycle;
+    size_t n = g.getNumVertices();
+    vector<int> colors(n, WHITE); // like in DFS as we've learned in the course algo-1
+    vector<int> parents(n, -1);
+    vector<int> path;
 
-    for (int i = 0; i < g.getNumVertices(); ++i)
+    for (size_t i = 0; i < n; i++) // going through all the vertices
     {
-        if (!visited[i]) // if haven't visited yet
+        if (colors[i] == WHITE)
         {
-            if (isCyclicUtil(i, visited, cycle, g))
+            // if it we'll return nothing for all the vertices means there no cycle
+            string cycle = isContainsCycleUtil(g, i, &colors, &parents, &path);
+            if (!cycle.empty())
             {
-                for (int j = 1; j < cycle.size() - 1; ++j)
-                {
-                    cout << cycle[j] << "->";
-                }
-                cout << cycle.back() << endl; // Print the last vertex to complete the cycle
+                cout << cycle << endl; // print the cycle
                 return true;
             }
         }
     }
-
     return false;
 }
 
