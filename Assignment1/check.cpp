@@ -10,14 +10,14 @@ using namespace std;
 int main()
 {
     ariel::Graph g(true);
-    vector<vector<int>> graph1 = {
-        {0, 1, 0},
-        {0, 0, 1},
-        {1, 0, 0}};
-    g.loadGraph(graph1);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
-    cout << Algorithms::isConnected(g) << endl;     // true
+    // vector<vector<int>> graph1 = {
+    //     {0, 1, 0},
+    //     {0, 0, 1},
+    //     {1, 0, 0}};
+    // g.loadGraph(graph1);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::isBipartite(g) << endl;      // false
     // cout << Algorithms::shortestPath(g, 0, 2) << endl;
     // cout << Algorithms::shortestPath(g, 2, 1) << endl;
@@ -37,14 +37,14 @@ int main()
     // cout << Algorithms::shortestPath(g, 2, 1) << endl; // no path
     // cout << Algorithms::shortestPath(g, 2, 0) << endl; // no path
 
-    vector<vector<int>> graph22 = {
-        {0, 0, 0},
-        {1, 0, 0},
-        {0, 1, 0}};
-    g.loadGraph(graph22);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl; // false
-    cout << Algorithms::isConnected(g) << endl;     // true?
+    // vector<vector<int>> graph22 = {
+    //     {0, 0, 0},
+    //     {1, 0, 0},
+    //     {0, 1, 0}};
+    // g.loadGraph(graph22);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // false
+    // cout << Algorithms::isConnected(g) << endl;     // true?
 
     //  vector<vector<int>> graph3 = {
     //      {0, 1, 0},
@@ -71,7 +71,7 @@ int main()
     // cout << Algorithms::shortestPath(g, 2, 0) << endl; // 2 -> 1 -> 0
 
     /***** Weighted directed graphs *****/
-
+    
     // vector<vector<int>> graph5 = {
     //     {0, 1, 0, 0, 0},
     //     {1, 0, 2, 0, 0},

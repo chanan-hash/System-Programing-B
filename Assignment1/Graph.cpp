@@ -88,7 +88,7 @@ void Graph::printGraph()
     for (size_t i = 0; i < vertices; i++)
     {
         // only count the upper triangle of the matrix
-        for (size_t j = i + 1; j < adjMatrix[i].size(); j++)
+        for (size_t j = 0; j < vertices; j++)
         {
             if (adjMatrix[i][j] != 0)
             {
