@@ -8,6 +8,12 @@ using namespace ariel;
  * By using the Graph:: and include, we're refrencing the Graph class and the Graph.hpp file
  */
 
+Graph::Graph(bool isDirected)
+{
+    this->isDirected = isDirected;
+    this->numVertices = 0;
+}
+
 size_t Graph::getNumVertices()
 {
     return this->numVertices;
@@ -23,15 +29,12 @@ bool Graph::getDirected()
     return this->isDirected;
 }
 
-// TODO also check if the graph is directed or not by using the isSymmetric function and input from the user
-// TODO check if every column and row has the same number of elements, if not throw an exception
-// check that the diagonal is all 0's
 void Graph::loadGraph(vector<vector<int>> &matrix)
 {
-    // if (!isSymmetric(matrix) && this->isDirected)
-    // {
-    //     throw invalid_argument("The graph is not directed");
-    // }
+    if (!isSymmetric(matrix) && !this->isDirected) // if it undirected and not symmetric
+    {
+        throw invalid_argument("The graph is not directed");
+    }
 
     if (!matrix.empty())
     {
@@ -43,13 +46,22 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
             // Assign each value from the input matrix to the adjacency matrix
             for (size_t i = 0; i < matrix.size(); i++)
             {
+                // check if the matrix is square
+                if (matrix[i].size() != matrix.size())
+                {
+                    throw invalid_argument("The matrix is not square");
+                }
+
                 for (size_t j = 0; j < matrix[i].size(); j++)
                 {
+                    if (i == j && matrix[i][j] != 0)
+                    {
+                        throw invalid_argument("The diagonal is not all 0's");
+                    }
+
                     this->adjMatrix[i][j] = matrix[i][j];
-                    // this->adjMatrix.at(i).at(j) = matrix.at(i).at(j);
                 }
             }
-            // this->adjMatrix = matrix;
             // Update the number of vertices
             this->numVertices = matrix.size();
         }
@@ -62,13 +74,35 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
 
 void Graph::printGraph()
 {
-    for (size_t i = 0; i < this->numVertices; i++)
+    // for (size_t i = 0; i < this->numVertices; i++)
+    // {
+    //     for (size_t j = 0; j < this->numVertices; j++)
+    //     {
+    //         cout << this->adjMatrix[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    int edges = 0;
+    int vertices = this->numVertices;
+    for (size_t i = 0; i < vertices; i++)
     {
-        for (size_t j = 0; j < this->numVertices; j++)
+        // only count the upper triangle of the matrix
+        for (size_t j = i + 1; j < adjMatrix[i].size(); j++)
         {
-            cout << this->adjMatrix[i][j] << " ";
+            if (adjMatrix[i][j] != 0)
+            {
+                edges++;
+            }
         }
-        cout << endl;
+    }
+    if (this->isDirected)
+    {
+        cout << "The graph is directed. V = " << vertices << ", E = " << edges << endl;
+    }
+    else
+    {
+        cout << "The graph is undirected. V = " << vertices << " E = " << (edges / 2) << endl;
     }
 }
 

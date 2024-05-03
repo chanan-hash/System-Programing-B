@@ -49,7 +49,100 @@ int whatGraph(Graph g)
     return kind;
 }
 
-string writingCycle(vector<int> &path, vector<int> &parents, int start)
+/**
+ * To check if graph is connected we can use the DFS algorithm.
+ * The output of it will be the forset of the DFS's trees.
+ * Then we'll take the last root in the forest and run the DFS again.
+ * If we've visited all the vertices we can say that the graph is connected.
+ * Each tree will be represented as a vector of the vertices, And the forest will be the matrix
+ */
+
+// vector<vector<int>> DFS_Forest(Graph g)
+// {
+//     size_t n = g.getNumVertices();
+//     vector<bool> visited(n, false);
+//     vector<vector<int>> forest;
+//     vector<vector<int>> adjmatrix = g.getAdjMatrix();
+
+//     for (int i = 0; i < n; i++) // ensure that we've visited all the vertices, even if the graph is not connected
+//     {
+//         if (!visited[i]) // if vertex is not visited
+//         {
+//             stack<int> s; // the stack of the dfs (usually dfs is recursive the stack is the calling stack, but can be also iterative)
+//             vector<int> tree;
+//             s.push(i); // the root of the tree
+//             visited[i] = true;
+
+//             while (!s.empty()) // The dfs visit
+//             {
+//                 int u = s.top();   // saving the current node
+//                 s.pop();           // taking it out of the stack, pop is void
+//                 tree.push_back(u); // adding the node to the tree
+
+//                 for (int neighbor : adjmatrix[u]) // going all over the neighbors of the current node
+//                 {
+//                     if (neighbor != 0 && !visited[neighbor]) // if the neighbor is not visited and it's no 0, means there an edge between them
+//                     {
+//                         s.push(neighbor);         // push the neighbor to the stack for the dfs visit
+//                         visited[neighbor] = true; // marked as visited
+//                     }
+//                 }
+//             }
+//             forest.push_back(tree); // putting the tree inside the forest
+//         }
+//     }
+
+//     return forest;
+// }
+
+// // This function is for the second time we're running the DFS from the last root of the forest
+// // we have here overloaded function
+// // we need to check again if we can visit all the vertices from the last root
+// vector<vector<int>> DFS_Forest_Second(Graph &g, int lastroot)
+// {
+//     size_t n = g.getNumVertices();
+//     vector<bool> visited(n, false); // initialize all the vertices as not visited again
+//     vector<vector<int>> forest(n);
+//     vector<vector<int>> adjmatrix = g.getAdjMatrix();
+
+//     stack<int> s;
+//     s.push(lastroot); // strating form him and we'll see if the out put will be inly one tree or not
+//     visited[lastroot] = true;
+
+//     // The DFS visit same as before
+//     while (!s.empty())
+//     {
+//         int v = s.top(); // current vertex
+//         s.pop();
+
+//         for (int neighbor : adjmatrix[v])
+//         {
+//             if (neighbor != 0 && !visited[neighbor])
+//             {
+//                 s.push(neighbor);
+//                 visited[neighbor] = true;
+//                 forest[v].push_back(neighbor);
+//             }
+//         }
+//     }
+
+//     return forest;
+// }
+
+bool Algorithms::isConnected(Graph g)
+{
+    // vector<vector<int>> forest = DFS_Forest(g);
+    // int lastroot = forest.back().front(); // the last root of the forest
+    // vector<vector<int>> secondforest = DFS_Forest_Second(g, lastroot);
+    // int num_trees = secondforest.size(); // the number of trees in the forest
+    // if (num_trees == 1)                  // means the graph is connected
+    // {
+    //     return true;
+    // }
+    return false;
+}
+
+string writingCycle(vector<int> &path, int start)
 {
     string cycle;
     size_t Cstart = 0; // variable for the start of the cycle
@@ -70,21 +163,22 @@ string writingCycle(vector<int> &path, vector<int> &parents, int start)
 
 // The DFS visit in the graph for checking cycle if we've found a gray vertex we have a cycle
 // we're passing pointers because we want to keep the change themselves
-string isContainsCycleUtil(Graph &g, size_t src, vector<int> *colors, vector<int> *parents, vector<int> *path)
+string DFScycleCheck(Graph &g, size_t current, vector<int> *colors, vector<int> *parents, vector<int> *path)
 {
     size_t n = g.getNumVertices();
-    (*colors)[src] = GRAY; // we are visitng this vertex
-    path->push_back(src);  // add the vertex to the path
+    // each vertex has a we're writing it's color in the colors vector
+    (*colors)[current] = GRAY; // we are visitng this vertex now
+    path->push_back(current);  // add the vertex to the path
 
     for (size_t v = 0; v < n; v++) // visit all the vertices
     {
-        if (g.getAdjMatrix()[src][v] != 0)
+        if (g.getAdjMatrix()[current][v] != 0)
         { // there is an edge
             if ((*colors)[v] == WHITE)
             { // mean we came from here to the vertex
-                (*parents)[v] = (int)src;
-                string cycle = isContainsCycleUtil(g, v, colors, parents, path); // visit
-                if (!cycle.empty())
+                (*parents)[v] = (int)current;
+                string cycle = DFScycleCheck(g, v, colors, parents, path); // visit by the DFS
+                if (!cycle.empty())                                        // means we've got a cycle string
                 {
                     return cycle;
                 }
@@ -92,15 +186,16 @@ string isContainsCycleUtil(Graph &g, size_t src, vector<int> *colors, vector<int
             else if ((*colors)[v] == GRAY) // we've a gray reached a gray vertex from which we came
                                            // means there is a cycle
             {
-                return writingCycle(*path, *parents, v);
+                return writingCycle(*path, v);
             }
         }
     }
-    (*colors)[src] = BLACK; // we've finished visiting this vertex
-    path->pop_back();       // remove the vertex from the path because we are done with it
+    (*colors)[current] = BLACK; // we've finished visiting this vertex
+    path->pop_back();           // remove the vertex from the path because we are done with it
     return "";
 }
 
+// By runing the DFS
 bool Algorithms::isContainsCycle(Graph g)
 {
     size_t n = g.getNumVertices();
@@ -113,7 +208,7 @@ bool Algorithms::isContainsCycle(Graph g)
         if (colors[i] == WHITE)
         {
             // if it we'll return nothing for all the vertices means there no cycle
-            string cycle = isContainsCycleUtil(g, i, &colors, &parents, &path);
+            string cycle = DFScycleCheck(g, i, &colors, &parents, &path);
             if (!cycle.empty())
             {
                 cout << cycle << endl; // print the cycle
@@ -417,12 +512,12 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 }
 
 // To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
-// bool Algorithms::negativeCycle(Graph g)
-// {
-//     return shortestPath(g, 0, 0) == "Negative cycle detected";
-//     // return whatGraph(g) == 3; // in undirected graph, the minimum we've found a negative edge we can have a negative cycle.
-//     // Because we can go back and forth between the two vertices, and reduce the path weight
-// }
+bool Algorithms::negativeCycle(Graph g)
+{
+    return shortestPath(g, 0, 0) == "Negative cycle detected";
+    // return whatGraph(g) == 3; // in undirected graph, the minimum we've found a negative edge we can have a negative cycle.
+    // Because we can go back and forth between the two vertices, and reduce the path weight
+}
 
 string Algorithms::isBipartite(Graph g)
 {
