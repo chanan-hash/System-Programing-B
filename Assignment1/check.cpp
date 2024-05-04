@@ -30,7 +30,7 @@ int main()
     // g.loadGraph(graph2);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // false
-    // cout << Algorithms::isConnected(g) << endl;     // trur
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::isBipartite(g) << endl;      // A={0, 2}, B={1}.
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
     // cout << Algorithms::shortestPath(g, 1, 2) << endl; // 1 -> 2
@@ -44,7 +44,7 @@ int main()
     // g.loadGraph(graph22);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // false
-    // cout << Algorithms::isConnected(g) << endl;     // true?
+    // cout << Algorithms::isConnected(g) << endl;     // true
 
     //  vector<vector<int>> graph3 = {
     //      {0, 1, 0},
@@ -53,7 +53,8 @@ int main()
 
     //  g.loadGraph(graph3);
     //  g.printGraph();
-    //  // cout << Algorithms::isContainsCycle(g) << endl; // returning 0, it thinks that is undirected graph
+    //  cout << Algorithms::isContainsCycle(g) << endl; // returning 0, it thinks that is undirected graph
+    //  cout << Algorithms::isConnected(g) << endl;     // true
     //  cout << Algorithms::isBipartite(g) << endl; // A={0, 2}, B={1}.
     //  cout << Algorithms::shortestPath(g, 0, 2) << endl;
     //  cout << Algorithms::shortestPath(g, 2, 1) << endl;
@@ -66,12 +67,13 @@ int main()
     // g.loadGraph(graph4);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl;    // true because it is directed graph
+    // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2}, B={1}.
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
     // cout << Algorithms::shortestPath(g, 2, 0) << endl; // 2 -> 1 -> 0
 
     /***** Weighted directed graphs *****/
-    
+
     // vector<vector<int>> graph5 = {
     //     {0, 1, 0, 0, 0},
     //     {1, 0, 2, 0, 0},
@@ -81,6 +83,7 @@ int main()
     // g.loadGraph(graph5);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::shortestPath(g, 0, 4) << endl;
     // cout << Algorithms::shortestPath(g, 3, 1) << endl;
     // cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
@@ -94,6 +97,7 @@ int main()
     // g.loadGraph(graph55);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1, 3}.
     // cout << Algorithms::shortestPath(g, 4, 0) << endl; // no path
     // cout << Algorithms::shortestPath(g, 3, 2) << endl; // no path
@@ -107,8 +111,8 @@ int main()
     //     {0, 2, 6, 0, 0}};
     // g.loadGraph(graph56);
     // g.printGraph();
-
     // cout << Algorithms::isContainsCycle(g) << endl; // 1 -> 2 -> 3 -> 4 -> 1
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0-> 1 -> 3
     // cout << Algorithms::shortestPath(g, 4, 3) << endl; // 4 -> 1 -> 3
     // cout << Algorithms::shortestPath(g, 4, 2) << endl; // 4 -> 1 -> 2
@@ -127,6 +131,7 @@ int main()
     // g.loadGraph(graph57);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // false
+    // cout << Algorithms::isConnected(g) << endl;     // false
     // cout << Algorithms::shortestPath(g, 8, 1) << endl; // no path
     // cout << Algorithms::shortestPath(g, 3, 6) << endl; // no path
     // cout << Algorithms::shortestPath(g, 1, 7) << endl; // no path
@@ -144,6 +149,7 @@ int main()
     // g.loadGraph(graph58);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 0
+    // cout << Algorithms::isConnected(g) << endl;     // false
     // cout << Algorithms::shortestPath(g, 4, 3) << endl; // no path
     // cout << Algorithms::shortestPath(g, 3, 0) << endl; // no path
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 2
@@ -181,6 +187,7 @@ int main()
     // g.loadGraph(graph6);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // false
+    // cout << Algorithms::isConnected(g) << endl;     // false
     // cout << Algorithms::isBipartite(g) << endl;      //
     // cout << Algorithms::shortestPath(g, 5, 3) << endl; // no path
     // cout << Algorithms::shortestPath(g, 2, 6) << endl; // no path
@@ -198,6 +205,7 @@ int main()
     // g.loadGraph(graph7);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true 1->2->3->4->1
+    // cout << Algorithms::isConnected(g) << endl;     // false
     // cout << Algorithms::isBipartite(g) << endl;      // ?
     // cout << Algorithms::shortestPath(g, 5, 3) << endl; // no path
     // cout << Algorithms::shortestPath(g, 2, 6) << endl; // no path
@@ -216,6 +224,7 @@ int main()
     //     {0, 0, 0}};
     // g.loadGraph(graph10);
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
+    // cout << Algorithms::isConnected(g) << endl;         // true
 
     // vector<vector<int>> graph11 = {
     //     {0, -1, 2},
@@ -223,6 +232,8 @@ int main()
     //     {0, 0, 0}};
     // g.loadGraph(graph11);
     // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::isConnected(g) << endl;        // true
 
     // vector<vector<int>> graph12 = {
     //     {0, -1, 2, 0, 0, 0},
@@ -232,6 +243,9 @@ int main()
     //     {0, 0, 0, 0, 0, 0},
     //     {0, 0, 0, 0, 0, 0}};
     // g.loadGraph(graph12);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // false
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 1 -> 2 -> 4
     // cout << Algorithms::shortestPath(g, 3, 1) << endl; // no path
     // cout << Algorithms::shortestPath(g, 4, 5) << endl; // no path
@@ -243,7 +257,9 @@ int main()
     //     {0, 0, 0, -2},
     //     {1, 0, 0, 0}};
     // g.loadGraph(graph13);
+    // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 3 -> 0
+    // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::shortestPath(g, 0, 3) << endl; // negative cycle dedected
     // cout << Algorithms::negativeCycle(g) << endl;      // true
     return 0;

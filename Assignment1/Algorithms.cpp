@@ -57,88 +57,83 @@ int whatGraph(Graph g)
  * Each tree will be represented as a vector of the vertices, And the forest will be the matrix
  */
 
-// vector<vector<int>> DFS_Forest(Graph g)
-// {
-//     size_t n = g.getNumVertices();
-//     vector<bool> visited(n, false);
-//     vector<vector<int>> forest;
-//     vector<vector<int>> adjmatrix = g.getAdjMatrix();
 
-//     for (int i = 0; i < n; i++) // ensure that we've visited all the vertices, even if the graph is not connected
-//     {
-//         if (!visited[i]) // if vertex is not visited
-//         {
-//             stack<int> s; // the stack of the dfs (usually dfs is recursive the stack is the calling stack, but can be also iterative)
-//             vector<int> tree;
-//             s.push(i); // the root of the tree
-//             visited[i] = true;
+// return the tree of the DFS visit from onr vertex
+// We send the verticesColors as a pointer because we want to keep the changes
+vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> *verticesColors)
+{
+    size_t V = g.getNumVertices();
+    vector<size_t> tree;
+    stack<size_t> s;
+    s.push(vertex);
+    // verticesColors[vertex] = GRAY;
 
-//             while (!s.empty()) // The dfs visit
-//             {
-//                 int u = s.top();   // saving the current node
-//                 s.pop();           // taking it out of the stack, pop is void
-//                 tree.push_back(u); // adding the node to the tree
+    while (!s.empty())
+    {
+        size_t u = s.top();
+        s.pop();
 
-//                 for (int neighbor : adjmatrix[u]) // going all over the neighbors of the current node
-//                 {
-//                     if (neighbor != 0 && !visited[neighbor]) // if the neighbor is not visited and it's no 0, means there an edge between them
-//                     {
-//                         s.push(neighbor);         // push the neighbor to the stack for the dfs visit
-//                         visited[neighbor] = true; // marked as visited
-//                     }
-//                 }
-//             }
-//             forest.push_back(tree); // putting the tree inside the forest
-//         }
-//     }
+        if ((*verticesColors)[u] == WHITE) // means we've discovered the vertex
+        {
+            (*verticesColors)[u] = GRAY; // marking as checking it now
+            tree.push_back(u);         // because we'vejust discovered it we'll push it to the tree
 
-//     return forest;
-// }
+            for (size_t v = 0; v < V; v++) // going over it's neighbors
+            {
+                if (g.getAdjMatrix()[u][v] != 0 && (*verticesColors)[v] == WHITE)
+                {
+                    s.push(v); // adding all the white vertices from u to the stack
+                }
+            }
+        }
+        else if ((*verticesColors)[u] == GRAY) // means we've visited the vertex
+        {
+            (*verticesColors)[u] = BLACK; // marking as finished visiting
+        }
+    }
+    return tree;
+}
 
-// // This function is for the second time we're running the DFS from the last root of the forest
-// // we have here overloaded function
-// // we need to check again if we can visit all the vertices from the last root
-// vector<vector<int>> DFS_Forest_Second(Graph &g, int lastroot)
-// {
-//     size_t n = g.getNumVertices();
-//     vector<bool> visited(n, false); // initialize all the vertices as not visited again
-//     vector<vector<int>> forest(n);
-//     vector<vector<int>> adjmatrix = g.getAdjMatrix();
+vector<vector<size_t>> DFS_Forest(Graph &g)
+{
+    size_t V = g.getNumVertices();
+    vector<int> verticesColors(V, WHITE); // Like we've seen in the course algo-1
+    vector<vector<size_t>> forest;
 
-//     stack<int> s;
-//     s.push(lastroot); // strating form him and we'll see if the out put will be inly one tree or not
-//     visited[lastroot] = true;
-
-//     // The DFS visit same as before
-//     while (!s.empty())
-//     {
-//         int v = s.top(); // current vertex
-//         s.pop();
-
-//         for (int neighbor : adjmatrix[v])
-//         {
-//             if (neighbor != 0 && !visited[neighbor])
-//             {
-//                 s.push(neighbor);
-//                 visited[neighbor] = true;
-//                 forest[v].push_back(neighbor);
-//             }
-//         }
-//     }
-
-//     return forest;
-// }
+    // going all over the vertices
+    for (size_t i = 0; i < V; i++)
+    {
+        if (verticesColors[i] == WHITE)
+        {
+            vector<size_t> tree = DFS_Visit(g, i, &verticesColors);
+            forest.push_back(tree);
+        }
+    }
+    return forest;
+}
 
 bool Algorithms::isConnected(Graph g)
 {
-    // vector<vector<int>> forest = DFS_Forest(g);
-    // int lastroot = forest.back().front(); // the last root of the forest
-    // vector<vector<int>> secondforest = DFS_Forest_Second(g, lastroot);
-    // int num_trees = secondforest.size(); // the number of trees in the forest
-    // if (num_trees == 1)                  // means the graph is connected
-    // {
-    //     return true;
-    // }
+    size_t n = g.getNumVertices();
+    vector<vector<size_t>> forest = DFS_Forest(g);
+
+    if (forest.size() == 1)
+    {
+        return true;
+    }
+
+    // If we have a forest from the DFS, we'll check fro, the last root if we can visit all the vertices
+    int lastroot = forest.back().front(); // the last root of the forest
+
+    vector<int> colors(g.getNumVertices(), WHITE);
+
+    vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, &colors);
+    size_t last_tree_size = dfs_last_v.size(); // the number of trees in the forest
+
+    if (last_tree_size == n) // means we've visited all the vertices, and the graph is connected
+    {
+        return true;
+    }
     return false;
 }
 
