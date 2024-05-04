@@ -11,43 +11,12 @@ using namespace std;
 using namespace ariel;
 
 // For running the DFS visit in the graph as we had in algo-1 course
+// We'll use the colors to mark the vertices
 #define WHITE 1
 #define GRAY 2
 #define BLACK 3
 
-/*******************  This part for now will hadle direct graph we'll ************************/
-
-/** for shortest path we'll check what kind of a graph it is:
- * 1. if it is an unweighted graph we'll use BFS
- * 2. if it is a non-negatiive weighted graph we'll use Dijkstra's algorithm
- * 3. if it is a negative weighted graph we'll use Bellman-Ford algorithm
- *
- * for now we'll handle the unweighted and undirect graph
- * if we have only 0 and 1, it is an unweighted graph --> return 1
- * if we have not only 0, 1, it is a weighted graph --> return 2
- * if we have less than it is a negative weighted graph --> return 3
- */
-int whatGraph(Graph g)
-{
-    vector<vector<int>> matrix = g.getAdjMatrix();
-    int n = matrix.size();
-    int kind = 1;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (matrix[i][j] < 0)
-            {
-                return 3; // we knwo it is a negative weighted graph and can return
-            }
-            else if (matrix[i][j] > 1)
-            {
-                kind = 2; // and return only in the end
-            }
-        }
-    }
-    return kind;
-}
+/********Checking a regular connection in direct graph ********/
 
 /**
  * To check if graph is connected we can use the DFS algorithm.
@@ -56,7 +25,6 @@ int whatGraph(Graph g)
  * If we've visited all the vertices we can say that the graph is connected.
  * Each tree will be represented as a vector of the vertices, And the forest will be the matrix
  */
-
 
 // return the tree of the DFS visit from onr vertex
 // We send the verticesColors as a pointer because we want to keep the changes
@@ -76,7 +44,7 @@ vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> *verticesColors)
         if ((*verticesColors)[u] == WHITE) // means we've discovered the vertex
         {
             (*verticesColors)[u] = GRAY; // marking as checking it now
-            tree.push_back(u);         // because we'vejust discovered it we'll push it to the tree
+            tree.push_back(u);           // because we'vejust discovered it we'll push it to the tree
 
             for (size_t v = 0; v < V; v++) // going over it's neighbors
             {
@@ -112,7 +80,7 @@ vector<vector<size_t>> DFS_Forest(Graph &g)
     return forest;
 }
 
-bool Algorithms::isConnected(Graph g)
+bool directedIsConnected(Graph g)
 {
     size_t n = g.getNumVertices();
     vector<vector<size_t>> forest = DFS_Forest(g);
@@ -136,6 +104,49 @@ bool Algorithms::isConnected(Graph g)
     }
     return false;
 }
+
+/********Checking a regular connection in undirect graph ********/
+
+/**
+ * Using the bfs algorithm to check if the graph is connected.
+ * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
+ */
+
+bool undirectedIsConnected(Graph graph)
+{
+    // Assuming the graph is undirected
+    size_t numVertices = graph.getNumVertices();
+    vector<bool> visited(numVertices, false);
+    queue<size_t> q;
+    q.push(0); // start from the first vertex
+    visited[0] = true;
+
+    while (!q.empty())
+    {
+        size_t current = q.front();
+        q.pop();
+
+        vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
+        for (size_t i = 0; i < numVertices; ++i)
+        {
+            if (adjacencyMatrix[current][i] && !visited[i])
+            {
+                q.push(i);
+                visited[i] = true;
+            }
+        }
+    }
+    for (bool v : visited)
+    {
+        if (!v)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+/***************** Cycle check in directed graph **************************/
 
 string writingCycle(vector<int> &path, int start)
 {
@@ -191,7 +202,7 @@ string DFScycleCheck(Graph &g, size_t current, vector<int> *colors, vector<int> 
 }
 
 // By runing the DFS
-bool Algorithms::isContainsCycle(Graph g)
+bool directedIsContainsCycle(Graph g)
 {
     size_t n = g.getNumVertices();
     vector<int> colors(n, WHITE); // like in DFS as we've learned in the course algo-1
@@ -214,126 +225,120 @@ bool Algorithms::isContainsCycle(Graph g)
     return false;
 }
 
-/*******************  This part for now will hadle undirect graph we'll ************************/
+/***************** Cycle check in undirected graph **************************/
 /**
- * Using the bfs algorithm to check if the graph is connected.
- * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
+ * To check if a graph contains a cycle,
+ * we'll depth-first search (DFS) with a slight modification.
+ * The idea is to keep track of the vertices currently in the recursion stack of function for DFS traversal.
+ * If a vertex is reached that is already in the recursion stack,
+ * then there is a cycle in the tree.
+ *
+ * We can usi the idea of finding which kind of edges we have in the graph
+ * if we have back edge then we have a cycle
  */
 
-// bool Algorithms::isConnected(Graph graph)
-// {
-//     // Assuming the graph is undirected
-//     size_t numVertices = graph.getNumVertices();
-//     vector<bool> visited(numVertices, false);
-//     queue<size_t> q;
-//     q.push(0); // start from the first vertex
-//     visited[0] = true;
+bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
+{
+    visited[node] = true;
+    path.push(node);
+    int n = g.getNumVertices();
+    // Visit all adjacent nodes
+    for (int i = 0; i < n; ++i)
+    {
+        if (g.getAdjMatrix()[node][i] != 0)
+        {
+            // If the adjacent node is not visited, recursively visit it
+            if (!visited[i])
+            {
+                parent[i] = node;
+                if (hasCycleDFS(g, i, visited, parent, path))
+                    return true;
+            }
+            // If the adjacent node is already visited and not the parent of current node, cycle exists
+            else if (i != parent[node])
+            {
+                // Print the cycle using the path
+                cout << "The cycle is: ";
 
-//     while (!q.empty())
-//     {
-//         size_t current = q.front();
-//         q.pop();
+                stack<int> cycle;
+                while (!path.empty())
+                {
+                    int current = path.top();
+                    cycle.push(current);
+                    path.pop();
+                    if (current == i)
+                        break;
+                }
+                while (!cycle.empty())
+                {
+                    cout << cycle.top();
+                    cycle.pop();
+                    if (!cycle.empty())
+                        cout << "->";
+                }
+                cout << "->" << i << endl;
+                return true;
+            }
+        }
+    }
 
-//         vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
-//         for (size_t i = 0; i < numVertices; ++i)
-//         {
-//             if (adjacencyMatrix[current][i] && !visited[i])
-//             {
-//                 q.push(i);
-//                 visited[i] = true;
-//             }
-//         }
-//     }
-//     for (bool v : visited)
-//     {
-//         if (!v)
-//         {
-//             return false;
-//         }
-//     }
-//     return true;
-// }
+    path.pop(); // Remove the current node from the path as we backtrack
+    return false;
+}
 
-// /**
-//  * To check if a graph contains a cycle,
-//  * we'll depth-first search (DFS) with a slight modification.
-//  * The idea is to keep track of the vertices currently in the recursion stack of function for DFS traversal.
-//  * If a vertex is reached that is already in the recursion stack,
-//  * then there is a cycle in the tree.
-//  *
-//  * We can usi the idea of finding which kind of edges we have in the graph
-//  * if we have back edge then we have a cycle
-//  */
+// Function to check if the graph has a cycle
+bool undirectedIsContainsCycle(Graph g)
+{
+    int n = g.getNumVertices();
+    vector<bool> visited(n, false);
+    vector<int> parent(n, -1); // Array to keep track of parent nodes in DFS
+    stack<int> path;
 
-// bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
-// {
-//     visited[node] = true;
-//     path.push(node);
-//     int n = g.getNumVertices();
-//     // Visit all adjacent nodes
-//     for (int i = 0; i < n; ++i)
-//     {
-//         if (g.getAdjMatrix()[node][i] != 0)
-//         {
-//             // If the adjacent node is not visited, recursively visit it
-//             if (!visited[i])
-//             {
-//                 parent[i] = node;
-//                 if (hasCycleDFS(g, i, visited, parent, path))
-//                     return true;
-//             }
-//             // If the adjacent node is already visited and not the parent of current node, cycle exists
-//             else if (i != parent[node])
-//             {
-//                 // Print the cycle using the path
-//                 cout << "The cycle is: ";
+    // Iterate through each node and perform DFS if not visited
+    for (int i = 0; i < n; ++i)
+    {
+        if (!visited[i])
+        {
+            if (hasCycleDFS(g, i, visited, parent, path)) // Parent is -1 for the starting node
+                return true;
+        }
+    }
 
-//                 stack<int> cycle;
-//                 while (!path.empty())
-//                 {
-//                     int current = path.top();
-//                     cycle.push(current);
-//                     path.pop();
-//                     if (current == i)
-//                         break;
-//                 }
-//                 while (!cycle.empty())
-//                 {
-//                     cout << cycle.top();
-//                     cycle.pop();
-//                     if (!cycle.empty())
-//                         cout << "->";
-//                 }
-//                 cout << "->" << i << endl;
-//                 return true;
-//             }
-//         }
-//     }
+    return false;
+}
 
-//     path.pop(); // Remove the current node from the path as we backtrack
-//     return false;
-// }
-
-// // Function to check if the graph has a cycle
-// bool Algorithms::isContainsCycle(Graph g)
-// {
-//     int n = g.getNumVertices();
-//     vector<bool> visited(n, false);
-//     vector<int> parent(n, -1); // Array to keep track of parent nodes in DFS
-//     stack<int> path;
-
-//     // Iterate through each node and perform DFS if not visited
-//     for (int i = 0; i < n; ++i)
-//     {
-//         if (!visited[i])
-//         {
-//             if (hasCycleDFS(g, i, visited, parent, path)) // Parent is -1 for the starting node
-//                 return true;
-//         }
-//     }
-
-//     return false;
-// }
+/****************** Shortest Pathes ****************/
+/** for shortest path we'll check what kind of a graph it is:
+ * 1. if it is an unweighted graph we'll use BFS
+ * 2. if it is a non-negatiive weighted graph we'll use Dijkstra's algorithm
+ * 3. if it is a negative weighted graph we'll use Bellman-Ford algorithm
+ *
+ * for now we'll handle the unweighted and undirect graph
+ * if we have only 0 and 1, it is an unweighted graph --> return 1
+ * if we have not only 0, 1, it is a weighted graph --> return 2
+ * if we have less than it is a negative weighted graph --> return 3
+ */
+int whatGraph(Graph g)
+{
+    vector<vector<int>> matrix = g.getAdjMatrix();
+    int n = matrix.size();
+    int kind = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (matrix[i][j] < 0)
+            {
+                return 3; // we knwo it is a negative weighted graph and can return
+            }
+            else if (matrix[i][j] > 1)
+            {
+                kind = 2; // and return only in the end
+            }
+        }
+    }
+    return kind;
+}
 
 string BFS(Graph &g, int start, int end)
 {
@@ -478,6 +483,26 @@ string bellmanFord(Graph &g, int start, int end)
     }
 
     return path;
+}
+
+/******************** The hpp functions ********************/
+
+bool Algorithms::isConnected(Graph g)
+{
+    if (g.getDirected()) // if the graph is directed
+    {
+        return directedIsConnected(g);
+    }
+    return undirectedIsConnected(g);
+}
+
+bool Algorithms::isContainsCycle(Graph g)
+{
+    if (g.getDirected()) // if the graph is directed
+    {
+        return directedIsContainsCycle(g);
+    }
+    return undirectedIsContainsCycle(g);
 }
 
 // According to what is returning  form graph kind we'll use the correct algorithm
