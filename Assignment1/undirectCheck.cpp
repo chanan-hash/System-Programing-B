@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    ariel::Graph g;
+    ariel::Graph g(false);
     /**
      * Chechups for undirected and unweighted graph
      */
@@ -225,18 +225,34 @@ int main()
     // cout << Algorithms::negativeCycle(g) << endl;      // false
     // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1,3}
 
-    // TODO need to be checked
-    vector<vector<int>> graph14 = {
-        {0, 1, 0, 0, 0},
-        {1, 0, 2, 0, 0},
-        {0, 2, 0, 3, 0},
-        {0, 0, 3, 0, 4},
-        {0, 0, 0, 4, 0}
-    };
-    g.loadGraph(graph14);
+    // vector<vector<int>> graph14 = {
+    //     {0, 1, 0, 0, 0},
+    //     {1, 0, 2, 0, 0},
+    //     {0, 2, 0, 3, 0},
+    //     {0, 0, 3, 0, 4},
+    //     {0, 0, 0, 4, 0}
+    // };
+    // g.loadGraph(graph14);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+
+    vector<vector<int>> graph15 = {
+        {0, 1, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, -10, 0, 0, 0, 0, 0, 0},
+        {0, -10, 0, 20, 0, 0, 0, 0, 0},
+        {0, 0, 20, 0, -30, 0, 0, 0, 0},
+        {0, 0, 0, -30, 0, 40, 0, 0, 0},
+        {0, 0, 0, 0, 40, 0, -50, 0, 10},
+        {0, 0, 0, 0, 0, -50, 0, 60, 0},
+        {0, 0, 0, 0, 0, 0, 60, 0, -70},
+        {0, 0, 0, 0, 0, 10, 0, -70, 0}};
+
+    g.loadGraph(graph15);
     g.printGraph();
     cout << Algorithms::isConnected(g) << endl;        // true
     cout << Algorithms::isContainsCycle(g) << endl;    // false
+    cout << Algorithms::negativeCycle(g) << endl;     // true
 
     return 0;
 }

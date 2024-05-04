@@ -6,6 +6,7 @@
 #include <climits>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 using namespace ariel;
@@ -485,6 +486,64 @@ string bellmanFord(Graph &g, int start, int end)
     return path;
 }
 
+/************* returning the negative cycle itself *************/
+vector<int> negativeCyclePath(Graph g)
+{
+    int n = g.getNumVertices();
+    vector<int> distance(n, INT_MAX);
+    vector<int> predecessor(n, -1);
+    int cycle_start = -1;
+
+    // Assume the source vertex is 0
+    distance[0] = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        cycle_start = -1;
+        for (int u = 0; u < n; ++u)
+        {
+            for (int v = 0; v < n; ++v)
+            {
+                if (g.getAdjMatrix()[u][v] != 0)
+                {
+                    int new_distance = distance[u] + g.getAdjMatrix()[u][v];
+                    if (new_distance < distance[v])
+                    {
+                        distance[v] = new_distance;
+                        predecessor[v] = u;
+                        cycle_start = v;
+                    }
+                }
+            }
+        }
+    }
+
+    vector<int> cycle;
+    if (cycle_start != -1)
+    {
+        // We found a negative cycle
+        // Go n steps back to make sure we are in the cycle
+        int v = cycle_start;
+        for (int i = 0; i < n; ++i)
+        {
+            v = predecessor[v];
+        }
+
+        // Add vertices to the cycle
+        for (int u = v;; u = predecessor[u])
+        {
+            cycle.push_back(u);
+            if (u == v && cycle.size() > 1)
+            {
+                break;
+            }
+        }
+        reverse(cycle.begin(), cycle.end());
+    }
+
+    return cycle;
+}
+
 /******************** The hpp functions ********************/
 
 bool Algorithms::isConnected(Graph g)
@@ -532,11 +591,27 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 }
 
 // To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
-bool Algorithms::negativeCycle(Graph g)
+string Algorithms::negativeCycle(Graph g)
 {
-    return shortestPath(g, 0, 0) == "Negative cycle detected";
-    // return whatGraph(g) == 3; // in undirected graph, the minimum we've found a negative edge we can have a negative cycle.
-    // Because we can go back and forth between the two vertices, and reduce the path weight
+    string result;
+    if (shortestPath(g, 0, 0) == "Negative cycle detected")
+    {
+        vector<int> cycle = negativeCyclePath(g);
+        result = "Negative cycle detected: ";
+        for (size_t i = 0; i < cycle.size(); ++i)
+        {
+            result += to_string(cycle[i]);
+            if (i != cycle.size() - 1) // Not the last vertex
+            {
+                result += "->";
+            }
+        }
+    }
+    else
+    {
+        result = "No negative cycle detected";
+    }
+    return result;
 }
 
 string Algorithms::isBipartite(Graph g)

@@ -262,5 +262,34 @@ int main()
     // cout << Algorithms::isConnected(g) << endl;     // true
     // cout << Algorithms::shortestPath(g, 0, 3) << endl; // negative cycle dedected
     // cout << Algorithms::negativeCycle(g) << endl;      // true
+
+    // vector<vector<int>> graph14 = {
+    //     {0, 0, 0, 1, 0},
+    //     {0, 0, -1, 0, 0},
+    //     {0, 0, 0, -1, 0},
+    //     {0, 0, 0, 0, 1},
+    //     {0, -1, 0, 0, 0}};
+    // g.loadGraph(graph14);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // true 3 -> 4 -> 1 -> 2 -> 3
+    // cout << Algorithms::isConnected(g) << endl;     // true
+    // cout << Algorithms::shortestPath(g, 0, 3) << endl; // negative cycle dedected
+    // cout << Algorithms::negativeCycle(g) << endl;      // 4->1->2->3->4
+ 
+
+    vector<vector<int>> graph15 = {
+        {0, 1, 0, 0, 0, 0, 0},
+        {0, 0, -10, 0, 0, 0, 0},
+        {0, 0, 0, -30, 0, 0, 0},
+        {30, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 40, 0},
+        {0, 0, 0, 0, 0, 0, -50},
+        {0, 0, 0, 0, 0, 0, 0}};
+    g.loadGraph(graph15);
+    g.printGraph();
+    cout << Algorithms::isContainsCycle(g) << endl; // true
+    cout << Algorithms::isConnected(g) << endl;     // false
+    cout << Algorithms::negativeCycle(g) << endl; // 1->2->3->0->1
+    
     return 0;
 }

@@ -8,6 +8,7 @@
 #include <climits>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 namespace ariel
 {
@@ -39,7 +40,7 @@ namespace ariel
 
         // Return true if the graph is bipartite, false otherwise
 
-        static bool negativeCycle(Graph g);
+        static string negativeCycle(Graph g);
         // Your implementation to check if the graph contains a negative cycle goes here
         // You can use any graph traversal algorithm, such as Bellman-Ford, to check for negative cycles
 
