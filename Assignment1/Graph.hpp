@@ -23,6 +23,8 @@ namespace ariel
         size_t getNumVertices();
         vector<vector<int>> getAdjMatrix();
         bool getDirected();
+        
+        void setDirected(bool isDirected);
 
         // Function to load graph from an adjacency matrix, like a set function
         void loadGraph(vector<vector<int>> &matrix);

@@ -657,38 +657,24 @@ string Algorithms::isBipartite(Graph g)
         }
     }
 
-    vector<int> groupA;
-    vector<int> groupB;
-    for (size_t i = 0; i < n; ++i)
+    string result = "The graph is bipartite: A={";
+    for (size_t i = 0; i < groups[0].size(); ++i)
     {
-        if (color[i] == 0)
+        result += to_string(groups[0][i]);
+        if (i != groups[0].size() - 1)
         {
-            groupA.push_back(i);
-        }
-        else
-        {
-            groupB.push_back(i);
+            result += ", ";
         }
     }
-
-    cout << "The graph is bipartite: A={";
-    for (size_t i = 0; i < groupA.size(); ++i)
+    result += "}, B={";
+    for (size_t i = 0; i < groups[1].size(); ++i)
     {
-        cout << groupA[i];
-        if (i != groupA.size() - 1)
+        result += to_string(groups[1][i]);
+        if (i != groups[1].size() - 1)
         {
-            cout << ", ";
+            result += ", ";
         }
     }
-    cout << "}, B={";
-    for (size_t i = 0; i < groupB.size(); ++i)
-    {
-        cout << groupB[i];
-        if (i != groupB.size() - 1)
-        {
-            cout << ", ";
-        }
-    }
-    cout << "}." << endl;
-    return "";
+    result += "}.";
+    return result;
 }
