@@ -169,7 +169,11 @@ TEST_CASE("Checking unconccted undirected graphs")
     CHECK(ariel::Algorithms::shortestPath(g, 0, 2) == "No path found");
     CHECK(ariel::Algorithms::shortestPath(g, 1, 0) == "1 -> 0");
     CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2}, B={1}.");
+}
 
+TEST_CASE("Checking graphs with 2 connected components")
+{
+    ariel::Graph g(false);
     // Checking graph with 2 connected components
     vector<vector<int>> graph12 = {
         {0, 1, 0, 0, 0},
@@ -185,6 +189,37 @@ TEST_CASE("Checking unconccted undirected graphs")
     CHECK(ariel::Algorithms::shortestPath(g, 4, 3) == "4 -> 2 -> 3");
     CHECK(ariel::Algorithms::shortestPath(g, 1, 0) == "1 -> 0");
     CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2}, B={1, 3, 4}.");
+}
+
+TEST_CASE("More weighted graphs")
+{
+    ariel::Graph g(false);
+
+    // Wiehted graph with 2 vertices unconnected
+    vector<vector<int>> graph13 = {
+        {0, 1, 0, 1, 0},
+        {1, 0, 0, 2, 0},
+        {0, 0, 0, 0, 0},
+        {1, 2, 0, 0, 0},
+        {0, 0, 0, 0, 0}};
+    g.loadGraph(graph13);
+    CHECK(ariel::Algorithms::isConnected(g) == false);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 3) == "0 -> 3");
+    CHECK(ariel::Algorithms::shortestPath(g, 1, 2) == "No path found");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
+
+    vector<vector<int>> graph14 = {
+        {0, 1, 0, 0, 0},
+        {1, 0, 2, 0, 0},
+        {0, 2, 0, 3, 0},
+        {0, 0, 3, 0, 4},
+        {0, 0, 0, 4, 0}};
+    g.loadGraph(graph14);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == false);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "0 -> 1 -> 2 -> 3 -> 4");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}.");
 }
 
 // TEST_CASE("Testing undirected with negative edges graphs")
