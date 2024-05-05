@@ -55,7 +55,7 @@ int main()
     // g.printGraph();
     // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isContainsCycle(g) << endl;    // true
-    // cout << Algorithms::isBipartite(g) << endl; 
+    // cout << Algorithms::isBipartite(g) << endl;
     // cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0-> 1 -> 2 -> 4
     // cout << Algorithms::shortestPath(g, 3, 1) << endl; //  3 -> 0 -> 1
 
@@ -85,8 +85,8 @@ int main()
     // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isContainsCycle(g) << endl;    // true
     // cout << Algorithms::shortestPath(g, 0, 4) << endl; // we have a negative cycle, because we can go from vertex 1 to 3 (2 to 4) as many times as we want
-    // cout << Algorithms::negativeCycle(g) << endl;      // 
-        //     // if we'll change place [3][1] = 0 we'll get 0 -> 1 -> 3 -> 4
+    // cout << Algorithms::negativeCycle(g) << endl;      //
+    //     // if we'll change place [3][1] = 0 we'll get 0 -> 1 -> 3 -> 4
 
     // have negative cycle
     // vector<vector<int>> graph6 = {
@@ -240,22 +240,22 @@ int main()
     // cout << Algorithms::shortestPath(g, 0, 4) << endl; // 0 -> 1 -> 2 -> 3 -> 4
     // cout << Algorithms::isBipartite(g) << endl;        // {0, 2, 4} {1, 3}
 
-    vector<vector<int>> graph15 = {
-        {0, 1, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, -10, 0, 0, 0, 0, 0, 0},
-        {0, -10, 0, 20, 0, 0, 0, 0, 0},
-        {0, 0, 20, 0, -30, 0, 0, 0, 0},
-        {0, 0, 0, -30, 0, 40, 0, 0, 0},
-        {0, 0, 0, 0, 40, 0, -50, 0, 10},
-        {0, 0, 0, 0, 0, -50, 0, 60, 0},
-        {0, 0, 0, 0, 0, 0, 60, 0, -70},
-        {0, 0, 0, 0, 0, 10, 0, -70, 0}};
+    // vector<vector<int>> graph15 = {
+    //     {0, 1, 0, 0, 0, 0, 0, 0, 0},
+    //     {1, 0, -10, 0, 0, 0, 0, 0, 0},
+    //     {0, -10, 0, 20, 0, 0, 0, 0, 0},
+    //     {0, 0, 20, 0, -30, 0, 0, 0, 0},
+    //     {0, 0, 0, -30, 0, 40, 0, 0, 0},
+    //     {0, 0, 0, 0, 40, 0, -50, 0, 10},
+    //     {0, 0, 0, 0, 0, -50, 0, 60, 0},
+    //     {0, 0, 0, 0, 0, 0, 60, 0, -70},
+    //     {0, 0, 0, 0, 0, 10, 0, -70, 0}};
 
-    g.loadGraph(graph15);
-    g.printGraph();
-    cout << Algorithms::isConnected(g) << endl;        // true
-    cout << Algorithms::isContainsCycle(g) << endl;    // false
-    cout << Algorithms::negativeCycle(g) << endl;     // true
+    // g.loadGraph(graph15);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;     // true
+    // cout << Algorithms::isContainsCycle(g) << endl; // true
+    // cout << Algorithms::negativeCycle(g) << endl;   // true
 
     // vector<vector<int>> graph16 = {
     //     {0, -1, 0, 0, 0},
@@ -266,8 +266,34 @@ int main()
     // g.loadGraph(graph16);
     // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isContainsCycle(g) << endl;    // false
-    // cout << Algorithms::shortestPath(g, 0, 4) << endl; 
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl;
     // cout << Algorithms::negativeCycle(g) << endl; // negative cycle
+
+    vector<vector<int>> graph3 = {
+        {0, 1, 0, 0, 0},
+        {1, 0, 3, 0, 0},
+        {0, 3, 0, 4, 0},
+        {0, 0, 4, 0, 5},
+        {0, 0, 0, 5, 0}};
+    g.loadGraph(graph3); // Load the graph to the object.
+
+    g.printGraph();                                    // Should print: "Graph with 5 vertices and 7 edges."
+    cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
+    cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: 0->1->2->3->4.
+    cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "0" (false). should print 1
+    cout << Algorithms::isBipartite(g) << endl;        // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
+
+
+    // The graph has not zero on the diagonal
+        vector<vector<int>> graph88 = {
+        {0, 1, 0, 0, 0},
+        {1, 1, 3, 0, 0},
+        {0, 3, 6, 4, 0},
+        {0, 0, 4, 4, 5},
+        {0, 0, 0, 5, 0}};
+    g.loadGraph(graph88); // Load the graph to the object.
+
+    
 
     return 0;
 }

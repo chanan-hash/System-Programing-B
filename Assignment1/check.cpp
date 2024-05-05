@@ -291,5 +291,6 @@ int main()
     cout << Algorithms::isConnected(g) << endl;     // false
     cout << Algorithms::negativeCycle(g) << endl; // 1->2->3->0->1
     
+
     return 0;
 }
