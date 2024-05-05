@@ -222,9 +222,33 @@ TEST_CASE("More weighted graphs")
     CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}.");
 }
 
-// TEST_CASE("Testing undirected with negative edges graphs")
-// {
-// }
+TEST_CASE("Testing undirected negative cycle graphs")
+{
+    ariel::Graph g(false);
+    vector<vector<int>> graph5{
+        {0, 6, 7, 0, 0},
+        {6, 0, 8, -4, 0},
+        {7, 8, 0, 0, 5},
+        {0, -4, 0, 0, 7},
+        {0, 0, 5, 7, 0}};
+    g.loadGraph(graph5);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "Negative cycle detected");
+    CHECK(ariel::Algorithms::negativeCycle(g) == "Negative cycle detected: 3->1->3");
+
+    vector<vector<int>> graph6 = {
+        {0, -1, 0, -1, 0},
+        {-1, 0, -1, 0, 0},
+        {0, -1, 0, 0, -1},
+        {-1, 0, 0, 0, -1},
+        {0, 0, -1, -1, 0}};
+    g.loadGraph(graph6);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "Negative cycle detected");
+    CHECK(ariel::Algorithms::negativeCycle(g) == "Negative cycle detected: 4->2->4");
+}
 
 /***************** Testing Directed graphs ********************/
 
