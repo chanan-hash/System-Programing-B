@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Graph.hpp"
+#include <stdexcept>
 
 using namespace std;
 using namespace ariel;

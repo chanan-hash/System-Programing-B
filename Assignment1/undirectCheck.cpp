@@ -237,22 +237,34 @@ int main()
     // cout << Algorithms::isConnected(g) << endl;        // true
     // cout << Algorithms::isContainsCycle(g) << endl;    // false
 
-    vector<vector<int>> graph15 = {
-        {0, 1, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, -10, 0, 0, 0, 0, 0, 0},
-        {0, -10, 0, 20, 0, 0, 0, 0, 0},
-        {0, 0, 20, 0, -30, 0, 0, 0, 0},
-        {0, 0, 0, -30, 0, 40, 0, 0, 0},
-        {0, 0, 0, 0, 40, 0, -50, 0, 10},
-        {0, 0, 0, 0, 0, -50, 0, 60, 0},
-        {0, 0, 0, 0, 0, 0, 60, 0, -70},
-        {0, 0, 0, 0, 0, 10, 0, -70, 0}};
+    // vector<vector<int>> graph15 = {
+    //     {0, 1, 0, 0, 0, 0, 0, 0, 0},
+    //     {1, 0, -10, 0, 0, 0, 0, 0, 0},
+    //     {0, -10, 0, 20, 0, 0, 0, 0, 0},
+    //     {0, 0, 20, 0, -30, 0, 0, 0, 0},
+    //     {0, 0, 0, -30, 0, 40, 0, 0, 0},
+    //     {0, 0, 0, 0, 40, 0, -50, 0, 10},
+    //     {0, 0, 0, 0, 0, -50, 0, 60, 0},
+    //     {0, 0, 0, 0, 0, 0, 60, 0, -70},
+    //     {0, 0, 0, 0, 0, 10, 0, -70, 0}};
 
-    g.loadGraph(graph15);
-    g.printGraph();
-    cout << Algorithms::isConnected(g) << endl;        // true
-    cout << Algorithms::isContainsCycle(g) << endl;    // false
-    cout << Algorithms::negativeCycle(g) << endl;     // true
+    // g.loadGraph(graph15);
+    // g.printGraph();
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::negativeCycle(g) << endl;     // true
+
+    // vector<vector<int>> graph16 = {
+    //     {0, -1, 0, 0, 0},
+    //     {-1, 0, 3, 0, 0},
+    //     {0, 3, 0, 4, 0},
+    //     {0, 0, 4, 0, 5},
+    //     {0, 0, 0, 5, 0}};
+    // g.loadGraph(graph16);
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; 
+    // cout << Algorithms::negativeCycle(g) << endl; // negative cycle
 
     return 0;
 }

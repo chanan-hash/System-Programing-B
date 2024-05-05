@@ -7,6 +7,7 @@
 #include <queue>
 #include <stack>
 #include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 using namespace ariel;
@@ -92,7 +93,7 @@ bool directedIsConnected(Graph g)
     }
 
     // If we have a forest from the DFS, we'll check fro, the last root if we can visit all the vertices
-    int lastroot = forest.back().front(); // the last root of the forest
+    size_t lastroot = forest.back().front(); // the last root of the forest
 
     vector<int> colors(g.getNumVertices(), WHITE);
 
@@ -240,23 +241,23 @@ bool directedIsContainsCycle(Graph g)
 
 bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
 {
-    visited[node] = true;
+    visited[(size_t)node] = true;
     path.push(node);
     int n = g.getNumVertices();
     // Visit all adjacent nodes
-    for (int i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
     {
-        if (g.getAdjMatrix()[node][i] != 0)
+        if (g.getAdjMatrix()[(size_t)node][i] != 0)
         {
             // If the adjacent node is not visited, recursively visit it
             if (!visited[i])
             {
-                parent[i] = node;
+                parent[i] = (size_t)node;
                 if (hasCycleDFS(g, i, visited, parent, path))
                     return true;
             }
             // If the adjacent node is already visited and not the parent of current node, cycle exists
-            else if (i != parent[node])
+            else if (i != parent[(size_t)node])
             {
                 // Print the cycle using the path
                 cout << "The cycle is: ";
@@ -291,12 +292,12 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
 bool undirectedIsContainsCycle(Graph g)
 {
     int n = g.getNumVertices();
-    vector<bool> visited(n, false);
-    vector<int> parent(n, -1); // Array to keep track of parent nodes in DFS
+    vector<bool> visited((size_t)n, false);
+    vector<int> parent((size_t)n, -1); // Array to keep track of parent nodes in DFS
     stack<int> path;
 
     // Iterate through each node and perform DFS if not visited
-    for (int i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
     {
         if (!visited[i])
         {
@@ -324,9 +325,9 @@ int whatGraph(Graph g)
     vector<vector<int>> matrix = g.getAdjMatrix();
     int n = matrix.size();
     int kind = 1;
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (size_t j = 0; j < n; j++)
         {
             if (matrix[i][j] < 0)
             {
@@ -350,7 +351,7 @@ string BFS(Graph &g, int start, int end)
     queue<int> q;
 
     q.push(start);
-    visited[start] = true;
+    visited[(size_t)start] = true;
 
     while (!q.empty())
     {
@@ -361,17 +362,17 @@ string BFS(Graph &g, int start, int end)
         {
             // Reconstruct the path from end to start
             string path = to_string(end);
-            while (parent[end] != -1)
+            while (parent[(size_t)end] != -1)
             {
-                path = to_string(parent[end]) + " -> " + path;
-                end = parent[end];
+                path = to_string(parent[(size_t)end]) + " -> " + path;
+                end = parent[(size_t)end];
             }
             return path;
         }
 
-        for (int i = 0; i < V; ++i)
+        for (size_t i = 0; i < V; ++i)
         {
-            if (g.getAdjMatrix()[u][i] != 0 && !visited[i]) // if there's no edge and we havent visieted him
+            if (g.getAdjMatrix()[(size_t)u][i] != 0 && !visited[i]) // if there's no edge and we havent visieted him
             {
                 q.push(i);
                 visited[i] = true; // mark as visited
@@ -386,7 +387,7 @@ string BFS(Graph &g, int start, int end)
 string dijksra(Graph &g, int start, int end)
 {
 
-    int n = g.getNumVertices();
+    size_t n = g.getNumVertices();
     vector<int> dist(n, INT_MAX);
     vector<int> parent(n, -1);
     vector<bool> visited(n, false);
@@ -395,7 +396,7 @@ string dijksra(Graph &g, int start, int end)
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
     // The distance from start to itself is 0
-    dist[start] = 0;
+    dist[(size_t)start] = 0;
     pq.push({0, start});
 
     while (!pq.empty())
@@ -403,29 +404,29 @@ string dijksra(Graph &g, int start, int end)
         int u = pq.top().second;
         pq.pop();
 
-        visited[u] = true;
+        visited[(size_t)u] = true;
 
         if (u == end)
         {
             // Reconstruct the path from end to start
             string path = to_string(end);
-            while (parent[end] != -1)
+            while (parent[(size_t)end] != -1)
             {
-                path = to_string(parent[end]) + " -> " + path;
-                end = parent[end];
+                path = to_string(parent[(size_t)end]) + " -> " + path;
+                end = parent[(size_t)end];
             }
             return path;
         }
 
-        for (int i = 0; i < n; ++i)
+        for (size_t i = 0; i < n; ++i)
         {
-            if (g.getAdjMatrix()[u][i] != 0 && !visited[i])
+            if (g.getAdjMatrix()[(size_t)u][i] != 0 && !visited[i])
             {
-                int newDist = dist[u] + g.getAdjMatrix()[u][i];
+                int newDist = dist[(size_t)u] + g.getAdjMatrix()[(size_t)u][i];
                 if (newDist < dist[i])
                 {
                     dist[i] = newDist;
-                    parent[i] = u;
+                    parent[i] = (size_t)u;
                     pq.push({dist[i], i});
                 }
             }
@@ -478,9 +479,9 @@ string bellmanFord(Graph &g, int start, int end)
 
     // Build the shortest path from end to start
     string path = to_string(end);
-    for (size_t v = (size_t)end; v != (size_t)start; v = (size_t)predecessor[v])
+    for (size_t v = (size_t)end; v != start; v = (size_t)predecessor[v])
     {
-        path = to_string(predecessor[v]) + " -> " + path;
+        path = to_string((int)predecessor[v]) + " -> " + path;
     }
 
     return path;
@@ -489,7 +490,7 @@ string bellmanFord(Graph &g, int start, int end)
 /************* returning the negative cycle itself *************/
 vector<int> negativeCyclePath(Graph g)
 {
-    int n = g.getNumVertices();
+    size_t n = g.getNumVertices();
     vector<int> distance(n, INT_MAX);
     vector<int> predecessor(n, -1);
     int cycle_start = -1;
@@ -497,12 +498,12 @@ vector<int> negativeCyclePath(Graph g)
     // Assume the source vertex is 0
     distance[0] = 0;
 
-    for (int i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
     {
         cycle_start = -1;
-        for (int u = 0; u < n; ++u)
+        for (size_t u = 0; u < n; ++u)
         {
-            for (int v = 0; v < n; ++v)
+            for (size_t v = 0; v < n; ++v)
             {
                 if (g.getAdjMatrix()[u][v] != 0)
                 {
@@ -510,7 +511,7 @@ vector<int> negativeCyclePath(Graph g)
                     if (new_distance < distance[v])
                     {
                         distance[v] = new_distance;
-                        predecessor[v] = u;
+                        predecessor[v] = (int)u;
                         cycle_start = v;
                     }
                 }
@@ -524,13 +525,13 @@ vector<int> negativeCyclePath(Graph g)
         // We found a negative cycle
         // Go n steps back to make sure we are in the cycle
         int v = cycle_start;
-        for (int i = 0; i < n; ++i)
+        for (size_t i = 0; i < n; ++i)
         {
-            v = predecessor[v];
+            v = predecessor[(size_t)v];
         }
 
         // Add vertices to the cycle
-        for (int u = v;; u = predecessor[u])
+        for (int u = v;; u = predecessor[(size_t)u])
         {
             cycle.push_back(u);
             if (u == v && cycle.size() > 1)
@@ -616,11 +617,11 @@ string Algorithms::negativeCycle(Graph g)
 
 string Algorithms::isBipartite(Graph g)
 {
-    int n = g.getNumVertices();
+    size_t n = g.getNumVertices();
     vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors
     vector<vector<int>> groups(2); // groups[0] and groups[1] are the two groups of vertices
 
-    for (int start = 0; start < n; ++start)
+    for (size_t start = 0; start < n; ++start)
     {
         if (color[start] == -1)
         {
@@ -634,18 +635,18 @@ string Algorithms::isBipartite(Graph g)
                 int node = q.front();
                 q.pop();
 
-                for (int i = 0; i < n; ++i)
+                for (size_t i = 0; i < n; ++i)
                 {
-                    if (g.getAdjMatrix()[node][i] != 0)
+                    if (g.getAdjMatrix()[(size_t)node][i] != 0)
                     {
                         if (color[i] == -1)
                         {
                             // If the node has not been colored, color it with the opposite color and add it to the corresponding group
-                            color[i] = 1 - color[node];
-                            groups[color[i]].push_back(i);
+                            color[i] = 1 - color[(size_t)node];
+                            groups[(size_t)color[i]].push_back(i);
                             q.push(i);
                         }
-                        else if (color[i] == color[node])
+                        else if (color[i] == color[(size_t)node])
                         {
                             // If the node has been colored and its color is the same as the current node, the graph is not bipartite
                             return "The graph is not bipartite";

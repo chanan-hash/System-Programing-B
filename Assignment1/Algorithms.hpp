@@ -9,6 +9,7 @@
 #include <queue>
 #include <stack>
 #include <algorithm>
+#include <stdexcept>
 
 namespace ariel
 {

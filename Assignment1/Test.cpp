@@ -4,6 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <climits>
+#include <queue>
+#include <stack>
+#include <algorithm>
+#include <stdexcept>
 
 using namespace doctest;
 using namespace ariel;
