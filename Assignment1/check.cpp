@@ -10,18 +10,18 @@ using namespace std;
 int main()
 {
     ariel::Graph g(true);
-    // vector<vector<int>> graph1 = {
-    //     {0, 1, 0},
-    //     {0, 0, 1},
-    //     {1, 0, 0}};
-    // g.loadGraph(graph1);
-    // g.printGraph();
-    // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
-    // cout << Algorithms::isConnected(g) << endl;     // true
-    // cout << Algorithms::isBipartite(g) << endl;      // false
-    // cout << Algorithms::shortestPath(g, 0, 2) << endl;
-    // cout << Algorithms::shortestPath(g, 2, 1) << endl;
-    // cout << Algorithms::shortestPath(g, 1, 2) << endl;
+    vector<vector<int>> graph1 = {
+        {0, 1, 0},
+        {0, 0, 1},
+        {1, 0, 0}};
+    g.loadGraph(graph1);
+    g.printGraph();
+    cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
+    cout << Algorithms::isConnected(g) << endl;     // true
+    cout << Algorithms::isBipartite(g) << endl;      // false
+    cout << Algorithms::shortestPath(g, 0, 2) << endl;
+    cout << Algorithms::shortestPath(g, 2, 1) << endl;
+    cout << Algorithms::shortestPath(g, 1, 2) << endl;
 
     // vector<vector<int>> graph2 = {
     //     {0, 1, 0},
@@ -277,19 +277,19 @@ int main()
     // cout << Algorithms::negativeCycle(g) << endl;      // 4->1->2->3->4
  
 
-    vector<vector<int>> graph15 = {
-        {0, 1, 0, 0, 0, 0, 0},
-        {0, 0, -10, 0, 0, 0, 0},
-        {0, 0, 0, -30, 0, 0, 0},
-        {30, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 40, 0},
-        {0, 0, 0, 0, 0, 0, -50},
-        {0, 0, 0, 0, 0, 0, 0}};
-    g.loadGraph(graph15);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl; // true
-    cout << Algorithms::isConnected(g) << endl;     // false
-    cout << Algorithms::negativeCycle(g) << endl; // 1->2->3->0->1
+    // vector<vector<int>> graph15 = {
+    //     {0, 1, 0, 0, 0, 0, 0},
+    //     {0, 0, -10, 0, 0, 0, 0},
+    //     {0, 0, 0, -30, 0, 0, 0},
+    //     {30, 0, 0, 0, 0, 0, 0},
+    //     {0, 0, 0, 0, 0, 40, 0},
+    //     {0, 0, 0, 0, 0, 0, -50},
+    //     {0, 0, 0, 0, 0, 0, 0}};
+    // g.loadGraph(graph15);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // true
+    // cout << Algorithms::isConnected(g) << endl;     // false
+    // cout << Algorithms::negativeCycle(g) << endl; // 1->2->3->0->1
     
 
     return 0;

@@ -617,7 +617,33 @@ string Algorithms::negativeCycle(Graph g)
 
 string Algorithms::isBipartite(Graph g)
 {
+
+    /** if the graph is direc, we'll make it undirected, because we want to know only if there is an edge between the vertices
+     * So if we have edje at [i][j] and [j][i] but with different weights, we'll consider it as a single edge
+     * else we'll copy the value at [i][j] to [j][i], or opposite if needed
+     */
     size_t n = g.getNumVertices();
+
+    if (g.getDirected())
+    {
+        vector<vector<int>> adjMatrix = g.getAdjMatrix(); // supposed to point on the same matrix
+        for (size_t i = 0; i < n; ++i)
+        {
+            for (size_t j = 0; j < n; ++j)
+            {
+                if (adjMatrix[i][j] != 0 && adjMatrix[j][i] == 0)
+                {
+                    adjMatrix[j][i] = adjMatrix[i][j];
+                }
+                else if (adjMatrix[i][j] == 0 && adjMatrix[j][i] != 0)
+                {
+                    adjMatrix[i][j] = adjMatrix[j][i];
+                }
+            }
+        }
+        g.setDirected(false);
+    }
+
     vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors
     vector<vector<int>> groups(2); // groups[0] and groups[1] are the two groups of vertices
 

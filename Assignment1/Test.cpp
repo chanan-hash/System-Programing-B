@@ -290,6 +290,27 @@ TEST_CASE("Testing more unweighted undirected graph")
 
 /***************** Testing Directed graphs ********************/
 
+TEST_CASE("Testing directed unweighted graphs")
+{
+ariel::Graph g(true);
+    vector<vector<int>> graph1 = {
+        {0, 1, 0},
+        {0, 0, 1},
+        {1, 0, 0}};
+    g.loadGraph(graph1);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);    
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
+    CHECK(Algorithms::shortestPath(g, 0, 2) == "0 -> 1 -> 2");
+    CHECK(Algorithms::shortestPath(g, 2, 1) == "2 -> 0 -> 1");
+    CHECK(Algorithms::shortestPath(g, 1, 2) == "1 -> 2");
+    
+    
+
+
+
+}
+
 /***************** Testin their graphs ****************/
 TEST_CASE("Testing connected")
 {
@@ -306,7 +327,7 @@ TEST_CASE("Testing connected")
 
 TEST_CASE("Test shortestPath")
 {
-    ariel::Graph g;
+    ariel::Graph g(false);
     vector<vector<int>> graph = {
         {0, 1, 0},
         {1, 0, 1},
@@ -388,7 +409,6 @@ TEST_CASE("Test invalid graph")
         {0, 0, 0, 5}};
     CHECK_THROWS(g.loadGraph(graph));
 
-
     // The graph does not have 0 on the diagonal
     vector<vector<int>> graph88 = {
         {0, 1, 0, 0, 0},
@@ -396,5 +416,5 @@ TEST_CASE("Test invalid graph")
         {0, 3, 6, 4, 0},
         {0, 0, 4, 4, 5},
         {0, 0, 0, 5, 0}};
-    CHECK_THROWS(g.loadGraph(graph88)); // 
+    CHECK_THROWS(g.loadGraph(graph88));
 }
