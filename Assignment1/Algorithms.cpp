@@ -549,6 +549,11 @@ vector<int> negativeCyclePath(Graph g)
 
 bool Algorithms::isConnected(Graph g)
 {
+    if (g.getNumVertices() == 0)
+    {
+        return true;
+    }
+
     if (g.getDirected()) // if the graph is directed
     {
         return directedIsConnected(g);
@@ -558,6 +563,11 @@ bool Algorithms::isConnected(Graph g)
 
 bool Algorithms::isContainsCycle(Graph g)
 {
+    if (g.getNumVertices() == 0)
+    {
+        return false;
+    }
+
     if (g.getDirected()) // if the graph is directed
     {
         return directedIsContainsCycle(g);

@@ -10,18 +10,18 @@ using namespace std;
 int main()
 {
     ariel::Graph g(true);
-    vector<vector<int>> graph1 = {
-        {0, 1, 0},
-        {0, 0, 1},
-        {1, 0, 0}};
-    g.loadGraph(graph1);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
-    cout << Algorithms::isConnected(g) << endl;     // true
-    cout << Algorithms::isBipartite(g) << endl;      // false
-    cout << Algorithms::shortestPath(g, 0, 2) << endl;
-    cout << Algorithms::shortestPath(g, 2, 1) << endl;
-    cout << Algorithms::shortestPath(g, 1, 2) << endl;
+    // vector<vector<int>> graph1 = {
+    //     {0, 1, 0},
+    //     {0, 0, 1},
+    //     {1, 0, 0}};
+    // g.loadGraph(graph1);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
+    // cout << Algorithms::isConnected(g) << endl;     // true
+    // cout << Algorithms::isBipartite(g) << endl;      // false
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl;
+    // cout << Algorithms::shortestPath(g, 2, 1) << endl;
+    // cout << Algorithms::shortestPath(g, 1, 2) << endl;
 
     // vector<vector<int>> graph2 = {
     //     {0, 1, 0},
@@ -291,6 +291,19 @@ int main()
     // cout << Algorithms::isConnected(g) << endl;     // false
     // cout << Algorithms::negativeCycle(g) << endl; // 1->2->3->0->1
     
+// Checking an empty graph
+    // vector<vector<int>> graph16 = {};
+    // g.loadGraph(graph16);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // false
+    // cout << Algorithms::isConnected(g) << endl;     // false
+    // cout << Algorithms::isBipartite(g) << endl;      // A={}, B={}.
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 2, 0) << endl; // no path
+
+    // vector<vector<int>> graph17 = {{}};
+    // g.loadGraph(graph17);
+    // g.printGraph();
 
     return 0;
 }
