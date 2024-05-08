@@ -337,21 +337,6 @@ TEST_CASE("Testing directed unweighted graphs")
     CHECK(ariel::Algorithms::shortestPath(g, 2, 0) == "2 -> 1 -> 0");
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 TEST_CASE("Checking an empty graph")
 {
     ariel::Graph g(true);
@@ -366,7 +351,7 @@ TEST_CASE("Checking an empty graph")
     CHECK_THROWS(g.loadGraph(graph1));
 }
 
-TEST_CASE("Checking directed wwighted graph")
+TEST_CASE("Checking directed wighted graph")
 {
     ariel::Graph g(true);
     vector<vector<int>> graph3 = {
@@ -380,6 +365,51 @@ TEST_CASE("Checking directed wwighted graph")
     CHECK(ariel::Algorithms::shortestPath(g, 0, 2) == "0 -> 1 -> 2");
     CHECK(ariel::Algorithms::shortestPath(g, 2, 1) == "2 -> 1");
     CHECK(ariel::Algorithms::shortestPath(g, 1, 1) == "1");
+
+    vector<vector<int>> graph5 = {
+        {0, 1, 0, 0, 0},
+        {1, 0, 2, 0, 0},
+        {0, 2, 0, 3, 0},
+        {0, 0, 3, 0, 4},
+        {0, 0, 0, 4, 0}};
+    g.loadGraph(graph5);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "0 -> 1 -> 4");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, 1) == "3 -> 2 -> 1");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, -1) == "No path found");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
+}
+TEST_CASE("More weighted graphs")
+{
+    ariel::Graph g(true);
+    vector<vector<int>> graph55 = {
+        {0, 1, 0, 0, 0},
+        {0, 0, 2, 0, 0},
+        {0, 0, 0, 3, 0},
+        {0, 0, 0, 0, 4},
+        {0, 0, 0, 0, 0}};
+    g.loadGraph(graph55);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == false);
+    CHECK(ariel::Algorithms::shortestPath(g, 4, 0) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, 2) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 2, 4) == "2 -> 3 -> 4");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}.");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 /***************** Testin their graphs ****************/

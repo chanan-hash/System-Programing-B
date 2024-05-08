@@ -62,48 +62,48 @@ int main()
     //  cout << Algorithms::shortestPath(g, 1, 1) << endl; //1
 
 
-    vector<vector<int>> graph4 = {
-        {0, 1, 0},
-        {1, 0, 1},
-        {0, 1, 0}};
-    g.loadGraph(graph4);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl;    // true because it is directed graph
-    cout << Algorithms::isConnected(g) << endl;        // true
-    cout << Algorithms::isBipartite(g) << endl;        // A={0, 2}, B={1}.
-    cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
-    cout << Algorithms::shortestPath(g, 2, 0) << endl; // 2 -> 1 -> 0
+    // vector<vector<int>> graph4 = {
+    //     {0, 1, 0},
+    //     {1, 0, 1},
+    //     {0, 1, 0}};
+    // g.loadGraph(graph4);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl;    // true because it is directed graph
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2}, B={1}.
+    // cout << Algorithms::shortestPath(g, 0, 2) << endl; // 0 -> 1 -> 2
+    // cout << Algorithms::shortestPath(g, 2, 0) << endl; // 2 -> 1 -> 0
 
     /***** Weighted directed graphs *****/
 
-    // vector<vector<int>> graph5 = {
-    //     {0, 1, 0, 0, 0},
-    //     {1, 0, 2, 0, 0},
-    //     {0, 2, 0, 3, 0},
-    //     {0, 0, 3, 0, 4},
-    //     {0, 0, 0, 4, 0}};
-    // g.loadGraph(graph5);
-    // g.printGraph();
-    // cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
-    // cout << Algorithms::isConnected(g) << endl;     // true
-    // cout << Algorithms::shortestPath(g, 0, 4) << endl;
-    // cout << Algorithms::shortestPath(g, 3, 1) << endl;
-    // cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
+    vector<vector<int>> graph5 = {
+        {0, 1, 0, 0, 0},
+        {1, 0, 2, 0, 0},
+        {0, 2, 0, 3, 0},
+        {0, 0, 3, 0, 4},
+        {0, 0, 0, 4, 0}};
+    g.loadGraph(graph5);
+    g.printGraph();
+    cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
+    cout << Algorithms::isConnected(g) << endl;     // true
+    cout << Algorithms::shortestPath(g, 0, 4) << endl;
+    cout << Algorithms::shortestPath(g, 3, 1) << endl;
+    cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
 
-    // vector<vector<int>> graph55 = {
-    //     {0, 1, 0, 0, 0},
-    //     {0, 0, 2, 0, 0},
-    //     {0, 0, 0, 3, 0},
-    //     {0, 0, 0, 0, 4},
-    //     {0, 0, 0, 0, 0}};
-    // g.loadGraph(graph55);
-    // g.printGraph();
-    // cout << Algorithms::isContainsCycle(g) << endl;    // false
-    // cout << Algorithms::isConnected(g) << endl;        // true
-    // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1, 3}.
-    // cout << Algorithms::shortestPath(g, 4, 0) << endl; // no path
-    // cout << Algorithms::shortestPath(g, 3, 2) << endl; // no path
-    // cout << Algorithms::shortestPath(g, 2, 4) << endl;
+    vector<vector<int>> graph55 = {
+        {0, 1, 0, 0, 0},
+        {0, 0, 2, 0, 0},
+        {0, 0, 0, 3, 0},
+        {0, 0, 0, 0, 4},
+        {0, 0, 0, 0, 0}};
+    g.loadGraph(graph55);
+    g.printGraph();
+    cout << Algorithms::isContainsCycle(g) << endl;    // false
+    cout << Algorithms::isConnected(g) << endl;        // true
+    cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1, 3}.
+    cout << Algorithms::shortestPath(g, 4, 0) << endl; // no path
+    cout << Algorithms::shortestPath(g, 3, 2) << endl; // no path
+    cout << Algorithms::shortestPath(g, 2, 4) << endl;
 
     // vector<vector<int>> graph56 = {
     //     {0, 1, 0, 8, 0},
