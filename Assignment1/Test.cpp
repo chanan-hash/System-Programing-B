@@ -434,6 +434,22 @@ TEST_CASE("Testing big directed graph")
     CHECK(ariel::Algorithms::shortestPath(g, 1, 7) == "No path found");
     CHECK(ariel::Algorithms::shortestPath(g, 0, 1) == "0 -> 1");
     CHECK(ariel::Algorithms::shortestPath(g, 3, 5) == "3 -> 4 -> 5");
+
+    vector<vector<int>> graph58 = {
+        {0, 2, 4, 0, 0},
+        {9, 0, 3, 0, 0},
+        {5, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0}};
+
+    g.loadGraph(graph58);
+    CHECK(ariel::Algorithms::isConnected(g) == false);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true); // 0 -> 1 -> 0
+    CHECK(ariel::Algorithms::shortestPath(g, 4, 3) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, 0) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 2) == "0 -> 2");
+    CHECK(ariel::Algorithms::shortestPath(g, 1, 0) == "1 -> 2 -> 0");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
 }
 
 /***************** Testin their graphs ****************/

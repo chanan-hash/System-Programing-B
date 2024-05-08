@@ -37,7 +37,7 @@ void Graph::setDirected(bool isDirected)
 
 void Graph::loadGraph(vector<vector<int>> &matrix)
 {
-    if (!isSymmetric(matrix) && !this->isDirected) // if it undirected and not symmetric
+    if (!isSymetric(matrix) && !this->isDirected) // if it undirected and not symmetric
     {
         throw invalid_argument("The graph is not directed");
     }
@@ -113,7 +113,7 @@ void Graph::printGraph()
     }
 }
 
-bool Graph::isSymmetric(vector<vector<int>> &matrix) // for graph being undirected it first need to be symmetric
+bool Graph::isSymetric(vector<vector<int>> &matrix) // for graph being undirected it first need to be symmetric
 {
     for (size_t i = 0; i < matrix.size(); i++)
     {

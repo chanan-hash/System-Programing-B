@@ -32,7 +32,7 @@ namespace ariel
         // Function to print the adjacency matrix
         void printGraph();
 
-        static bool isSymmetric(vector<vector<int>> &matrix); // getting a matrix and return if it is symmetric
+        static bool isSymetric(vector<vector<int>> &matrix); // getting a matrix and return if it is symmetric
     };
 } // namespace ariel
 

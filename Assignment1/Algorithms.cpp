@@ -625,7 +625,7 @@ string Algorithms::negativeCycle(Graph g)
     return result;
 }
 
-string Algorithms::isBipartite(Graph g)
+string Algorithms::isBipartite(Graph g) // we don't wan't the changes to afect outside the function, only inner changes for the checking
 {
 
     /** if the graph is direc, we'll make it undirected, because we want to know only if there is an edge between the vertices
