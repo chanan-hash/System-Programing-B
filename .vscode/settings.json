@@ -113,6 +113,9 @@
     "streambuf": "cpp",
     "thread": "cpp",
     "typeinfo": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "any": "cpp"
   }
 }

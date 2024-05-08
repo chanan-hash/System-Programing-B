@@ -44,7 +44,7 @@ void Graph::loadGraph(vector<vector<int>> &matrix)
 
     if (!matrix.empty())
     {
-        this->adjMatrix.clear(); // clearing all the last values in the matrix
+        // this->adjMatrix.clear(); // clearing all the last values in the matrix
         // Check if the matrix is square (number of rows equals number of columns)
         if (matrix.size() == matrix[(size_t)0].size()) // mattrix.at(0).size() is the number of columns
         {

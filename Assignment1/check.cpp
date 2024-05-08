@@ -76,61 +76,61 @@ int main()
 
     /***** Weighted directed graphs *****/
 
-    vector<vector<int>> graph5 = {
-        {0, 1, 0, 0, 0},
-        {1, 0, 2, 0, 0},
-        {0, 2, 0, 3, 0},
-        {0, 0, 3, 0, 4},
-        {0, 0, 0, 4, 0}};
-    g.loadGraph(graph5);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
-    cout << Algorithms::isConnected(g) << endl;     // true
-    cout << Algorithms::shortestPath(g, 0, 4) << endl;
-    cout << Algorithms::shortestPath(g, 3, 1) << endl;
-    cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
+    // vector<vector<int>> graph5 = {
+    //     {0, 1, 0, 0, 0},
+    //     {1, 0, 2, 0, 0},
+    //     {0, 2, 0, 3, 0},
+    //     {0, 0, 3, 0, 4},
+    //     {0, 0, 0, 4, 0}};
+    // g.loadGraph(graph5);
+    // g.printGraph();
+    // cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
+    // cout << Algorithms::isConnected(g) << endl;     // true
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl;
+    // cout << Algorithms::shortestPath(g, 3, 1) << endl;
+    // cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
 
-    vector<vector<int>> graph55 = {
-        {0, 1, 0, 0, 0},
-        {0, 0, 2, 0, 0},
-        {0, 0, 0, 3, 0},
-        {0, 0, 0, 0, 4},
-        {0, 0, 0, 0, 0}};
-    g.loadGraph(graph55);
-    g.printGraph();
-    cout << Algorithms::isContainsCycle(g) << endl;    // false
-    cout << Algorithms::isConnected(g) << endl;        // true
-    cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1, 3}.
-    cout << Algorithms::shortestPath(g, 4, 0) << endl; // no path
-    cout << Algorithms::shortestPath(g, 3, 2) << endl; // no path
-    cout << Algorithms::shortestPath(g, 2, 4) << endl;
-
-    // vector<vector<int>> graph56 = {
-    //     {0, 1, 0, 8, 0},
-    //     {0, 0, 2, 2, 0},
+    // vector<vector<int>> graph55 = {
+    //     {0, 1, 0, 0, 0},
+    //     {0, 0, 2, 0, 0},
     //     {0, 0, 0, 3, 0},
     //     {0, 0, 0, 0, 4},
-    //     {0, 2, 6, 0, 0}};
-    // g.loadGraph(graph56);
+    //     {0, 0, 0, 0, 0}};
+    // g.loadGraph(graph55);
     // g.printGraph();
-    // cout << Algorithms::isContainsCycle(g) << endl; // 1 -> 2 -> 3 -> 4 -> 1
-    // cout << Algorithms::isConnected(g) << endl;     // true
-    // cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0-> 1 -> 3
-    // cout << Algorithms::shortestPath(g, 4, 3) << endl; // 4 -> 1 -> 3
-    // cout << Algorithms::shortestPath(g, 4, 2) << endl; // 4 -> 1 -> 2
+    // cout << Algorithms::isContainsCycle(g) << endl;    // false
+    // cout << Algorithms::isConnected(g) << endl;        // true
+    // cout << Algorithms::isBipartite(g) << endl;        // A={0, 2, 4}, B={1, 3}.
+    // cout << Algorithms::shortestPath(g, 4, 0) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 3, 2) << endl; // no path
+    // cout << Algorithms::shortestPath(g, 2, 4) << endl;
 
-    // vector<vector<int>> graph57 = {
-    //     {0, 2, 0, 0, 0, 0, 0, 0, 0},
-    //     {0, 0, 3, 0, 0, 0, 0, 0, 0},
-    //     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-    //     {0, 0, 0, 0, 4, 0, 0, 0, 0},
-    //     {0, 0, 0, 0, 0, 5, 0, 0, 0},
-    //     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-    //     {0, 0, 0, 0, 0, 0, 0, 6, 0},
-    //     {0, 0, 0, 0, 0, 0, 0, 0, 7},
-    //     {0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    vector<vector<int>> graph56 = {
+        {0, 1, 0, 8, 0},
+        {0, 0, 2, 2, 0},
+        {0, 0, 0, 3, 0},
+        {0, 0, 0, 0, 4},
+        {0, 2, 6, 0, 0}};
+    g.loadGraph(graph56);
+    g.printGraph();
+    cout << Algorithms::isContainsCycle(g) << endl; // 1 -> 2 -> 3 -> 4 -> 1
+    cout << Algorithms::isConnected(g) << endl;     // true
+    cout << Algorithms::shortestPath(g, 0, 3) << endl; // 0-> 1 -> 3
+    cout << Algorithms::shortestPath(g, 4, 3) << endl; // 4 -> 1 -> 3
+    cout << Algorithms::shortestPath(g, 4, 2) << endl; // 4 -> 1 -> 2
 
-    // g.loadGraph(graph57);
+    vector<vector<int>> graph57 = {
+        {0, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 3, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 4, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 5, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 6, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 7},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+    g.loadGraph(graph57);
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // false
     // cout << Algorithms::isConnected(g) << endl;     // false

@@ -397,19 +397,43 @@ TEST_CASE("More weighted graphs")
     CHECK(ariel::Algorithms::shortestPath(g, 2, 4) == "2 -> 3 -> 4");
     CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}.");
 
+    vector<vector<int>> graph56 = {
+        {0, 1, 0, 8, 0},
+        {0, 0, 2, 2, 0},
+        {0, 0, 0, 3, 0},
+        {0, 0, 0, 0, 4},
+        {0, 2, 6, 0, 0}};
+    g.loadGraph(graph56);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == true);
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 3) == "0 -> 1 -> 3");
+    CHECK(ariel::Algorithms::shortestPath(g, 4, 3) == "4 -> 1 -> 3");
+    CHECK(ariel::Algorithms::shortestPath(g, 4, 2) == "4 -> 1 -> 2");
+}
+TEST_CASE("Testing big directed graph")
+{
+    ariel::Graph g(true);
+    vector<vector<int>> graph57 = {
+        {0, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 3, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 4, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 5, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 6, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 7},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-
-
-
-
-
-
-
-
-
-
-
-
+    g.loadGraph(graph57);
+    CHECK(ariel::Algorithms::isConnected(g) == false);
+    CHECK(ariel::Algorithms::isContainsCycle(g) == false);
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 3, 5, 6, 8}, B={1, 4, 7}.");
+    CHECK(ariel::Algorithms::shortestPath(g, 8, 1) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, 6) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 1, 7) == "No path found");
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 1) == "0 -> 1");
+    CHECK(ariel::Algorithms::shortestPath(g, 3, 5) == "3 -> 4 -> 5");
 }
 
 /***************** Testin their graphs ****************/
