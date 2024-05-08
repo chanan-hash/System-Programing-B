@@ -443,7 +443,7 @@ string bellmanFord(Graph &g, int start, int end)
     vector<int> predecessor(numVertices, -1);
     distance[(size_t)start] = 0;
 
-    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
+    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix(); // we want the changes only to be here
     for (size_t i = 0; i < numVertices - 1; i++)
     {
         for (size_t j = 0; j < numVertices; j++)
@@ -633,10 +633,10 @@ string Algorithms::isBipartite(Graph g) // we don't wan't the changes to afect o
      * else we'll copy the value at [i][j] to [j][i], or opposite if needed
      */
     size_t n = g.getNumVertices();
+    vector<vector<int>> adjMatrix = g.getAdjMatrix(); // supposed to point on the same matrix
 
     if (g.getDirected())
     {
-        vector<vector<int>> adjMatrix = g.getAdjMatrix(); // supposed to point on the same matrix
         for (size_t i = 0; i < n; ++i)
         {
             for (size_t j = 0; j < n; ++j)
@@ -673,7 +673,7 @@ string Algorithms::isBipartite(Graph g) // we don't wan't the changes to afect o
 
                 for (size_t i = 0; i < n; ++i)
                 {
-                    if (g.getAdjMatrix()[(size_t)node][i] != 0)
+                    if (adjMatrix[(size_t)node][i] != 0)
                     {
                         if (color[i] == -1)
                         {
