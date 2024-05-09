@@ -50,7 +50,6 @@ int main()
     cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "The cycle is: 0->1->2->0".
     cout << Algorithms::isBipartite(g) << endl;        // Should print: "0" (false).
 
-
     ariel::Graph g2(false);
     // 5x5 matrix that reprsents a connected weighted graph.
     vector<vector<int>> graph3 = {
@@ -61,7 +60,7 @@ int main()
         {0, 0, 0, 5, 0}};
     g2.loadGraph(graph3); // Load the graph to the object.
 
-    g2.printGraph();                                    // Should print: "Graph with 5 vertices and 7 edges."
+    g2.printGraph();                                    // Should print: "Graph with 5 vertices and 4 edges."
     cout << Algorithms::isConnected(g2) << endl;        // Should print: "1" (true).
     cout << Algorithms::shortestPath(g2, 0, 4) << endl; // Should print: 0->1->2->3->4.
     cout << Algorithms::isContainsCycle(g2) << endl;    // Should print: "0" (false). should print 1
@@ -76,7 +75,24 @@ int main()
         {0, 0, 0, 5}};
     try
     {
-        g.loadGraph(graph4); // Load the graph to the object.
+        g2.loadGraph(graph4); // Load the graph to the object.
+    }
+    catch (const std::invalid_argument &e)
+    {
+        // beacuse we it to be undirected but the matrix is not symmetric (more it is not square, it will fall in the beggining)
+        cout << e.what() << endl; // Should print: "The graph is not directed."
+    }
+
+    ariel::Graph g3(true);
+    vector<vector<int>> graph5= {
+        {0, 1, 2, 0},
+        {1, 0, 3, 0},
+        {2, 3, 0, 4},
+        {0, 0, 4, 0},
+        {0, 0, 0, 5}};
+    try
+    {
+        g3.loadGraph(graph5); // Load the graph to the object.
     }
     catch (const std::invalid_argument &e)
     {
