@@ -17,17 +17,17 @@ namespace ariel
         bool isDirected;
 
     public:
-        // Constructor that getting  if the graph is directed or not 
+        // Constructor that getting  if the graph is directed or not
         Graph(bool isDirected = false); // default constructor is not directed
 
         size_t getNumVertices();
         vector<vector<int>> getAdjMatrix();
         bool getDirected();
-        
+
         void setDirected(bool isDirected);
 
         // Function to load graph from an adjacency matrix, like a set function
-        void loadGraph(vector<vector<int>> matrix);
+        void loadGraph(vector<vector<int>> matrix); // passing it not by reference because we don't want to change it the orginal matrix
 
         // Function to print the adjacency matrix
         void printGraph();

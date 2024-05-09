@@ -30,7 +30,7 @@ using namespace ariel;
 
 // return the tree of the DFS visit from onr vertex
 // We send the verticesColors as a pointer because we want to keep the changes
-vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> *verticesColors)
+vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> &verticesColors)
 {
     size_t V = g.getNumVertices();
     vector<size_t> tree;
@@ -43,22 +43,22 @@ vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> *verticesColors)
         size_t u = s.top();
         s.pop();
 
-        if ((*verticesColors)[u] == WHITE) // means we've discovered the vertex
+        if (verticesColors[u] == WHITE) // means we've discovered the vertex
         {
-            (*verticesColors)[u] = GRAY; // marking as checking it now
+            verticesColors[u] = GRAY; // marking as checking it now
             tree.push_back(u);           // because we'vejust discovered it we'll push it to the tree
 
             for (size_t v = 0; v < V; v++) // going over it's neighbors
             {
-                if (g.getAdjMatrix()[u][v] != 0 && (*verticesColors)[v] == WHITE)
+                if (g.getAdjMatrix()[u][v] != 0 && verticesColors[v] == WHITE)
                 {
                     s.push(v); // adding all the white vertices from u to the stack
                 }
             }
         }
-        else if ((*verticesColors)[u] == GRAY) // means we've visited the vertex
+        else if (verticesColors[u] == GRAY) // means we've visited the vertex
         {
-            (*verticesColors)[u] = BLACK; // marking as finished visiting
+            verticesColors[u] = BLACK; // marking as finished visiting
         }
     }
     return tree;
@@ -75,14 +75,14 @@ vector<vector<size_t>> DFS_Forest(Graph &g)
     {
         if (verticesColors[i] == WHITE)
         {
-            vector<size_t> tree = DFS_Visit(g, i, &verticesColors);
+            vector<size_t> tree = DFS_Visit(g, i, verticesColors);
             forest.push_back(tree);
         }
     }
     return forest;
 }
 
-bool directedIsConnected(Graph g)
+bool directedIsConnected(Graph &g)
 {
     size_t n = g.getNumVertices();
     vector<vector<size_t>> forest = DFS_Forest(g);
@@ -97,7 +97,7 @@ bool directedIsConnected(Graph g)
 
     vector<int> colors(g.getNumVertices(), WHITE);
 
-    vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, &colors);
+    vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, colors);
     size_t last_tree_size = dfs_last_v.size(); // the number of trees in the forest
 
     if (last_tree_size == n) // means we've visited all the vertices, and the graph is connected
@@ -114,7 +114,7 @@ bool directedIsConnected(Graph g)
  * Because the graph is undirected we can start from any vertex, and if it is connected we will reach all the vertices
  */
 
-bool undirectedIsConnected(Graph graph)
+bool undirectedIsConnected(Graph &graph)
 {
     // Assuming the graph is undirected
     size_t numVertices = graph.getNumVertices();
@@ -171,40 +171,40 @@ string writingCycle(vector<int> &path, int start)
 
 // The DFS visit in the graph for checking cycle if we've found a gray vertex we have a cycle
 // we're passing pointers because we want to keep the change themselves
-string DFScycleCheck(Graph &g, size_t current, vector<int> *colors, vector<int> *parents, vector<int> *path)
+string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> &parents, vector<int> &path)
 {
     size_t n = g.getNumVertices();
     // each vertex has a we're writing it's color in the colors vector
-    (*colors)[current] = GRAY; // we are visitng this vertex now
-    path->push_back(current);  // add the vertex to the path
+    colors[current] = GRAY; // we are visitng this vertex now
+    path.push_back(current);  // add the vertex to the path
 
     for (size_t v = 0; v < n; v++) // visit all the vertices
     {
         if (g.getAdjMatrix()[current][v] != 0)
         { // there is an edge
-            if ((*colors)[v] == WHITE)
+            if (colors[v] == WHITE)
             { // mean we came from here to the vertex
-                (*parents)[v] = (int)current;
+                parents[v] = (int)current;
                 string cycle = DFScycleCheck(g, v, colors, parents, path); // visit by the DFS
                 if (!cycle.empty())                                        // means we've got a cycle string
                 {
                     return cycle;
                 }
             }
-            else if ((*colors)[v] == GRAY) // we've a gray reached a gray vertex from which we came
+            else if (colors[v] == GRAY) // we've a gray reached a gray vertex from which we came
                                            // means there is a cycle
             {
-                return writingCycle(*path, v);
+                return writingCycle(path, v);
             }
         }
     }
-    (*colors)[current] = BLACK; // we've finished visiting this vertex
-    path->pop_back();           // remove the vertex from the path because we are done with it
+    colors[current] = BLACK; // we've finished visiting this vertex
+    path.pop_back();           // remove the vertex from the path because we are done with it
     return "";
 }
 
 // By runing the DFS
-bool directedIsContainsCycle(Graph g)
+bool directedIsContainsCycle(Graph &g)
 {
     size_t n = g.getNumVertices();
     vector<int> colors(n, WHITE); // like in DFS as we've learned in the course algo-1
@@ -216,7 +216,7 @@ bool directedIsContainsCycle(Graph g)
         if (colors[i] == WHITE)
         {
             // if it we'll return nothing for all the vertices means there no cycle
-            string cycle = DFScycleCheck(g, i, &colors, &parents, &path);
+            string cycle = DFScycleCheck(g, i, colors, parents, path);
             if (!cycle.empty())
             {
                 cout << cycle << endl; // print the cycle
@@ -289,7 +289,7 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
 }
 
 // Function to check if the graph has a cycle
-bool undirectedIsContainsCycle(Graph g)
+bool undirectedIsContainsCycle(Graph &g)
 {
     int n = g.getNumVertices();
     vector<bool> visited((size_t)n, false);
@@ -488,14 +488,14 @@ string bellmanFord(Graph &g, int start, int end)
 }
 
 /************* returning the negative cycle itself *************/
-vector<int> negativeCyclePath(Graph g)
+vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle, we'll find the cycle and print it
 {
     size_t n = g.getNumVertices();
     vector<int> distance(n, INT_MAX);
     vector<int> predecessor(n, -1);
     int cycle_start = -1;
 
-    // Assume the source vertex is 0
+    // Assume the source vertex is 0, for checking the negative cycle we'll run bellman-ford from the first vertex
     distance[0] = 0;
 
     for (size_t i = 0; i < n; ++i)
@@ -507,6 +507,7 @@ vector<int> negativeCyclePath(Graph g)
             {
                 if (g.getAdjMatrix()[u][v] != 0)
                 {
+                    // relax the edge
                     int new_distance = distance[u] + g.getAdjMatrix()[u][v];
                     if (new_distance < distance[v])
                     {
