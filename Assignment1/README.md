@@ -1,29 +1,40 @@
-# מטלה 1 - גרפים (Classes and Namespaces)
+# Graph Project and algorithms
 
-המטרה שלכם במטלה הזאת היא ליצור מחלקה שמייצגת גרף ולממש אלגוריתמים על הגרפים (זה הזמן להזכר בקורס אלגוריתמים 1).
+This project is a simple implementation of a Graph data structure in C++, and simple algorithms on graphs. It supports both directed and undirected graphs.
 
-במטלה הזאת הייצוג של הגרף שלכם יתבצע בעזרת מטריצת שכנויות - https://he.wikipedia.org/wiki/%D7%9E%D7%98%D7%A8%D7%99%D7%A6%D7%AA_%D7%A9%D7%9B%D7%A0%D7%95%D7%AA.
 
-הגרף יכול להיות גרף מכוון ולא מכוון וגם גרף ממושקל. מטריצת השכנויות חייבת להיות מטריצה ריבועית.
 
-עליכם לכתוב את הקבצים הבאים:
+## Features
 
+- Create a Graph object and specify whether it is directed or undirected.
+- Load a graph from a 2D adjacency matrix.
+- The adjacency matrix must be square (number of rows equals number of columns).
+- If the graph is undirected, the adjacency matrix must be symmetric.
+
+## Classes
+We have two leading classes here
+1. ```Graph.cpp```
+2. ```Algorithms```
+
+### Graph.cpp:
+- The main funciton there is the ```loadGraph()```. It getting a matrix and loading it to the graph
+- Second function that we had to implement is ```printGraph```, printing the number of vertices and edges in the graph
+
+### Algorithms:
+We have in this class 5 main functions
+1. ```isConnected``` Checking if a graph is connected (not scc), mean all the vertices have edges. 
+For undirected graph we'll use the BFS algorithm. For direct graph the main idea is to use DFS algorithms and checking if from the root of the last tree in the DFS-forest, we can get to all the vertices
+
+2. ```isContainsCycle``` Checking 
+
+## Building
+- first clone the reposiroty to yourm here is the commad:
+```bash
+git clone https://github.com/username/repository.git
 ```
-Graph.cpp
-Algorithms.cpp
-```
 
-הקובץ `Graph.cpp` מכיל מחלקה המייצגת גרף.
-המחלקה מכילה את הפעולות `loadGraph` המקבלת מטריצת שכנויות וטוענת אותה לתוך הגרף ו-`printGraph` שמדפיסה את הייצוג של הגרף (הפורמט לבחירתכם, ראו דוגמה ב-`Demo.cpp`).
+- To build and compile the project run the ```make``` command in your teminal and it will run automatically the Demo file
 
-הקובץ `Algorithms.cpp` מכיל מימושים לאלגוריתמים על גרפים. ביניהם:
+- We can check leak memory check if we want by running ```make valgrind```
 
-- `isConnected(g)` - האלגוריתם מקבל גרף ומחזיר 1 אם הגרף קשיר (אחרת מחזיר 0).
-- `shortestPath(g,start,end)` - האלגוריתם מקבל גרף, קודקוד התחלה וקודקוד סיום ומחזיר את המסלול הקל ביותר (במקרה שהגרף לא ממושקל - הקצר ביותר) בין שני הקודקודים. במידה ואין מסלול כזה, האלגוריתם יחזיר -1.
-- `isContainsCycle(g)` - האלגוריתם מקבל גרף ומדפיס מעגל כלשהו. אם לא קיים מעגל בגרף, האלגוריתם יחזיר 0.
-- `isBipartite(g)` - האלגוריתם מקבל גרף ומחזיר את החלוקה של הגרף לגרף דו-צדדי. אם אי אפשר לחלק את הגרף, האלגוריתם יחזיר 0.
-- `negativeCycle(g)` - האלגוריתם מקבל גרף ומוצא מעגל שלילי (כלומר מעגל שסכום המשקלים של הצלעות שלילי). אם לא קיים מעגל כזה, האלגוריתם ידפיס שלא קיים מעגל שלילי.
-
-הקובץ `Demo.cpp` מכיל דוגמאות של קלטים ופלטים.
-עליכם לכתוב בתחילת כל קובץ את מספר תעודת הזהות שלכם ואת המייל. כמו כן, בנוסף לקבצים של המטלה אתם נדרשים להגיש גם קובץ README המתאר את אופן המימוש ואת החלוקה שביצעתם בקוד (סוג של מדריך משתמש). אי עמידה בהנחיות תגרור הפחתה בציון. בהצלחה!
-  
+## Testing
