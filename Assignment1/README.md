@@ -22,13 +22,18 @@ We have two leading classes here
 
 ### Algorithms:
 We have in this class 5 main functions
-1. ```isConnected``` Checking if a graph is connected (not scc), mean all the vertices have edges. 
-For undirected graph we'll use the BFS algorithm. For direct graph the main idea is to use DFS algorithms and checking if from the root of the last tree in the DFS-forest, we can get to all the vertices
+1. ```isConnected``` Checking if a graph is connected (not scc), mean all the vertices have edges.  
+For undirected graph we'll use the BFS algorithm.  
+For direct graph the main idea is to use DFS algorithms and checking if from the root of the last tree in the DFS-forest, we can get to all the vertices
 
-2. ```isContainsCycle``` Checking 
+2. ```isContainsCycle``` Checking if A graph has cycle. We're using the DFS algorithm, and kind of checking what edge is it (tree,back,forward or cross edge)
+In undirected graph we only tree edge, and back edge, it will be marked by boolean vector, and if in the DFS visited we got back to vertex we've visited means there is cycle  
+For directed graph will use a vector of color (that are defined as number), if we have found while running DFS a back-edge means we have cycle, in the code it means we've got again to GRAY colored vertex
+3. ```shortedPath``` For finding the shortes path we'll check the kind of the graph
+
 
 ## Building
-- first clone the reposiroty to yourm here is the commad:
+- first clone the reposiroty to your o here is the commad:
 ```bash
 git clone https://github.com/username/repository.git
 ```
