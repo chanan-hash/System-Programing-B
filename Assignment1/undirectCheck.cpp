@@ -269,31 +269,38 @@ int main()
     // cout << Algorithms::shortestPath(g, 0, 4) << endl;
     // cout << Algorithms::negativeCycle(g) << endl; // negative cycle
 
-    vector<vector<int>> graph3 = {
-        {0, 1, 0, 0, 0},
-        {1, 0, 3, 0, 0},
-        {0, 3, 0, 4, 0},
-        {0, 0, 4, 0, 5},
-        {0, 0, 0, 5, 0}};
-    g.loadGraph(graph3); // Load the graph to the object.
+    // vector<vector<int>> graph3 = {
+    //     {0, 1, 0, 0, 0},
+    //     {1, 0, 3, 0, 0},
+    //     {0, 3, 0, 4, 0},
+    //     {0, 0, 4, 0, 5},
+    //     {0, 0, 0, 5, 0}};
+    // g.loadGraph(graph3); // Load the graph to the object.
 
-    g.printGraph();                                    // Should print: "Graph with 5 vertices and 7 edges."
-    cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
-    cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: 0->1->2->3->4.
-    cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "0" (false). should print 1
-    cout << Algorithms::isBipartite(g) << endl;        // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
+    // g.printGraph();                                    // Should print: "Graph with 5 vertices and 7 edges."
+    // cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: 0->1->2->3->4.
+    // cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "0" (false). should print 1
+    // cout << Algorithms::isBipartite(g) << endl;        // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
 
+    // // The graph has not zero on the diagonal
+    //     vector<vector<int>> graph88 = {
+    //     {0, 1, 0, 0, 0},
+    //     {1, 1, 3, 0, 0},
+    //     {0, 3, 6, 4, 0},
+    //     {0, 0, 4, 4, 5},
+    //     {0, 0, 0, 5, 0}};
+    // g.loadGraph(graph88); // Load the graph to the object.
 
-    // The graph has not zero on the diagonal
-        vector<vector<int>> graph88 = {
-        {0, 1, 0, 0, 0},
-        {1, 1, 3, 0, 0},
-        {0, 3, 6, 4, 0},
-        {0, 0, 4, 4, 5},
-        {0, 0, 0, 5, 0}};
-    g.loadGraph(graph88); // Load the graph to the object.
-
-    
-
+    // vector<vector<int>> graph89 = {
+    //     {0, 10, -1, 1, 0},
+    //     {10, 0, 10, 0, 0},
+    //     {-1, 10, 0, 0, 2},
+    //     {1, 0, 0, 0, 0},
+    //     {0, 0, 2, 0, 0}};
+    //     g.loadGraph(graph89); // Load the graph to the object.
+    // g.printGraph();                                    // Should print: "Graph with 5 vertices and 7 edges."
+    // cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
+    // cout << Algorithms::shortestPath(g, 1, 2) << endl; 
     return 0;
 }

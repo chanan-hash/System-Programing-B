@@ -35,7 +35,7 @@ void Graph::setDirected(bool isDirected)
     this->isDirected = isDirected;
 }
 
-void Graph::loadGraph(vector<vector<int>> &matrix)
+void Graph::loadGraph(vector<vector<int>> matrix)
 {
     if (!isSymetric(matrix) && !this->isDirected) // if it undirected and not symmetric
     {

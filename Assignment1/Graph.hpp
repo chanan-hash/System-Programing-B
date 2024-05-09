@@ -27,7 +27,7 @@ namespace ariel
         void setDirected(bool isDirected);
 
         // Function to load graph from an adjacency matrix, like a set function
-        void loadGraph(vector<vector<int>> &matrix);
+        void loadGraph(vector<vector<int>> matrix);
 
         // Function to print the adjacency matrix
         void printGraph();
