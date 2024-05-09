@@ -548,7 +548,7 @@ vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle
 
 /******************** The hpp functions ********************/
 
-bool Algorithms::isConnected(Graph g)
+bool Algorithms::isConnected(Graph &g)
 {
     if (g.getNumVertices() == 0)
     {
@@ -562,7 +562,7 @@ bool Algorithms::isConnected(Graph g)
     return undirectedIsConnected(g);
 }
 
-bool Algorithms::isContainsCycle(Graph g)
+bool Algorithms::isContainsCycle(Graph &g)
 {
     if (g.getNumVertices() == 0)
     {
@@ -652,7 +652,7 @@ string Algorithms::isBipartite(Graph g) // we don't wan't the changes to afect o
                 }
             }
         }
-        g.setDirected(false);
+        // g.setDirected(false);
     }
 
     vector<int> color(n, -1);      // -1 means no color, 0 and 1 are the two colors

@@ -16,7 +16,7 @@ namespace ariel
     class Algorithms
     {
     public:
-        static bool isConnected(Graph g); // TODO add 'ariel namespace' for all the functions
+        static bool isConnected(Graph &g); // TODO add 'ariel namespace' for all the functions
         // Your implementation to check if the graph is connected goes here
         // You can use any graph traversal algorithm, such as BFS or DFS, to check connectivity
 
@@ -29,7 +29,7 @@ namespace ariel
         // Return the shortest path between the start and end vertices
         // If there is no path, return -1
 
-        static bool isContainsCycle(Graph g);
+        static bool isContainsCycle(Graph &g);
         // Your implementation to check if the graph contains a cycle goes here
         // You can use any graph traversal algorithm, such as BFS or DFS, to check for cycles
 
