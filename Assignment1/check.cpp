@@ -15,6 +15,7 @@ int main()
     //     {0, 0, 1},
     //     {1, 0, 0}};
     // g.loadGraph(graph1);
+    // cout << g.getDirected() << endl;
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true 0 -> 1 -> 2 -> 0
     // cout << Algorithms::isConnected(g) << endl;     // true

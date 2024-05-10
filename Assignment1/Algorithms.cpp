@@ -320,7 +320,7 @@ bool undirectedIsContainsCycle(Graph &g)
  * if we have not only 0, 1, it is a weighted graph --> return 2
  * if we have less than it is a negative weighted graph --> return 3
  */
-int whatGraph(Graph g)
+int whatGraph(Graph &g)
 {
     vector<vector<int>> matrix = g.getAdjMatrix();
     int n = matrix.size();
@@ -603,7 +603,7 @@ string Algorithms::shortestPath(Graph &g, int start, int end)
 }
 
 // To check negative cycle in a graph we just need to run bellman-ford algorithm and che what have returned
-string Algorithms::negativeCycle(Graph g)
+string Algorithms::negativeCycle(Graph &g)
 {
     string result;
     if (shortestPath(g, 0, 0) == "Negative cycle detected")
@@ -626,7 +626,7 @@ string Algorithms::negativeCycle(Graph g)
     return result;
 }
 
-string Algorithms::isBipartite(Graph g) // we don't wan't the changes to afect outside the function, only inner changes for the checking
+string Algorithms::isBipartite(Graph &g) // we don't wan't the changes to afect outside the function, only inner changes for the checking
 {
 
     /** if the graph is direc, we'll make it undirected, because we want to know only if there is an edge between the vertices

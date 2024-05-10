@@ -35,13 +35,13 @@ namespace ariel
 
         // Return true if the graph contains a cycle, false otherwise
 
-        static string isBipartite(Graph g);
+        static string isBipartite(Graph &g);
         // Your implementation to check if the graph is bipartite goes here
         // You can use any graph traversal algorithm, such as BFS or DFS, to check bipartiteness
 
         // Return true if the graph is bipartite, false otherwise
 
-        static string negativeCycle(Graph g);
+        static string negativeCycle(Graph &g);
         // Your implementation to check if the graph contains a negative cycle goes here
         // You can use any graph traversal algorithm, such as Bellman-Ford, to check for negative cycles
 
