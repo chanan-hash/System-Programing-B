@@ -90,8 +90,8 @@ int main()
     // g.printGraph();
     // cout << Algorithms::isContainsCycle(g) << endl; // true it is like undirected graph here
     // cout << Algorithms::isConnected(g) << endl;     // true
-    // cout << Algorithms::shortestPath(g, 0, 4) << endl;
-    // cout << Algorithms::shortestPath(g, 3, 1) << endl;
+    // cout << Algorithms::shortestPath(g, 0, 4) << endl; 0 -> 1 -> 2 -> 3 -> 4
+    // cout << Algorithms::shortestPath(g, 3, 1) << endl; 
     // cout << Algorithms::shortestPath(g, 3, -1) << endl; // no path found
 
     // vector<vector<int>> graph55 = {

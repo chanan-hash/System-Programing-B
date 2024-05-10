@@ -62,7 +62,7 @@ int main()
     cout << Algorithms::isConnected(g2) << endl;        // Should print: "1" (true).
     cout << Algorithms::shortestPath(g2, 0, 4) << endl; // Should print: 0->1->2->3->4.
     cout << Algorithms::isContainsCycle(g2) << endl;    // Should print: "0" (false). should print 1
-    cout << Algorithms::isBipartite(g2) << endl;        // Should print: "The graph is bipar/ite: A={0, 2, 4}, B={1, 3}."
+    cout << Algorithms::isBipartite(g2) << endl;        // Should print: "The graph is biparpite: A={0, 2, 4}, B={1, 3}."
 
     // 5x4 matrix that reprsents invalid graph.
     vector<vector<int>> graph4 = {
