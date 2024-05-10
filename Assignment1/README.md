@@ -1,7 +1,8 @@
+### For contact you can wirte me a mail - chananhelman@gmail.com
+
 # Graph and algorithms Project
 
 This project is a simple implementation of a Graph data structure in C++, and simple algorithms on graphs. It supports both directed and undirected graphs.
-
 
 
 ## Features
@@ -43,13 +44,16 @@ The main idea is to use **BFS** algorithm and to try coloring the graph with 2 c
 ## Building
 - first clone the reposiroty to your o here is the commad:
 ```bash
-git clone https://github.com/username/repository.git
+git clone https://github.com/chanan-hash/CPP-Ex1.git
 ```
 
 - To build and compile the project run the ```make``` command in your teminal and it will run automatically the Demo file
 
-- We can check leak memory check if we want by running ```make valgrind```
+- Be sure you have the right compiler ```clang-9```  or ```clang++```
 
 ## Testing
 By using ```doctest.h``` file, we'vr creted  a test file that checks the function on all kind of graph such as, directed/undirected, big/small, connected/unconected, empty, invalid, with and whitout cycles, etc...  
 To run the test after cloning the repository use ```make test``` command, and then run ```./test``` and it will run the test file
+
+## Valgrind
+For checking memory leak we can compile this project by writing in the terminal ```make vlagrind```
