@@ -1,3 +1,6 @@
+// mail - chanahelamn@gmail.com
+// Author - Chanan helman
+
 #include <iostream>
 #include <vector>
 #include "Graph.hpp"

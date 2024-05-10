@@ -1,3 +1,5 @@
+// mail - chanahelamn@gmail.com
+
 #include "doctest.h"
 #include "Algorithms.hpp"
 #include "Graph.hpp"
@@ -375,10 +377,10 @@ TEST_CASE("Checking directed wighted graph")
     g.loadGraph(graph5);
     CHECK(ariel::Algorithms::isConnected(g) == true);
     CHECK(ariel::Algorithms::isContainsCycle(g) == true);
-    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "0 -> 1 -> 4");
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "0 -> 1 -> 2 -> 3 -> 4");
     CHECK(ariel::Algorithms::shortestPath(g, 3, 1) == "3 -> 2 -> 1");
     CHECK(ariel::Algorithms::shortestPath(g, 3, -1) == "No path found");
-    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is not bipartite");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}.");
 }
 TEST_CASE("More weighted graphs")
 {

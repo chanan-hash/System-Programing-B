@@ -1,3 +1,5 @@
+// mail - chanahelamn@gmail.com
+
 #ifndef ALGORITHMS_HPP
 #define ALGORITHMS_HPP
 
@@ -16,39 +18,15 @@ namespace ariel
     class Algorithms
     {
     public:
-        static bool isConnected(Graph &g); // TODO add 'ariel namespace' for all the functions
-        // Your implementation to check if the graph is connected goes here
-        // You can use any graph traversal algorithm, such as BFS or DFS, to check connectivity
+        static bool isConnected(Graph &g); // returnin true or false if the graph is connected 
 
-        // Return true if the graph is connected, false otherwise
+        static string shortestPath(Graph &g, int start, int end); // returning the shorest path between to given vertices, using one of 3 algorithms
 
-        static string shortestPath(Graph &g, int start, int end);
-        // Your implementation to find the shortest path in the graph goes here
-        // You can use any graph traversal algorithm, such as BFS or DFS, to find the shortest path
+        static bool isContainsCycle(Graph &g); // returning true or false if the graph contains a cycle and printing it
 
-        // Return the shortest path between the start and end vertices
-        // If there is no path, return -1
+        static string isBipartite(Graph &g); // Check if the graph is bipartite by trying to color it
 
-        static bool isContainsCycle(Graph &g);
-        // Your implementation to check if the graph contains a cycle goes here
-        // You can use any graph traversal algorithm, such as BFS or DFS, to check for cycles
-
-        // Return true if the graph contains a cycle, false otherwise
-
-        static string isBipartite(Graph &g);
-        // Your implementation to check if the graph is bipartite goes here
-        // You can use any graph traversal algorithm, such as BFS or DFS, to check bipartiteness
-
-        // Return true if the graph is bipartite, false otherwise
-
-        static string negativeCycle(Graph &g);
-        // Your implementation to check if the graph contains a negative cycle goes here
-        // You can use any graph traversal algorithm, such as Bellman-Ford, to check for negative cycles
-
-        // Return true if the graph contains a negative cycle, false otherwise
-
-        // just for checking the graph type
-        // static int whatGraph(Graph g);
+        static string negativeCycle(Graph &g); // returning the negative cycle in the graph if there is one
     };
 }
 

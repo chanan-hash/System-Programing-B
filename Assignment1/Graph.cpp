@@ -1,3 +1,6 @@
+// mail - chanahelamn@gmail.com
+// Author - Chanan helman
+
 #include <iostream>
 #include <vector>
 #include "Graph.hpp"
@@ -15,7 +18,7 @@ Graph::Graph(bool isDirected)
     this->numVertices = 0;
 }
 
-size_t Graph::getNumVertices()
+size_t Graph::getNumVertices() const
 {
     return this->numVertices;
 }
@@ -25,7 +28,7 @@ vector<vector<int>> Graph::getAdjMatrix()
     return this->adjMatrix;
 }
 
-bool Graph::getDirected()
+bool Graph::getDirected() const
 {
     return this->isDirected;
 }
@@ -35,46 +38,27 @@ void Graph::setDirected(bool isDirected)
     this->isDirected = isDirected;
 }
 
-void Graph::loadGraph(vector<vector<int>> matrix)
+void Graph::loadGraph(vector<vector<int>> &matrix)
 {
-    if (!isSymetric(matrix) && !this->isDirected) // if it undirected and not symmetric
-    {
-        throw invalid_argument("The graph is not directed");
-    }
 
-    if (!matrix.empty())
+    this->numVertices = matrix.size();
+    this->adjMatrix = matrix;
+    for (size_t i = 0; i < adjMatrix.size(); i++)
     {
-        // this->adjMatrix.clear(); // clearing all the last values in the matrix
-        // Check if the matrix is square (number of rows equals number of columns)
-        if (matrix.size() == matrix[(size_t)0].size()) // mattrix.at(0).size() is the number of columns
+        if (adjMatrix[i].size() != adjMatrix.size())
         {
-            // Resize the adjacency matrix to match the input matrix
-            this->adjMatrix.resize(matrix.size(), vector<int>(matrix.size()));
-            // Assign each value from the input matrix to the adjacency matrix
-            for (size_t i = 0; i < matrix.size(); i++)
-            {
-                // check if the matrix is square
-                if (matrix[i].size() != matrix.size())
-                {
-                    throw invalid_argument("The matrix is not square");
-                }
-
-                for (size_t j = 0; j < matrix[i].size(); j++)
-                {
-                    if (i == j && matrix[i][j] != 0)
-                    {
-                        throw invalid_argument("The diagonal is not all 0's");
-                    }
-
-                    this->adjMatrix[i][j] = matrix[i][j];
-                }
-            }
-            // Update the number of vertices
-            this->numVertices = matrix.size();
-        }
-        else
-        { // Throw an exception if the matrix is not square
             throw invalid_argument("The matrix is not square");
+        }
+        for (size_t j = 0; j < adjMatrix[i].size(); j++)
+        {
+            if (i == j && adjMatrix[i][j] != 0)
+            {
+                throw invalid_argument("The diagonal is not all 0's");
+            }
+            if (!this->isDirected && adjMatrix[i][j] != adjMatrix[j][i])
+            {
+                throw invalid_argument("The graph is not directed");
+            }
         }
     }
 }

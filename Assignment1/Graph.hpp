@@ -1,3 +1,6 @@
+// mail - chanahelamn@gmail.com
+// Author - Chanan helman
+
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
@@ -20,14 +23,14 @@ namespace ariel
         // Constructor that getting  if the graph is directed or not
         Graph(bool isDirected = false); // default constructor is not directed
 
-        size_t getNumVertices();
+        size_t getNumVertices() const;
         vector<vector<int>> getAdjMatrix();
-        bool getDirected();
+        bool getDirected() const;
 
         void setDirected(bool isDirected);
 
         // Function to load graph from an adjacency matrix, like a set function
-        void loadGraph(vector<vector<int>> matrix); // passing it not by reference because we don't want to change it the orginal matrix
+        void loadGraph(vector<vector<int>> &matrix); // passing it not by reference because we don't want to change it the orginal matrix
 
         // Function to print the adjacency matrix
         void printGraph();

@@ -1,3 +1,5 @@
+// mail - chanahelamn@gmail.com
+
 #include <iostream>
 #include <vector>
 #include "Graph.hpp"
@@ -14,9 +16,9 @@ using namespace ariel;
 
 // For running the DFS visit in the graph as we had in algo-1 course
 // We'll use the colors to mark the vertices
-#define WHITE 1
-#define GRAY 2
-#define BLACK 3
+const int WHITE = 1;
+const int GRAY = 2;
+const int BLACK = 3;
 
 /********Checking a regular connection in direct graph ********/
 
@@ -46,7 +48,7 @@ vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> &verticesColors)
         if (verticesColors[u] == WHITE) // means we've discovered the vertex
         {
             verticesColors[u] = GRAY; // marking as checking it now
-            tree.push_back(u);           // because we'vejust discovered it we'll push it to the tree
+            tree.push_back(u);        // because we'vejust discovered it we'll push it to the tree
 
             for (size_t v = 0; v < V; v++) // going over it's neighbors
             {
@@ -100,11 +102,7 @@ bool directedIsConnected(Graph &g)
     vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, colors);
     size_t last_tree_size = dfs_last_v.size(); // the number of trees in the forest
 
-    if (last_tree_size == n) // means we've visited all the vertices, and the graph is connected
-    {
-        return true;
-    }
-    return false;
+    return last_tree_size == n;
 }
 
 /********Checking a regular connection in undirect graph ********/
@@ -131,7 +129,7 @@ bool undirectedIsConnected(Graph &graph)
         vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
         for (size_t i = 0; i < numVertices; ++i)
         {
-            if (adjacencyMatrix[current][i] && !visited[i])
+            if (adjacencyMatrix[current][i] != 0 && !visited[i])
             {
                 q.push(i);
                 visited[i] = true;
@@ -175,8 +173,8 @@ string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> 
 {
     size_t n = g.getNumVertices();
     // each vertex has a we're writing it's color in the colors vector
-    colors[current] = GRAY; // we are visitng this vertex now
-    path.push_back(current);  // add the vertex to the path
+    colors[current] = GRAY;  // we are visitng this vertex now
+    path.push_back(current); // add the vertex to the path
 
     for (size_t v = 0; v < n; v++) // visit all the vertices
     {
@@ -192,14 +190,14 @@ string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> 
                 }
             }
             else if (colors[v] == GRAY) // we've a gray reached a gray vertex from which we came
-                                           // means there is a cycle
+                                        // means there is a cycle
             {
                 return writingCycle(path, v);
             }
         }
     }
     colors[current] = BLACK; // we've finished visiting this vertex
-    path.pop_back();           // remove the vertex from the path because we are done with it
+    path.pop_back();         // remove the vertex from the path because we are done with it
     return "";
 }
 
@@ -254,7 +252,9 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
             {
                 parent[i] = (size_t)node;
                 if (hasCycleDFS(g, i, visited, parent, path))
+                {
                     return true;
+                }
             }
             // If the adjacent node is already visited and not the parent of current node, cycle exists
             else if (i != parent[(size_t)node])
@@ -269,14 +269,17 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
                     cycle.push(current);
                     path.pop();
                     if (current == i)
+                    {
                         break;
+                    }
                 }
                 while (!cycle.empty())
                 {
                     cout << cycle.top();
                     cycle.pop();
-                    if (!cycle.empty())
+                    if (!cycle.empty()){
                         cout << "->";
+                    }
                 }
                 cout << "->" << i << endl;
                 return true;
@@ -301,8 +304,10 @@ bool undirectedIsContainsCycle(Graph &g)
     {
         if (!visited[i])
         {
-            if (hasCycleDFS(g, i, visited, parent, path)) // Parent is -1 for the starting node
+            if (hasCycleDFS(g, i, visited, parent, path))
+            { // Parent is -1 for the starting node
                 return true;
+            }
         }
     }
 
@@ -333,7 +338,7 @@ int whatGraph(Graph &g)
             {
                 return 3; // we knwo it is a negative weighted graph and can return
             }
-            else if (matrix[i][j] > 1)
+            if (matrix[i][j] > 1)
             {
                 kind = 2; // and return only in the end
             }
@@ -450,7 +455,7 @@ string bellmanFord(Graph &g, int start, int end)
         {
             for (size_t k = 0; k < numVertices; k++)
             {
-                if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+                if (adjacencyMatrix[j][k] != 0 && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
                 {
                     distance[k] = distance[j] + adjacencyMatrix[j][k];
                     predecessor[k] = j;
@@ -464,7 +469,7 @@ string bellmanFord(Graph &g, int start, int end)
     {
         for (size_t k = 0; k < numVertices; k++)
         {
-            if (adjacencyMatrix[j][k] && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
+            if (adjacencyMatrix[j][k] != 0 && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
             {
                 return "Negative cycle detected";
             }
