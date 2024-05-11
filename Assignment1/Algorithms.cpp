@@ -1,4 +1,4 @@
-// mail - chanahelamn@gmail.com
+// mail - chanahelman@gmail.com
 
 #include <iostream>
 #include <vector>
@@ -146,7 +146,7 @@ bool undirectedIsConnected(Graph &graph)
 }
 
 /***************** Cycle check in directed graph **************************/
-
+// Sending the path by reference because we want to get the and keep the chc
 string writingCycle(vector<int> &path, int start)
 {
     string cycle;
@@ -158,7 +158,7 @@ string writingCycle(vector<int> &path, int start)
             break;
         }
     }
-    for (size_t j = Cstart; j < path.size(); ++j)
+    for (size_t j = Cstart; j < path.size(); ++j) // reconstruction the cycle
     {
         cycle += to_string(path[j]) + "->";
     }
@@ -166,8 +166,8 @@ string writingCycle(vector<int> &path, int start)
     return cycle;
 }
 
-// The DFS visit in the graph for checking cycle if we've found a gray vertex we have a cycle
-// we're passing pointers because we want to keep the change themselves
+// The DFS visit in the graph for checking cycle if we've found a gray vertex  again (back edge) we have a cycle
+// we're passing by reference because we want to keep the changes
 string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> &parents, vector<int> &path)
 {
     size_t n = g.getNumVertices();
@@ -177,18 +177,18 @@ string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> 
 
     for (size_t v = 0; v < n; v++) // visit all the vertices
     {
-        if (g.getAdjMatrix()[current][v] != 0)
-        { // there is an edge
-            if (colors[v] == WHITE)
-            { // mean we came from here to the vertex
-                parents[v] = (int)current;
-                string cycle = DFScycleCheck(g, v, colors, parents, path); // visit by the DFS
+        if (g.getAdjMatrix()[current][v] != 0) // there is an edge
+        {
+            if (colors[v] == WHITE) // mean we haven't visited it and we came from here to the vertex
+            {
+                parents[v] = (int)current;                                 // updating the parent
+                string cycle = DFScycleCheck(g, v, colors, parents, path); // visit by the DFS, and see if we can reconstruct a cycle
                 if (!cycle.empty())                                        // means we've got a cycle string
                 {
                     return cycle;
                 }
             }
-            else if (colors[v] == GRAY) // we've a gray reached a gray vertex from which we came
+            else if (colors[v] == GRAY) // we've a gray reached a gray vertex from which we came - back edge
                                         // means there is a cycle
             {
                 return writingCycle(path, v);
@@ -197,7 +197,7 @@ string DFScycleCheck(Graph &g, size_t current, vector<int> &colors, vector<int> 
     }
     colors[current] = BLACK; // we've finished visiting this vertex
     path.pop_back();         // remove the vertex from the path because we are done with it
-    return "";
+    return "";               // empty string means we haven't found a cycle
 }
 
 // By runing the DFS
@@ -205,8 +205,8 @@ bool directedIsContainsCycle(Graph &g)
 {
     size_t n = g.getNumVertices();
     vector<int> colors(n, WHITE); // like in DFS as we've learned in the course algo-1
-    vector<int> parents(n, -1);
-    vector<int> path;
+    vector<int> parents(n, -1);   // helping us to check if we've reached a predecesseor vertex
+    vector<int> path;             // the path to the actual cycle
 
     for (size_t i = 0; i < n; i++) // going through all the vertices
     {
@@ -232,15 +232,16 @@ bool directedIsContainsCycle(Graph &g)
  * If a vertex is reached that is already in the recursion stack,
  * then there is a cycle in the tree.
  *
- * We can usi the idea of finding which kind of edges we have in the graph
+ * We can use the idea of finding which kind of edges we have in the graph
  * if we have back edge then we have a cycle
  */
 
 bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent, stack<int> &path)
 {
-    visited[(size_t)node] = true;
+    visited[(size_t)node] = true; // instead of colors
     path.push(node);
-    int n = g.getNumVertices();
+    size_t n = g.getNumVertices();
+
     // Visit all adjacent nodes
     for (size_t i = 0; i < n; ++i)
     {
@@ -249,30 +250,32 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
             // If the adjacent node is not visited, recursively visit it
             if (!visited[i])
             {
-                parent[i] = (size_t)node;
+                parent[i] = (size_t)node; // Update the parent node
                 if (hasCycleDFS(g, i, visited, parent, path))
                 {
                     return true;
                 }
             }
+
             // If the adjacent node is already visited and not the parent of current node, cycle exists
             else if (i != parent[(size_t)node])
             {
                 // Print the cycle using the path
                 cout << "The cycle is: ";
 
-                stack<int> cycle;
+                stack<int> cycle; // for reconstructing
                 while (!path.empty())
                 {
-                    int current = path.top();
-                    cycle.push(current);
+                    int current = path.top(); // saving the vertex
+                    cycle.push(current);      // pushin to the cycle
                     path.pop();
-                    if (current == i)
+                    if (current == i) // means we've got to the strat again
                     {
                         break;
                     }
                 }
-                while (!cycle.empty())
+
+                while (!cycle.empty()) // printing the cycle
                 {
                     cout << cycle.top();
                     cycle.pop();
@@ -294,7 +297,7 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
 // Function to check if the graph has a cycle
 bool undirectedIsContainsCycle(Graph &g)
 {
-    int n = g.getNumVertices();
+    size_t n = g.getNumVertices();
     vector<bool> visited((size_t)n, false);
     vector<int> parent((size_t)n, -1); // Array to keep track of parent nodes in DFS
     stack<int> path;
