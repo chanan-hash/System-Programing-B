@@ -94,6 +94,7 @@ bool directedIsConnected(Graph &g)
     }
 
     // If we have a forest from the DFS, we'll check from the last root if we can visit all the vertices
+    // Because if we can it means we have one tree, we and the last root is the root of the tree with whole vertices
     size_t lastroot = forest.back().front(); // the last root of the forest
 
     vector<int> colors(g.getNumVertices(), WHITE); // initilzing the colors for the last DFS visit
