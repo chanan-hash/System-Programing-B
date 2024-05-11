@@ -277,7 +277,8 @@ bool hasCycleDFS(Graph &g, int node, vector<bool> &visited, vector<int> &parent,
                 {
                     cout << cycle.top();
                     cycle.pop();
-                    if (!cycle.empty()){
+                    if (!cycle.empty())
+                    {
                         cout << "->";
                     }
                 }
@@ -365,11 +366,12 @@ string BFS(Graph &g, int start, int end)
 
         if (u == end)
         {
-            // Reconstruct the path from end to start
+            // Reconstruct the path from end to start, fron the parent vector
             string path = to_string(end);
             while (parent[(size_t)end] != -1)
             {
-                path = to_string(parent[(size_t)end]) + " -> " + path;
+                // path = to_string(parent[(size_t)end]) + " -> " + path;
+                path.insert(0, to_string(parent[(size_t)end]) + " -> ");
                 end = parent[(size_t)end];
             }
             return path;
@@ -417,7 +419,8 @@ string dijksra(Graph &g, int start, int end)
             string path = to_string(end);
             while (parent[(size_t)end] != -1)
             {
-                path = to_string(parent[(size_t)end]) + " -> " + path;
+                // path = to_string(parent[(size_t)end]) + " -> " + path;
+                path.insert(0, to_string(parent[(size_t)end]) + " -> ");
                 end = parent[(size_t)end];
             }
             return path;
@@ -486,7 +489,8 @@ string bellmanFord(Graph &g, int start, int end)
     string path = to_string(end);
     for (size_t v = (size_t)end; v != start; v = (size_t)predecessor[v])
     {
-        path = to_string((int)predecessor[v]) + " -> " + path;
+        // path = to_string((int)predecessor[v]) + " -> " + path;
+        path.insert(0, to_string((int)predecessor[v]) + " -> ");
     }
 
     return path;
@@ -545,7 +549,7 @@ vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle
                 break;
             }
         }
-        reverse(cycle.begin(), cycle.end());
+        reverse(cycle.begin(), cycle.end()); // beacuse we went backwards, we need to revers the cycle to get it
     }
 
     return cycle;

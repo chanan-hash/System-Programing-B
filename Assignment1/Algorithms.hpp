@@ -18,7 +18,7 @@ namespace ariel
     class Algorithms
     {
     public:
-        static bool isConnected(Graph &g); // returnin true or false if the graph is connected 
+        static bool isConnected(Graph &g); // returning true or false if the graph is connected (not SCC, regular connection)
 
         static string shortestPath(Graph &g, int start, int end); // returning the shorest path between to given vertices, using one of 3 algorithms
 
