@@ -395,9 +395,9 @@ string dijksra(Graph &g, int start, int end)
 {
 
     size_t n = g.getNumVertices();
-    vector<int> dist(n, INT_MAX);
-    vector<int> parent(n, -1);
-    vector<bool> visited(n, false);
+    vector<int> dist(n, INT_MAX);   // Distance from start to each vertex, initiliazed to infinity
+    vector<int> parent(n, -1);      // Parent of each vertex in the shortest path
+    vector<bool> visited(n, false); // Visited vertices
 
     // The priority queue will contain pairs of (distance, vertex)
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
@@ -411,13 +411,13 @@ string dijksra(Graph &g, int start, int end)
         int u = pq.top().second;
         pq.pop();
 
-        visited[(size_t)u] = true;
+        visited[(size_t)u] = true; // Updating to visited
 
-        if (u == end)
+        if (u == end) // If we've reached the end we want to reconstruct the path
         {
             // Reconstruct the path from end to start
             string path = to_string(end);
-            while (parent[(size_t)end] != -1)
+            while (parent[(size_t)end] != -1) // Going over the parent vector
             {
                 // path = to_string(parent[(size_t)end]) + " -> " + path;
                 path.insert(0, to_string(parent[(size_t)end]) + " -> ");
@@ -426,8 +426,10 @@ string dijksra(Graph &g, int start, int end)
             return path;
         }
 
+        // finding all the vertices we can get from u
         for (size_t i = 0; i < n; ++i)
         {
+            // Relax
             if (g.getAdjMatrix()[(size_t)u][i] != 0 && !visited[i])
             {
                 int newDist = dist[(size_t)u] + g.getAdjMatrix()[(size_t)u][i];
@@ -440,7 +442,7 @@ string dijksra(Graph &g, int start, int end)
             }
         }
     }
-
+    // Mean we haven't find a path
     return "No path found";
 }
 
@@ -451,13 +453,15 @@ string bellmanFord(Graph &g, int start, int end)
     vector<int> predecessor(numVertices, -1);
     distance[(size_t)start] = 0;
 
-    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix(); // we want the changes only to be here
+    vector<vector<int>> adjacencyMatrix = g.getAdjMatrix();
+    // Running |n-1| iterations
     for (size_t i = 0; i < numVertices - 1; i++)
     {
         for (size_t j = 0; j < numVertices; j++)
         {
             for (size_t k = 0; k < numVertices; k++)
             {
+                // Relax
                 if (adjacencyMatrix[j][k] != 0 && distance[j] != INT_MAX && distance[j] + adjacencyMatrix[j][k] < distance[k])
                 {
                     distance[k] = distance[j] + adjacencyMatrix[j][k];
@@ -467,7 +471,7 @@ string bellmanFord(Graph &g, int start, int end)
         }
     }
 
-    // Check for negative-weight cycles
+    // Check for negative-weight cycles, by doing anthoer iteration and finding if we can still relax the path
     for (size_t j = 0; j < numVertices; j++)
     {
         for (size_t k = 0; k < numVertices; k++)
@@ -502,35 +506,37 @@ vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle
     size_t n = g.getNumVertices();
     vector<int> distance(n, INT_MAX);
     vector<int> predecessor(n, -1);
-    int cycle_start = -1;
+    int cycle_start = -1; // Will be the vertex where the cycle starts, if exists
 
     // Assume the source vertex is 0, for checking the negative cycle we'll run bellman-ford from the first vertex
     distance[0] = 0;
 
+    // Runing n iterations to check if there is a negative cycle
     for (size_t i = 0; i < n; ++i)
     {
-        cycle_start = -1;
+        cycle_start = -1; // Initilzing it in each iteration, in the last iteration if there is still relax, it will update the start of the cycle further
         for (size_t u = 0; u < n; ++u)
         {
             for (size_t v = 0; v < n; ++v)
             {
                 if (g.getAdjMatrix()[u][v] != 0)
                 {
-                    // relax the edge
+                    // Relax the edge
                     int new_distance = distance[u] + g.getAdjMatrix()[u][v];
                     if (new_distance < distance[v])
                     {
                         distance[v] = new_distance;
                         predecessor[v] = (int)u;
-                        cycle_start = v;
+                        cycle_start = v; // because if in the last iteration (n itreration) there is still relax,
+                                        // means there is a negative cycle and we want to save the start.
                     }
                 }
             }
         }
     }
 
-    vector<int> cycle;
-    if (cycle_start != -1)
+    vector<int> cycle; // To reconstruct the cycle if there is one
+    if (cycle_start != -1) // means we found a strat of the cycke and it have kept the vertex that is starting from
     {
         // We found a negative cycle
         // Go n steps back to make sure we are in the cycle
@@ -544,7 +550,7 @@ vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle
         for (int u = v;; u = predecessor[(size_t)u])
         {
             cycle.push_back(u);
-            if (u == v && cycle.size() > 1)
+            if (u == v && cycle.size() > 1) // means we've got to the strat of the cycle, and it's bigger than 1, that t is not only one vertex
             {
                 break;
             }
