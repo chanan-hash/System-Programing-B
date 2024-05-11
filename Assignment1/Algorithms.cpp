@@ -30,31 +30,30 @@ const int BLACK = 3;
  * Each tree will be represented as a vector of the vertices, And the forest will be the matrix
  */
 
-// return the tree of the DFS visit from onr vertex
-// We send the verticesColors as a pointer because we want to keep the changes
+// Return the tree of the DFS visit from one vertex
+// We send the verticesColors by reference because we want to keep the changes
 vector<size_t> DFS_Visit(Graph &g, size_t vertex, vector<int> &verticesColors)
 {
     size_t V = g.getNumVertices();
-    vector<size_t> tree;
-    stack<size_t> s;
+    vector<size_t> tree; // Inintialzing the tree
+    stack<size_t> s;     // The stack of the DFS visit, here we're doing it iteratively
     s.push(vertex);
-    // verticesColors[vertex] = GRAY;
 
     while (!s.empty())
     {
-        size_t u = s.top();
-        s.pop();
+        size_t u = s.top(); // saving the vertex
+        s.pop();            // poping it outs
 
         if (verticesColors[u] == WHITE) // means we've discovered the vertex
         {
             verticesColors[u] = GRAY; // marking as checking it now
-            tree.push_back(u);        // because we'vejust discovered it we'll push it to the tree
+            tree.push_back(u);        // because we've just discovered it we'll push it to the tree, and we can get here from his parent
 
             for (size_t v = 0; v < V; v++) // going over it's neighbors
             {
-                if (g.getAdjMatrix()[u][v] != 0 && verticesColors[v] == WHITE)
+                if (g.getAdjMatrix()[u][v] != 0 && verticesColors[v] == WHITE) // if there is an edge and we haven't visited it (it is still WHITE)
                 {
-                    s.push(v); // adding all the white vertices from u to the stack
+                    s.push(v); // adding all the white vertices from u to the DFS's stack
                 }
             }
         }
@@ -70,15 +69,15 @@ vector<vector<size_t>> DFS_Forest(Graph &g)
 {
     size_t V = g.getNumVertices();
     vector<int> verticesColors(V, WHITE); // Like we've seen in the course algo-1
-    vector<vector<size_t>> forest;
+    vector<vector<size_t>> forest;        // The DFS forest output
 
     // going all over the vertices
     for (size_t i = 0; i < V; i++)
     {
-        if (verticesColors[i] == WHITE)
+        if (verticesColors[i] == WHITE) // if we are discovering this vertex now
         {
-            vector<size_t> tree = DFS_Visit(g, i, verticesColors);
-            forest.push_back(tree);
+            vector<size_t> tree = DFS_Visit(g, i, verticesColors); // start the DFS visit from the vertex
+            forest.push_back(tree);                                // pushing the visit tree in the forest
         }
     }
     return forest;
@@ -87,22 +86,22 @@ vector<vector<size_t>> DFS_Forest(Graph &g)
 bool directedIsConnected(Graph &g)
 {
     size_t n = g.getNumVertices();
-    vector<vector<size_t>> forest = DFS_Forest(g);
+    vector<vector<size_t>> forest = DFS_Forest(g); // getting the DFS's forest visit
 
-    if (forest.size() == 1)
+    if (forest.size() == 1) // means we've visited all the vertices and it is connected
     {
         return true;
     }
 
-    // If we have a forest from the DFS, we'll check fro, the last root if we can visit all the vertices
+    // If we have a forest from the DFS, we'll check from the last root if we can visit all the vertices
     size_t lastroot = forest.back().front(); // the last root of the forest
 
-    vector<int> colors(g.getNumVertices(), WHITE);
+    vector<int> colors(g.getNumVertices(), WHITE); // initilzing the colors for the last DFS visit
 
-    vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, colors);
-    size_t last_tree_size = dfs_last_v.size(); // the number of trees in the forest
+    vector<size_t> dfs_last_v = DFS_Visit(g, lastroot, colors); // getting the DFS tree visit, from the last root
+    size_t last_tree_size = dfs_last_v.size();                  // the number of vertices in the forest
 
-    return last_tree_size == n;
+    return last_tree_size == n; // if it is equal to the number of vertices, we've visited all the vertices
 }
 
 /********Checking a regular connection in undirect graph ********/
@@ -117,30 +116,30 @@ bool undirectedIsConnected(Graph &graph)
     // Assuming the graph is undirected
     size_t numVertices = graph.getNumVertices();
     vector<bool> visited(numVertices, false);
-    queue<size_t> q;
-    q.push(0); // start from the first vertex
-    visited[0] = true;
+    queue<size_t> q;   // The BFS queue
+    q.push(0);         // start from the first vertex
+    visited[0] = true; // marked as visited
 
     while (!q.empty())
     {
-        size_t current = q.front();
-        q.pop();
+        size_t current = q.front(); // getting the vertex
+        q.pop();                    // poping it out
 
         vector<vector<int>> adjacencyMatrix = graph.getAdjMatrix();
         for (size_t i = 0; i < numVertices; ++i)
         {
-            if (adjacencyMatrix[current][i] != 0 && !visited[i])
+            if (adjacencyMatrix[current][i] != 0 && !visited[i]) // if there is an edge and we haven't visited this vertex
             {
-                q.push(i);
-                visited[i] = true;
+                q.push(i);         // pushing it in the queue
+                visited[i] = true; // marking as visited
             }
         }
     }
-    for (bool v : visited)
+    for (bool v : visited) // checking if we've visited all the vertices or not
     {
         if (!v)
         {
-            return false;
+            return false; // means there is a vertex that we haven't visited
         }
     }
     return true;
@@ -528,14 +527,14 @@ vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle
                         distance[v] = new_distance;
                         predecessor[v] = (int)u;
                         cycle_start = v; // because if in the last iteration (n itreration) there is still relax,
-                                        // means there is a negative cycle and we want to save the start.
+                                         // means there is a negative cycle and we want to save the start.
                     }
                 }
             }
         }
     }
 
-    vector<int> cycle; // To reconstruct the cycle if there is one
+    vector<int> cycle;     // To reconstruct the cycle if there is one
     if (cycle_start != -1) // means we found a strat of the cycke and it have kept the vertex that is starting from
     {
         // We found a negative cycle

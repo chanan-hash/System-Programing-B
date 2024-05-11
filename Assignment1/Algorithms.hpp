@@ -18,15 +18,20 @@ namespace ariel
     class Algorithms
     {
     public:
-        static bool isConnected(Graph &g); // returning true or false if the graph is connected (not SCC, regular connection)
+        // Returning true or false if the graph is connected (not SCC, regular connection)
+        static bool isConnected(Graph &g);
 
-        static string shortestPath(Graph &g, int start, int end); // returning the shorest path between to given vertices, using one of 3 algorithms
+        // Returning the shorest path between to given vertices, using one of 3 algorithms.
+        static string shortestPath(Graph &g, int start, int end);
 
-        static bool isContainsCycle(Graph &g); // returning true or false if the graph contains a cycle and printing it
+        // Returning true or false if the graph contains a cycle and printing it.
+        static bool isContainsCycle(Graph &g);
 
-        static string isBipartite(Graph &g); // Check if the graph is bipartite by trying to color it
+        // Check if the graph is bipartite by trying to color it.
+        static string isBipartite(Graph &g);
 
-        static string negativeCycle(Graph &g); // returning the negative cycle in the graph if there is one
+        // Returning the negative cycle in the graph if there is one.
+        static string negativeCycle(Graph &g);
     };
 }
 
