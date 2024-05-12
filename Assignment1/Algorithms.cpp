@@ -505,7 +505,7 @@ string bellmanFord(Graph &g, int start, int end)
 }
 
 /************* returning the negative cycle itself *************/
-vector<int> negativeCyclePath(Graph g) // After we know we have a negative cycle, we'll find the cycle and print it
+vector<int> negativeCyclePath(Graph &g) // After we know we have a negative cycle, we'll find the cycle and print it
 {
     size_t n = g.getNumVertices();
     vector<int> distance(n, INT_MAX);

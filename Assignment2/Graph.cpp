@@ -162,6 +162,10 @@ namespace ariel
             }
         }
 
+        // Returning a reference to the current object. This is not a pointer
+        // Returning *this from an operator overload function allows you to chain operations together
+        // In the context of the operator+= function, return *this; is returning a reference to the current Graph object after it has been modified by the addition operation.
+
         return *this;
     }
 
