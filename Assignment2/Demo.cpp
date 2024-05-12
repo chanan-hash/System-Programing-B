@@ -37,6 +37,12 @@ int main()
     ariel::Graph g3 = g1 + g2; // Add the two graphs together.
     cout<<g3;           // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
 
+    /*** my addition */
+    g1 += g2; // Add the two graphs together.
+    cout<<g1; // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
+    /*********/
+
+
     // g1 *= -2;        // Multiply the graph by -2.
     // cout<<g1; // Should print the matrix of the graph: [0, -2, 0], [-2, 0, -2], [0, -2, 0]
 

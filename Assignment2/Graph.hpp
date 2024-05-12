@@ -37,13 +37,13 @@ namespace ariel
 
         static bool isSymetric(vector<vector<int>> &matrix); // getting a matrix and return if it is symmetric
 
-
         /********************* Operator overloading ************************/
-        Graph operator+(const Graph& other);
-        
-        // This will allow us to do cout<<g1
-        friend ostream& operator<<(ostream& os, const Graph& g);
-    };
-} // namespace ariel
+        Graph operator+(const Graph &other);
+        Graph& operator+=(const Graph& other);
 
+        // This will allow us to do cout<<g1
+        friend std::ostream &operator<<(std::ostream &os, const Graph &g);
+    };
+
+} // namespace ariel
 #endif // GRAPH_HPP
