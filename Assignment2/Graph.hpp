@@ -42,7 +42,7 @@ namespace ariel
         Graph operator+(const Graph& other);
         
         // This will allow us to do cout<<g1
-        friend ostream& operator<<(ostream& os, Graph& g);
+        friend ostream& operator<<(ostream& os, const Graph& g);
     };
 } // namespace ariel
 

@@ -10,6 +10,7 @@
 #include <stack>
 #include <algorithm>
 #include <stdexcept>
+#include <sstream>
 
 using namespace std;
 using namespace ariel;

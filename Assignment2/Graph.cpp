@@ -5,6 +5,8 @@
 #include <vector>
 #include "Graph.hpp"
 #include <stdexcept>
+#include <sstream>
+#include <string>
 
 using namespace std;
 using namespace ariel;
@@ -23,7 +25,7 @@ size_t Graph::getNumVertices() const
     return this->numVertices;
 }
 
-vector<vector<int>> Graph::getAdjMatrix()
+vector<vector<int>> Graph::getAdjMatrix() const
 {
     return this->adjMatrix;
 }
@@ -115,7 +117,6 @@ bool Graph::isSymetric(vector<vector<int>> &matrix) // for graph being undirecte
 /***************************  Operator overloading     *************************/
 Graph Graph::operator+(const Graph &other)
 {
-
     // Checking the number of vertices in both graphs are the same
     if (this->numVertices != other.numVertices)
     {
@@ -126,6 +127,7 @@ Graph Graph::operator+(const Graph &other)
     // Assuming numVertices, adjMatrix are accessible members of Graph
 
     result.numVertices = this->numVertices; // it suppose to be the same size
+    // *result.adjMatrix = *this->adjMatrix; // Copy the first graph's adjacency matrix to the result graph
 
     // Adding the two adjacency matrices
     for (size_t i = 0; i < this->numVertices; i++)
@@ -141,15 +143,40 @@ Graph Graph::operator+(const Graph &other)
     return result;
 }
 
-ostream &operator<<(std::ostream &os, Graph &g)
+// ostream &operator<<(ostream &os, const Graph &g)
+// {
+//     for (size_t i = 0; i < g.getNumVertices(); i++)
+//     {
+//         for (size_t j = 0; j < g.getNumVertices(); j++)
+//         {
+//             // if(g.getAdjMatrix()[i][j] != 0){
+//             //         os << g.adjMatrix()[i][j] << " ";
+//             // }
+//             os << g.getAdjMatrix()[i][j] << " ";
+//         }
+//         os << endl;
+//     }
+//     return os;
+// }
+std::ostream &operator<<(std::ostream &os, const Graph &g)
 {
-    for (const auto &row : g.getAdjMatrix())
+    for (size_t i = 0; i < g.getNumVertices(); i++)
     {
-        for (const auto &elem : row)
+        os << "[";
+        for (size_t j = 0; j < g.getNumVertices(); j++)
         {
-            os << elem << ' ';
+            os << g.getAdjMatrix()[i][j];
+            if (j != g.getNumVertices() - 1)
+            {
+                os << ", ";
+            }
         }
-        os << '\n';
+        os << "]";
+        if (i != g.getNumVertices() - 1)
+        {
+            os << ", ";
+        }
+        os << std::endl;
     }
     return os;
 }
