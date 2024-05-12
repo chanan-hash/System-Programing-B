@@ -1,4 +1,5 @@
 #!make -f
+# mail - chananhelman@gmail.com
 
 CXX=clang++
 CXXFLAGS=-std=c++11 -Werror -g -Wsign-conversion
