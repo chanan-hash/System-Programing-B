@@ -18,7 +18,7 @@ We have two leading classes here
 2. ```Algorithms```
 
 ### Graph.cpp:
-- The main funciton there is the ```loadGraph()```. It getting a matrix and loading it to the graph
+- The main funciton there is the ```loadGraph```. It getting a matrix and loading it to the graph
 - Second function that we had to implement is ```printGraph```, printing the number of vertices and edges in the graph
 
 ### Algorithms:
@@ -42,7 +42,7 @@ IN undirected graph, if we have a negative edge we'll make it as a negative-cycl
 The main idea is to use **BFS** algorithm and to try coloring the graph with 2 colors, and check if each vertex and it's neighbors with different colors
 
 ## Building
-- first clone the reposiroty to your o here is the commad:
+- First clone the reposiroty to your on computer, here is the commad:
 ```bash
 git clone https://github.com/chanan-hash/CPP-Ex1.git
 ```
