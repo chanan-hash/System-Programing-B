@@ -24,7 +24,7 @@ namespace ariel
         Graph(bool isDirected = false); // default constructor is not directed
 
         size_t getNumVertices() const;
-        vector<vector<int>> getAdjMatrix();
+        vector<vector<int>> getAdjMatrix() const;
         bool getDirected() const;
 
         void setDirected(bool isDirected);
@@ -40,6 +40,9 @@ namespace ariel
 
         /********************* Operator overloading ************************/
         Graph operator+(const Graph& other);
+        
+        // This will allow us to do cout<<g1
+        friend ostream& operator<<(ostream& os, Graph& g);
     };
 } // namespace ariel
 

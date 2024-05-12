@@ -23,7 +23,7 @@ size_t Graph::getNumVertices() const
     return this->numVertices;
 }
 
-vector<vector<int>> Graph::getAdjMatrix()
+vector<vector<int>> Graph::getAdjMatrix() const
 {
     return this->adjMatrix;
 }

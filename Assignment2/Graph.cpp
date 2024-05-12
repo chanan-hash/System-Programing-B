@@ -140,3 +140,16 @@ Graph Graph::operator+(const Graph &other)
 
     return result;
 }
+
+ostream &operator<<(std::ostream &os, Graph &g)
+{
+    for (const auto &row : g.getAdjMatrix())
+    {
+        for (const auto &elem : row)
+        {
+            os << elem << ' ';
+        }
+        os << '\n';
+    }
+    return os;
+}

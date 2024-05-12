@@ -24,7 +24,7 @@ namespace ariel
         Graph(bool isDirected = false); // default constructor is not directed
 
         size_t getNumVertices() const;
-        vector<vector<int>> getAdjMatrix();
+        vector<vector<int>> getAdjMatrix() const;
         bool getDirected() const;
 
         void setDirected(bool isDirected);
