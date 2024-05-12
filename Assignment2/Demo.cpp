@@ -37,10 +37,17 @@ int main()
     ariel::Graph g3 = g1 + g2; // Add the two graphs together.
     cout<<g3;           // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
 
-    /*** my addition */
+    /*** my addition **********************************8*/
     g1 += g2; // Add the two graphs together.
     cout<<g1; // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
-    /*********/
+
+
+    g1 -= g2; // Subtract the two graphs.
+    cout<<g1; // Should print the matrix of the graph: [0, 1, 0], [1, 0, 1], [0, 1, 0]
+
+    ariel::Graph g4 = g1 - g2; // Subtract the two graphs.
+    cout<<g4;           // Should print the matrix of the graph: [0, 0, -1], [-1, 0, -1], [-1, -1, 0]
+    /*************************************************/
 
 
     // g1 *= -2;        // Multiply the graph by -2.

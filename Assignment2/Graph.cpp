@@ -169,6 +169,60 @@ namespace ariel
         return *this;
     }
 
+
+    // Overloading the - operator
+    Graph Graph::operator-(const Graph &other)
+    {
+        // Checking the number of vertices in both graphs are the same
+        if (this->numVertices != other.numVertices)
+        {
+            throw invalid_argument("The number of vertices in both graphs must be the same");
+        }
+
+        Graph result; // Create a new graph object to store the result
+        // Assuming numVertices, adjMatrix are accessible members of Graph
+
+        result.numVertices = this->numVertices; // it suppose to be the same size
+
+        // Subtracting the two adjacency matrices
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            vector<int> row;
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                row.push_back(this->adjMatrix[i][j] - other.adjMatrix[i][j]);
+            }
+            result.adjMatrix.push_back(row);
+        }
+
+        return result;
+    }
+
+    Graph &Graph::operator-=(const Graph &other)
+    {
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices != other.numVertices)
+        {
+            throw std::invalid_argument("Graphs must be the same size to subtract them.");
+        }
+
+        // Subtract the adjacency matrices
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                this->adjMatrix[i][j] -= other.adjMatrix[i][j];
+            }
+        }
+
+        // Returning a reference to the current object. This is not a pointer
+        // Returning *this from an operator overload function allows you to chain operations together
+        // In the context of the operator+= function, return *this; is returning a reference to the current Graph object after it has been modified by the addition operation.
+
+        return *this;
+    }
+
+
     // Replace the << operator with the following function
     std::ostream &operator<<(std::ostream &os, const Graph &g)
     {
