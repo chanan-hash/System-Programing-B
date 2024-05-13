@@ -55,9 +55,13 @@ namespace ariel
 
         Graph &operator/=(const int &num);
 
-        // The == operator
+        // The equality operators
         bool operator==(const Graph &other) const;
         bool operator!=(const Graph &other) const;
+        bool operator<(const Graph &other) const;
+        bool operator>(const Graph &other) const;
+        bool operator<=(const Graph &other) const;
+        bool operator>=(const Graph &other) const;
 
         // increment and decrement operators
         // int parameter is a dummy parameter used to differentiate this method from the prefix version.

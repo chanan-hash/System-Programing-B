@@ -285,6 +285,69 @@ namespace ariel
     }
 
     /**
+     * The < operator
+     * The defenition here of graph g2 is bigger than g1:
+     * 1. g1 is contained in g2
+     * 2. if none of the graphs contained inside each other, then g2 is bigger than g1 if it has more edges (the places that are not 0 in the matrix)
+     * 3. if they have the same number of edges if the order the matrix of g2 is biger than g1 (means the number of vertices)
+     */
+
+    bool Graph::operator<(const Graph &other) const
+    {
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices != other.numVertices)
+        {
+            throw std::invalid_argument("Graphs must be the same size to compare them.");
+        }
+
+        // Compare the adjacency matrices
+        int thisEdges = 0;
+        int otherEdges = 0;
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                if (this->adjMatrix[i][j] != 0)
+                {
+                    thisEdges++;
+                }
+                if (other.adjMatrix[i][j] != 0)
+                {
+                    otherEdges++;
+                }
+            }
+        }
+
+        if (thisEdges < otherEdges)
+        {
+            return true;
+        }
+        else if (thisEdges == otherEdges)
+        {
+            return this->numVertices < other.numVertices;
+        }
+        return false;
+    }
+
+    // The > operator, the opposite of the < operator
+    bool Graph::operator>(const Graph &other) const
+    {
+        return other < *this;
+    }
+
+    // The <= operator
+    bool Graph::operator<=(const Graph &other) const
+    {
+        return !(*this > other);
+    }
+
+    // The >= operator
+    bool Graph::operator>=(const Graph &other) const
+    {
+        return !(*this < other);
+    }
+
+    /**
      * The * operator overloading
      * 1. we have the * between to graphs that defined as a matrix multiplication
      * 2. we have *= operator that gets a graph and a number and return the graph after multiplying all the values by the number
@@ -379,7 +442,6 @@ namespace ariel
         return temp;       // return the copy (the old) value.
     }
 
-
     // Prefix decrement operator
     Graph &Graph::operator--()
     {
@@ -405,7 +467,6 @@ namespace ariel
         --(*this);         // Use the prefix version to decrement this instance
         return temp;       // return the copy (the old) value.
     }
-    
 
     /**
      * The << operator overloading
