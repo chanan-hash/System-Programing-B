@@ -47,6 +47,30 @@ int main()
 
     ariel::Graph g4 = g1 - g2; // Subtract the two graphs.
     cout<<g4;           // Should print the matrix of the graph: [0, 0, -1], [-1, 0, -1], [-1, -1, 0]
+
+
+    ariel::Graph g5 = -g1; // Unary minus.
+    cout<<g5;           // Should print the matrix of the graph: [0, -1, 0], [-1, 0, -1], [0, -1, 0] 
+    cout<<g1;           // Should print the matrix of the graph: [0, 1, 0], [1, 0, 1], [0, 1, 0]
+
+    g5 = +g1; // Unary plus.
+    cout<<g5;           // Should print the matrix of the graph: [0, 1, 0], [1, 0, 1], [0, 1, 0]
+
+        cout << "== operator" <<endl;
+
+    cout << (g1 == g2) << endl; // Should print 0
+    cout << (g1 == g1) << endl; // Should print 1
+    cout << (g1 == g5) << endl; // Should print 1
+    cout << (g4 == g2) << endl; // Should print 0
+
+    cout << "\n!= operator" <<endl;
+
+    cout << (g1 != g2) << endl; // Should print 1
+    cout << (g1 != g1) << endl; // Should print 0
+    cout << (g5 != g1) << endl; // Should print 0
+    cout << (g4 != g2) << endl; // Should print 1
+
+
     /*************************************************/
 
 

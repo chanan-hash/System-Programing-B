@@ -117,6 +117,13 @@ namespace ariel
 
     /***************************  Operator overloading     *************************/
 
+    /**
+     * The + operator overloading
+     * 1. we have regular + operator that gets two graphs and return a new graph that is the sum of the two graphs
+     * 2. we have += operator that gets two graphs and return the first graph after adding the second graph to it
+     * 3. we have unary + operator that gets a graph and return a copy of the graph
+     */
+
     // Overloading the + operator
     Graph Graph::operator+(const Graph &other)
     {
@@ -169,7 +176,18 @@ namespace ariel
         return *this;
     }
 
+    // Unary plus operator
+    Graph Graph::operator+() const
+    {
+        return *this; // Return a copy of the current graph
+    }
 
+    /**
+     * The - operator overloading
+     * 1. we have regular - operator that gets two graphs and return a new graph that is the subtraction of the two graphs
+     * 2. we have -= operator that gets two graphs and return the first graph after subtracting the second graph from it
+     * 3. we have unary - operator that gets a graph and return a copy of the graph with all the values negated
+     */
     // Overloading the - operator
     Graph Graph::operator-(const Graph &other)
     {
@@ -222,6 +240,55 @@ namespace ariel
         return *this;
     }
 
+    // Unary minus operator
+    Graph Graph::operator-() const
+    {
+        Graph result(*this); // Create a copy of the current graph
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                result.adjMatrix[i][j] = -this->adjMatrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    /*****Equals operator**/
+    bool Graph::operator==(const Graph &other) const
+    {
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices != other.numVertices)
+        {
+            return false;
+        }
+
+        // Compare the adjacency matrices
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                if (this->adjMatrix[i][j] != other.adjMatrix[i][j])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // The != operator, the opposite of the == operator
+    bool Graph::operator!=(const Graph &other) const
+    {
+        return !(*this == other);
+    }
+
+    /**
+     * The << operator overloading
+     * 1. we have << operator that gets a graph and return a reference to the ostream object
+     * 2. we have a friend function that gets a graph and return a reference to the ostream object
+     */
 
     // Replace the << operator with the following function
     std::ostream &operator<<(std::ostream &os, const Graph &g)
