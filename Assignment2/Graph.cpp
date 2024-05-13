@@ -294,10 +294,25 @@ namespace ariel
 
     bool Graph::operator<(const Graph &other) const
     {
-        // Check if the sizes of the two graphs are the same
-        if (this->numVertices != other.numVertices)
+        if (this->numVertices > other.numVertices)
         {
-            throw std::invalid_argument("Graphs must be the same size to compare them.");
+            throw std::invalid_argument("g1 has more vertices than g2 check g1 > g2.");
+        }
+
+        // Checking if g1 is contained in g2, we'll go over g1 and check if all the values are in g2
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices <= other.numVertices)
+        {
+            for (size_t i = 0; i < this->numVertices; i++)
+            {
+                for (size_t j = 0; i < this->numVertices; j++)
+                {
+                    if (this->adjMatrix[i][j] != 0 && other.adjMatrix[i][j] == 0)
+                    {
+                        return false;
+                    }
+                }
+            }
         }
 
         // Compare the adjacency matrices
@@ -326,7 +341,7 @@ namespace ariel
         {
             return this->numVertices < other.numVertices;
         }
-        return false;
+        return true;
     }
 
     // The > operator, the opposite of the < operator
