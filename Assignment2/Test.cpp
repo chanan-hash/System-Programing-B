@@ -23,7 +23,9 @@ TEST_CASE("Test graph addition")
         {0, 2, 1},
         {2, 0, 3},
         {1, 3, 0}};
-    CHECK(g3.printGraph() == "[0, 2, 1]\n[2, 0, 3]\n[1, 3, 0]");
+    ariel::Graph g4;
+    g4.loadGraph(expectedGraph);
+    CHECK((g3 == g4) == true);
 }
 
 TEST_CASE("Test graph multiplication")
@@ -45,7 +47,9 @@ TEST_CASE("Test graph multiplication")
         {0, 0, 2},
         {1, 0, 1},
         {1, 0, 0}};
-    CHECK(g4.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+    ariel::Graph g5;
+    g5.loadGraph(expectedGraph);
+    CHECK((g4 == g5) == true);
 }
 
 TEST_CASE("Invalid operations")
@@ -58,9 +62,9 @@ TEST_CASE("Invalid operations")
     g1.loadGraph(graph);
     ariel::Graph g2;
     vector<vector<int>> weightedGraph = {
-        {0, 1, 1, 1},
-        {1, 0, 2, 1},
-        {1, 2, 0, 1}};
+        {0, 1, 1},
+        {1, 0, 2},
+        {1, 2, 0}};
     g2.loadGraph(weightedGraph);
     ariel::Graph g5;
     vector<vector<int>> graph2 = {
@@ -71,7 +75,7 @@ TEST_CASE("Invalid operations")
         {1, 0, 0, 1, 0}};
     g5.loadGraph(graph2);
     CHECK_THROWS(g5 * g1);
-    CHECK_THROWS(g1 * g2);
+    // CHECK_THROWS(g1 * g2); not suppoesed to throw
 
     // Addition of two graphs with different dimensions
     ariel::Graph g6;

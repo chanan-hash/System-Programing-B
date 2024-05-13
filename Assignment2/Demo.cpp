@@ -130,5 +130,30 @@ int main()
     cout << "Copy of graph before postfix decrement:\n" << g10 << endl;
 
 
+    // Check comparison operators.
+    cout << "Comparison operators:" << endl;
+    cout << "Graph g1:\n" << g1 << endl;
+    cout << "Graph g2:\n" << g2 << endl;
+
+    if (g1 < g2) {
+        cout << "g1 is less than g2\n";
+    }
+
+    if (g1 > g2) {
+        cout << "g1 is greater than g2\n";
+    }
+
+    if (g1 <= g2) {
+        cout << "g1 is less than or equal to g2\n";
+    }
+
+    if (g1 >= g2) {
+        cout << "g1 is greater than or equal to g2\n";
+    }
+
+
+
+
+
     return 0;
 }

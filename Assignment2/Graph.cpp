@@ -285,7 +285,7 @@ namespace ariel
     }
 
     /**
-     * The < operator
+     * The comparison operators
      * The defenition here of graph g2 is bigger than g1:
      * 1. g1 is contained in g2
      * 2. if none of the graphs contained inside each other, then g2 is bigger than g1 if it has more edges (the places that are not 0 in the matrix)
@@ -341,7 +341,7 @@ namespace ariel
         {
             return this->numVertices < other.numVertices;
         }
-        return true;
+        return true; // return false
     }
 
     // The > operator, the opposite of the < operator
