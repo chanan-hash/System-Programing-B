@@ -1,6 +1,7 @@
 /*
  * Demo program for Exercise 3.
- * Author: Benjamin Saldman.
+ * Author: Benjamin Saldman and Channa helman.
+ * mail - chananhelman@gmail.com
  */
 
 #include "Graph.hpp"
