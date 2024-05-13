@@ -331,6 +331,82 @@ namespace ariel
         return *this;
     }
 
+    // Dividing a graph by a scalar
+    Graph &Graph::operator/=(const int &num)
+    {
+        if (num == 0) // Check if the number is zero
+        {
+            throw std::invalid_argument("Cannot divide by zero");
+        }
+
+        // Divide all the values in the adjacency matrix by the number
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                this->adjMatrix[i][j] /= num;
+            }
+        }
+
+        return *this;
+    }
+
+    /*****Increment and decremet operators (prefix and postfix)******/
+
+    // Prefix increment operator
+    Graph &Graph::operator++()
+    {
+        // Increment all the values in the adjacency matrix by 1
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                if (this->adjMatrix[i][j] != 0)
+                {
+                    this->adjMatrix[i][j]++;
+                }
+            }
+        }
+
+        return *this;
+    }
+
+    // postfix increment operator
+    Graph Graph::operator++(int)
+    {
+        Graph temp(*this); // make a copy for result
+        ++(*this);         // Use the prefix version to increment this instance
+        return temp;       // return the copy (the old) value.
+    }
+
+
+    // Prefix decrement operator
+    Graph &Graph::operator--()
+    {
+        // Decrement all the values in the adjacency matrix by 1
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                if (this->adjMatrix[i][j] != 0)
+                {
+                    this->adjMatrix[i][j]--;
+                }
+            }
+        }
+
+        return *this;
+    }
+
+    // postfix decrement operator
+    Graph Graph::operator--(int)
+    {
+        Graph temp(*this); // make a copy for result
+        --(*this);         // Use the prefix version to decrement this instance
+        return temp;       // return the copy (the old) value.
+    }
+    
+
     /**
      * The << operator overloading
      * 1. we have << operator that gets a graph and return a reference to the ostream object

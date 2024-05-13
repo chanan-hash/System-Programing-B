@@ -53,9 +53,19 @@ namespace ariel
         Graph operator*(const Graph &other) const;
         Graph &operator*=(const int &num);
 
+        Graph &operator/=(const int &num);
+
         // The == operator
         bool operator==(const Graph &other) const;
         bool operator!=(const Graph &other) const;
+
+        // increment and decrement operators
+        // int parameter is a dummy parameter used to differentiate this method from the prefix version.
+        Graph &operator++();   // prefix increment operator
+        Graph operator++(int); // postfix increment operator
+
+        Graph &operator--();   // prefix decrement operator
+        Graph operator--(int); // postfix decrement operator
 
         // This will allow us to do cout<<g1
         friend std::ostream &operator<<(std::ostream &os, const Graph &g);
