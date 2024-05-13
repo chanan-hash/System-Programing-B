@@ -48,15 +48,14 @@ namespace ariel
         Graph &operator-=(const Graph &other);
         Graph operator-() const; // unary minus operator
 
-
         // The * operator
 
-        // Graph operator*(const int &num);
-        // Graph &operator*=(const int &num);
+        Graph operator*(const Graph &other) const;
+        Graph &operator*=(const int &num);
 
         // The == operator
-        bool operator==(const Graph& other) const;
-        bool operator!=(const Graph& other) const;
+        bool operator==(const Graph &other) const;
+        bool operator!=(const Graph &other) const;
 
         // This will allow us to do cout<<g1
         friend std::ostream &operator<<(std::ostream &os, const Graph &g);

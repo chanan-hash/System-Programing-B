@@ -285,6 +285,53 @@ namespace ariel
     }
 
     /**
+     * The * operator overloading
+     * 1. we have the * between to graphs that defined as a matrix multiplication
+     * 2. we have *= operator that gets a graph and a number and return the graph after multiplying all the values by the number
+     */
+
+    // Overloading the * operator
+    Graph Graph::operator*(const Graph &other) const
+    {
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices != other.numVertices)
+        {
+            throw std::invalid_argument("Graphs must be the same size to multiply them.");
+        }
+
+        Graph result(*this); // Create a copy of the current graph
+
+        // Perform matrix multiplication
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                result.adjMatrix[i][j] = 0;
+                for (size_t k = 0; k < this->numVertices; k++)
+                {
+                    result.adjMatrix[i][j] += this->adjMatrix[i][k] * other.adjMatrix[k][j];
+                }
+            }
+        }
+
+        return result;
+    }
+
+    Graph &Graph::operator*=(const int &num)
+    {
+        // Multiply all the values in the adjacency matrix by the number
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                this->adjMatrix[i][j] *= num;
+            }
+        }
+
+        return *this;
+    }
+
+    /**
      * The << operator overloading
      * 1. we have << operator that gets a graph and return a reference to the ostream object
      * 2. we have a friend function that gets a graph and return a reference to the ostream object
