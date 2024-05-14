@@ -292,41 +292,35 @@ namespace ariel
      * 3. if they have the same number of edges if the order the matrix of g2 is biger than g1 (means the number of vertices)
      */
 
-    bool Graph::operator<(const Graph &other) const
+    bool isContained(const Graph &g1, const Graph &g2)
     {
-        if (this->numVertices > other.numVertices)
-        {
-            throw std::invalid_argument("g1 has more vertices than g2 check g1 > g2.");
-        }
-
         // Checking if g1 is contained in g2, we'll go over g1 and check if all the values are in g2
-        // Check if the sizes of the two graphs are the same
-        if (this->numVertices <= other.numVertices)
+        for (size_t i = 0; i < g1.getNumVertices(); i++)
         {
-            for (size_t i = 0; i < this->numVertices; i++)
+            for (size_t j = 0; j < g1.getNumVertices(); j++)
             {
-                for (size_t j = 0; i < this->numVertices; j++)
+                if (g1.getAdjMatrix()[i][j] != 0 && g2.getAdjMatrix()[i][j] == 0)
                 {
-                    if (this->adjMatrix[i][j] != 0 && other.adjMatrix[i][j] == 0)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
         }
+        return true;
+    }
 
-        // Compare the adjacency matrices
+    bool edgesCount(const Graph &g1, const Graph &g2)
+    {
         int thisEdges = 0;
         int otherEdges = 0;
-        for (size_t i = 0; i < this->numVertices; i++)
+        for (size_t i = 0; i < g1.getNumVertices(); i++)
         {
-            for (size_t j = 0; j < this->numVertices; j++)
+            for (size_t j = 0; j < g1.getNumVertices(); j++)
             {
-                if (this->adjMatrix[i][j] != 0)
+                if (g1.getAdjMatrix()[i][j] != 0)
                 {
                     thisEdges++;
                 }
-                if (other.adjMatrix[i][j] != 0)
+                if (g2.getAdjMatrix()[i][j] != 0)
                 {
                     otherEdges++;
                 }
@@ -337,11 +331,31 @@ namespace ariel
         {
             return true;
         }
-        else if (thisEdges == otherEdges)
+        else if (thisEdges == otherEdges) // will go according to the number of vertices
         {
-            return this->numVertices < other.numVertices;
+            return g1.getNumVertices() < g2.getNumVertices();
         }
-        return true; // return false
+        return false;
+    }
+
+    bool Graph::operator<(const Graph &other) const
+    {
+        if (this->numVertices > other.numVertices)
+        {
+            throw std::invalid_argument("g1 has more vertices than g2 check g1 > g2.");
+        }
+        bool result = false;
+        // Checking if g1 is contained in g2, we'll go over g1 and check if all the values are in g2
+        // Check if the sizes of the two graphs are the same
+        if (this->numVertices <= other.numVertices)
+        {
+            result = isContained(*this, other);
+        }
+        if (!result) // means that g1 is not contained in g2, we'll check according to the number of edges
+        {
+            result = edgesCount(*this, other);
+        }
+        return result;
     }
 
     // The > operator, the opposite of the < operator

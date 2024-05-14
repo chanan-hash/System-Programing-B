@@ -121,13 +121,13 @@ int main()
     cout << "Original graph:\n" << g1 << endl;
 
     // Use the prefix -- operator
-    --g1;
-    cout << "Graph after prefix decrement:\n" << g1 << endl;
+    // --g1;
+    // cout << "Graph after prefix decrement:\n" << g1 << endl;
 
     // Use the postfix -- operator
-    ariel::Graph g10 = g1--;
-    cout << "Graph after postfix decrement:\n" << g1 << endl;
-    cout << "Copy of graph before postfix decrement:\n" << g10 << endl;
+    // ariel::Graph g10 = g1--;
+    // cout << "Graph after postfix decrement:\n" << g1 << endl;
+    // cout << "Copy of graph before postfix decrement:\n" << g10 << endl;
 
 
     // Check comparison operators.
@@ -151,7 +151,11 @@ int main()
         cout << "g1 is greater than or equal to g2\n";
     }
 
+    cout<< "\nGraph g3:\n" << g3 << endl;
 
+    if(g3 > g2){
+        cout << "g3 is greater than g2\n";
+    }
 
 
 
