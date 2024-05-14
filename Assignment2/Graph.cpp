@@ -1,12 +1,13 @@
 // mail - chanahelamn@gmail.com
 // Author - Chanan helman
 
-#include <iostream>
-#include <vector>
 #include "Graph.hpp"
-#include <stdexcept>
+
+#include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
+#include <vector>
 
 using namespace std;
 // using namespace ariel;
@@ -43,7 +44,6 @@ namespace ariel
 
     void Graph::loadGraph(vector<vector<int>> &matrix)
     {
-
         this->numVertices = matrix.size();
         this->adjMatrix = matrix;
         for (size_t i = 0; i < adjMatrix.size(); i++)
@@ -149,6 +149,12 @@ namespace ariel
             result.adjMatrix.push_back(row);
         }
 
+        // checking according to symetric the graph if it is directed or not
+        if (!isSymetric(result.adjMatrix))
+        {
+            result.setDirected(true);
+        }
+
         return result;
     }
 
@@ -172,6 +178,11 @@ namespace ariel
         // Returning a reference to the current object. This is not a pointer
         // Returning *this from an operator overload function allows you to chain operations together
         // In the context of the operator+= function, return *this; is returning a reference to the current Graph object after it has been modified by the addition operation.
+
+        if (!isSymetric(this->adjMatrix))
+        {
+            this->setDirected(true);
+        }
 
         return *this;
     }
@@ -213,6 +224,12 @@ namespace ariel
             result.adjMatrix.push_back(row);
         }
 
+        // checking according to symetric the graph if it is directed or not
+        if (!isSymetric(result.adjMatrix))
+        {
+            result.setDirected(true);
+        }
+
         return result;
     }
 
@@ -237,6 +254,11 @@ namespace ariel
         // Returning *this from an operator overload function allows you to chain operations together
         // In the context of the operator+= function, return *this; is returning a reference to the current Graph object after it has been modified by the addition operation.
 
+        if (!isSymetric(this->adjMatrix))
+        {
+            this->setDirected(true);
+        }
+
         return *this;
     }
 
@@ -251,6 +273,12 @@ namespace ariel
                 result.adjMatrix[i][j] = -this->adjMatrix[i][j];
             }
         }
+
+        if (!isSymetric(result.adjMatrix))
+        {
+            result.setDirected(true);
+        }
+
         return result;
     }
 
@@ -331,7 +359,8 @@ namespace ariel
         {
             return true;
         }
-        else if (thisEdges == otherEdges) // will go according to the number of vertices
+
+        if (thisEdges == otherEdges) // will go according to the number of vertices
         {
             return g1.getNumVertices() < g2.getNumVertices();
         }
@@ -347,7 +376,7 @@ namespace ariel
         bool result = false;
         // Checking if g1 is contained in g2, we'll go over g1 and check if all the values are in g2
         // Check if the sizes of the two graphs are the same
-        if (this->numVertices <= other.numVertices)
+        if (this->numVertices < other.numVertices)
         {
             result = isContained(*this, other);
         }
@@ -398,12 +427,31 @@ namespace ariel
         {
             for (size_t j = 0; j < this->numVertices; j++)
             {
+                if (i == j)
+                {
+                    continue;
+                }
                 result.adjMatrix[i][j] = 0;
+                // int sum = 0;
                 for (size_t k = 0; k < this->numVertices; k++)
                 {
+                    // sum += this->adjMatrix[i][k] * other.adjMatrix[k][j];
                     result.adjMatrix[i][j] += this->adjMatrix[i][k] * other.adjMatrix[k][j];
                 }
+
+                // to keep the graph as a graph we will keep the 0's, because it means there no edge
+                // if (sum != 0) {
+                //     result.adjMatrix[i][j] = sum;
+                // } else {
+                //     result.adjMatrix[i][j] = 0;
+                // }
             }
+        }
+
+        // checking according to symetric the graph if it is directed or not
+        if (!isSymetric(result.adjMatrix))
+        {
+            result.setDirected(true);
         }
 
         return result;
@@ -439,7 +487,6 @@ namespace ariel
                 this->adjMatrix[i][j] /= num;
             }
         }
-
         return *this;
     }
 
@@ -458,6 +505,11 @@ namespace ariel
                     this->adjMatrix[i][j]++;
                 }
             }
+        }
+
+        if (!isSymetric(this->adjMatrix))
+        {
+            this->setDirected(true);
         }
 
         return *this;
@@ -484,6 +536,11 @@ namespace ariel
                     this->adjMatrix[i][j]--;
                 }
             }
+        }
+
+        if (!isSymetric(this->adjMatrix))
+        {
+            this->setDirected(true);
         }
 
         return *this;
@@ -527,4 +584,4 @@ namespace ariel
         os << std::endl;
         return os;
     }
-}
+} // namespace ariel

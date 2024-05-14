@@ -60,6 +60,7 @@
     "iosfwd": "cpp",
     "iostream": "cpp",
     "ratio": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "stdexcept": "cpp"
   }
 }
