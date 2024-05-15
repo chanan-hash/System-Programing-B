@@ -150,6 +150,57 @@ TEST_CASE("Test graph multiplication")
     ariel::Graph g5;
     g5.loadGraph(expectedGraph);
     CHECK((g4 == g5) == true);
+
+    SUBCASE("Test graph multiplication by scalar")
+    {
+        g2 *= 2;
+        vector<vector<int>> expectedGraph = {
+            {0, 2, 2},
+            {2, 0, 4},
+            {2, 4, 0}};
+        ariel::Graph g6;
+        g6.loadGraph(expectedGraph);
+        CHECK((g2 == g6) == true);
+
+        g2 /= 2;
+
+        ariel::Graph g7 = 2 * g2;
+        CHECK((g7 == g6) == true);
+
+        ariel::Graph g8 = g2 * 2;
+        CHECK((g8 == g6) == true);
+    }
+
+    SUBCASE("Test a big weighted graphs multiplication")
+    {
+        ariel::Graph g9;
+        vector<vector<int>> weightedGraph2 = {
+            {0, 1, 1, -1, 1},
+            {1, 0, -7, 1, 4},
+            {-25, 1, 0, 2, 1},
+            {1, 5, 1, 0, 1},
+            {9, 1, 1, 3, 0}};
+        g9.loadGraph(weightedGraph2);
+
+        vector<vector<int>> weightedGraph3 = {
+            {0, -8, 1, -1, 0},
+            {1, 0, -7, 1, 4},
+            {-10, 1, 0, 6, 0},
+            {1, 0, 4, 0, 2},
+            {9, 1, -2, 3, 0}};
+        ariel::Graph g10;
+        g10.loadGraph(weightedGraph3);
+        ariel::Graph g11 = g9 * g10;
+        vector<vector<int>> expectedGraph2 = {
+            {0, 2, -13, 10, 2},
+            {107, 0, -3, -31, 2},
+            {12, 201, 0, 29, 8},
+            {4, -6, -36, 0, 20},
+            {-6, -71, 14, -2, 0}};
+        ariel::Graph g12;
+        g12.loadGraph(expectedGraph2);
+        CHECK((g11 == g12) == true);
+    }
 }
 
 TEST_CASE("Invalid operations")
@@ -187,4 +238,5 @@ TEST_CASE("Invalid operations")
         {1, 0, 0, 1, 0}};
     g6.loadGraph(graph3);
     CHECK_THROWS(g1 + g6);
+    CHECK_THROWS(g1 - g6);
 }
