@@ -58,10 +58,10 @@ namespace ariel
                 {
                     throw invalid_argument("The diagonal is not all 0's");
                 }
-                if (!this->isDirected && adjMatrix[i][j] != adjMatrix[j][i])
-                {
-                    throw invalid_argument("The graph is not directed");
-                }
+                // if (!this->isDirected && adjMatrix[i][j] != adjMatrix[j][i])
+                // {
+                //     throw invalid_argument("The graph is not directed");
+                // }
             }
         }
     }

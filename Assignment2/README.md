@@ -1,9 +1,19 @@
-# מטלה 2 - גרפים והעמסת אופרטורים
+### For contact main - chananhelman@gmail.com
 
-במטלה הקודמת מימשתם את המחלקה `Graph.cpp` המאפשרת ייצוג של גרפים בעזרת מטריצת שכנויות. במטלה הזאת, אתם תרחיבו את המחלקה ותוסיפו תמיכה באופרטורים חשבוניים על גרפים.
-כאמור, הגרפים מיוצגים בעזרת מטריצת שכנויות, לכן כל האופרטורים צריכים להיות חוקיים עבור מטריצות (כמו שלמדתם בקורס אלגברה לינארית).
+# Graphs & Operator overloading
 
-אתם תצטרכו להוסיף את האופרטורים הבאים:
+This assignment is a continuation of the first assignmet. Here we're gonna add the option for arithmetic options by operator-overloading.
+
+## Graph
+The graph in `Graph.cpp` is as in the first assignmet represented as an adjacency matrix, where [i][j] == 0, means no edge between i and j vertices.
+
+## Operators
+### The addition operator (+,+=,++)
+1. `+` adding two graphs only if they have the same number of vertices (means the same size). Allwoing as to do:  
+`g3 = g1 + g2`
+
+2.
+
 
 - שישה אופרטורים חשבוניים: חיבור (+) הוספה (+=) פלוס אונרי (+), ושלושת האופרטורים המקבילים לחיסור (-). כאמור, חיבור/חיסור של שתי מטריצות מוגדר רק על מטריצות מאותו סדר גודל nXn. ניסיון לחבר/לחסר שתי מטריצות שלא מקיימות תנאי זה יגרום לזריקת שגיאה.
 - שישה אופרטורי השוואה: גדול, גדול-או-שווה, קטן, קטן-או-שווה, שווה, לא-שווה. לשם מטלה זו כללי השוואת גרפים הם כדלקמן:
