@@ -51,6 +51,7 @@ namespace ariel
         // The * operator
 
         Graph operator*(const Graph &other) const;
+        Graph operator*(const int num) const;
         Graph &operator*=(const int &num);
 
         Graph &operator/=(const int &num);
@@ -74,6 +75,8 @@ namespace ariel
         // This will allow us to do cout<<g1
         friend std::ostream &operator<<(std::ostream &os, const Graph &g);
     };
-
+    // int * Graph
+    Graph operator*(int num, const Graph &g);
+    
 } // namespace ariel
 #endif // GRAPH_HPP

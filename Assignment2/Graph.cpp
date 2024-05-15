@@ -457,6 +457,27 @@ namespace ariel
         return result;
     }
 
+    // Graph * int
+    Graph Graph::operator*(int num) const
+    {
+        Graph result(*this); // make a copy of this graph
+        for (size_t i = 0; i < this->numVertices; i++)
+        {
+            for (size_t j = 0; j < this->numVertices; j++)
+            {
+                result.adjMatrix[i][j] *= num;
+            }
+        }
+        return result;
+    }
+
+    // int * Graph
+    Graph operator*(int num, const Graph &g)
+    {
+        return g * num; // use the Graph * int operator
+    }
+
+    // Multiply a graph by a scalar
     Graph &Graph::operator*=(const int &num)
     {
         // Multiply all the values in the adjacency matrix by the number
@@ -515,7 +536,7 @@ namespace ariel
         return *this;
     }
 
-    // postfix increment operator
+    // postfix increment operator, the compiler will see that the int is a dummy parameter and will know that this is the postfix version
     Graph Graph::operator++(int)
     {
         Graph temp(*this); // make a copy for result

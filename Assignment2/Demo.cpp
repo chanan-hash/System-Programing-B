@@ -84,6 +84,14 @@ int main()
     g1 /= -2;
     cout << g1; // Should print the matrix of the graph: [0, 1, 0], [1, 0, 1], [0, 1, 0]
 
+     cout<< "g1 * 2" << endl;
+     ariel::Graph g33 = g1 * 2; // Multiply the graph by 2.
+     cout << g33;                // Should print the matrix of the graph: [0, 2, 0], [2, 0, 2], [0, 2, 0]
+
+     ariel::Graph g34 = 2 * g1; // Multiply the graph by 2.
+     cout << g34;                // Should print the matrix of the graph: [0, 2, 0], [2, 0, 2], [0, 2, 0]
+
+
     ariel::Graph g44 = g1 * g2; // Multiply the two graphs together.
     cout << g44;                // Should print the multiplication of the matrices of g1 and g2: [0, 0, 2], [1, 0, 1], [1, 0, 0]
 
