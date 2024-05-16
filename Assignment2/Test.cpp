@@ -240,3 +240,35 @@ TEST_CASE("Invalid operations")
     CHECK_THROWS(g1 + g6);
     CHECK_THROWS(g1 - g6);
 }
+
+TEST_CASE("Testing increment and decrement prefix and postfix")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph);
+    ariel::Graph g2;
+    vector<vector<int>> weightedGraph = {
+        {0, 1, 1},
+        {1, 0, 2},
+        {1, 2, 0}};
+    g2.loadGraph(weightedGraph);
+
+    SUBCASE("Incrementing zero mat")
+    {
+        vector<vector<int>> zeroMatrix = {
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0}};
+        ariel::Graph g3;
+        g3.loadGraph(zeroMatrix);
+        g3++;
+        ++g3;
+        ariel::Graph g4;
+        g4.loadGraph(zeroMatrix);
+        CHECK((g3 == g4) == true);
+        CHECK((g3 != g4) == false);
+    }
+}
