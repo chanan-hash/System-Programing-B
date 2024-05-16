@@ -241,7 +241,7 @@ TEST_CASE("Invalid operations")
     CHECK_THROWS(g1 - g6);
 }
 
-TEST_CASE("Testing increment and decrement prefix and postfix")
+TEST_CASE("Testing increment prefix and postfix")
 {
     ariel::Graph g1;
     vector<vector<int>> graph = {
@@ -256,6 +256,34 @@ TEST_CASE("Testing increment and decrement prefix and postfix")
         {1, 2, 0}};
     g2.loadGraph(weightedGraph);
 
+    ariel::Graph g3 = g2++; // will be equal to g2 before increment
+    ariel::Graph g4;
+    ariel::Graph g5;
+    vector<vector<int>> expectedGraph = {
+        {0, 2, 2},
+        {2, 0, 3},
+        {2, 3, 0}};
+    g4.loadGraph(expectedGraph);
+    g5.loadGraph(weightedGraph);
+    CHECK((g4 == g2) == true);
+    CHECK((g3 == g5) == true);
+    CHECK((g3 != g2) == true);
+
+    ariel::Graph g6 = ++g1; // will be equal to g2 after increment
+    vector<vector<int>> graph2 = {
+        {0, 2, 0},
+        {2, 0, 2},
+        {0, 2, 0}};
+
+    ariel::Graph g7;
+    g7.loadGraph(graph2);
+
+    ariel::Graph g8;
+    g8.loadGraph(graph);
+
+    CHECK((g6 == g7) == true);
+    CHECK((g1 != g8) == true);
+
     SUBCASE("Incrementing zero matrix")
     {
         vector<vector<int>> zeroMatrix = {
@@ -267,7 +295,65 @@ TEST_CASE("Testing increment and decrement prefix and postfix")
         // Not supposed to change the graph
         g3++;
         ++g3;
-        ariel::Graph g4; 
+        ariel::Graph g4;
+        g4.loadGraph(zeroMatrix);
+        CHECK((g3 == g4) == true);
+        CHECK((g3 != g4) == false);
+    }
+}
+
+TEST_CASE("Testing devrement prefix and postfix")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+        {0, -8, 1, -1, 0},
+        {1, 0, -7, 1, 4},
+        {-10, 1, 0, 6, 0},
+        {1, 0, 4, 0, 2},
+        {9, 1, -2, 3, 0}};
+    g1.loadGraph(graph);
+    ariel::Graph g2 = g1--;
+
+    vector<vector<int>> graph2 = {
+        {0, -9, 0, -2, 0},
+        {0, 0, -8, 0, 3},
+        {-11, 0, 0, 5, 0},
+        {0, 0, 3, 0, 1},
+        {8, 0, -3, 2, 0}};
+    ariel::Graph g3;
+    g3.loadGraph(graph2);
+    ariel::Graph g4;
+    g4.loadGraph(graph);
+
+    CHECK((g3 == g1) == true);
+    CHECK((g2 == g4) == true);
+
+    ariel::Graph g5 = --g1;
+    vector<vector<int>> graph3 = {
+        {0, -10, 0, -3, 0},
+        {0, 0, -9, 0, 2},
+        {-12, 0, 0, 4, 0},
+        {0, 0, 2, 0, 0},
+        {7, 0, -4, 1, 0}};
+    ariel::Graph g6;
+    g6.loadGraph(graph3);
+
+    CHECK((g5 == g6) == true);
+    CHECK((g1 != g3) == true); // g1 changed
+
+
+    SUBCASE("Decrementing zero matrix")
+    {
+        vector<vector<int>> zeroMatrix = {
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0}};
+        ariel::Graph g3;
+        g3.loadGraph(zeroMatrix);
+        // Not supposed to change the graph
+        g3--;
+        --g3;
+        ariel::Graph g4;
         g4.loadGraph(zeroMatrix);
         CHECK((g3 == g4) == true);
         CHECK((g3 != g4) == false);
