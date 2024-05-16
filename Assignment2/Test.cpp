@@ -256,7 +256,7 @@ TEST_CASE("Testing increment and decrement prefix and postfix")
         {1, 2, 0}};
     g2.loadGraph(weightedGraph);
 
-    SUBCASE("Incrementing zero mat")
+    SUBCASE("Incrementing zero matrix")
     {
         vector<vector<int>> zeroMatrix = {
             {0, 0, 0},
@@ -264,9 +264,10 @@ TEST_CASE("Testing increment and decrement prefix and postfix")
             {0, 0, 0}};
         ariel::Graph g3;
         g3.loadGraph(zeroMatrix);
+        // Not supposed to change the graph
         g3++;
         ++g3;
-        ariel::Graph g4;
+        ariel::Graph g4; 
         g4.loadGraph(zeroMatrix);
         CHECK((g3 == g4) == true);
         CHECK((g3 != g4) == false);

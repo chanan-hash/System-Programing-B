@@ -73,10 +73,12 @@ namespace ariel
         Graph operator--(int); // postfix decrement operator
 
         // This will allow us to do cout<<g1
+        // The friends means this is not a class function, so it can take more arguments,
+        // and it has accsses to private members of the class.
         friend std::ostream &operator<<(std::ostream &os, const Graph &g);
     };
     // int * Graph
     Graph operator*(int num, const Graph &g);
-    
+
 } // namespace ariel
 #endif // GRAPH_HPP
