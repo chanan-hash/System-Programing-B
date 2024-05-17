@@ -34,6 +34,21 @@ Use example: `g1 -= g2`
 ### Incerment and decrement - prefix & postfix
 
 ### comparison operator
+Lets define first what is the meaning of graph onw is bigger (or smaller) than other graph
+
+1. If g1 is contained in g2, than ```g1 < g2``` 
+2.  If not, than ```g1 < g2``` if g2 has more edges than g1
+3. If not, than ```g1 < g2```, if g2 is from bigger order, mean has more vertices  
+
+For each other operator such as ```<= or >=```
+we'll use logic rules to created them.  
+For example to do ```g2 >= g1``` we need
+```!(g1 < g2)```
+
+
+### Equations operators (==,!=)
+- 2 graph will be called equal if they are from  the same order (same number of vertices), and they have the same edges and weights between each to vertices.
+- If not they are not equal
 
 ### Printing by << operator
 
@@ -65,12 +80,6 @@ make test
 ```bash 
 ./test
 ```
-
-
-- שישה אופרטורי השוואה: גדול, גדול-או-שווה, קטן, קטן-או-שווה, שווה, לא-שווה. לשם מטלה זו כללי השוואת גרפים הם כדלקמן:
-
-  1. גרפים G1 ו-G2 ייקראו שווים אם הם מאותו סדר גודל ומכילים את אותן הצלעות (והמשקלים של הצלעות זהים) או אם G1 לא גדול מ-G2 וגם G2 לא גדול מ-G1.
-  2. גרף G2 גדול מגרף G1 אם הגרף G1 מוכל ממש בגרף G2. אם אף גרף לא מוכל ממש בשני והגרפים לא שווים, אז גרף G2 גדול מגרף G1 אם מספר הצלעות ב-G2 גדול ממספר הצלעות ב-G1. אם בכל זאת מספר הצלעות זהה, אז הגרף G2 גדול מהגרף G1 אם המטריצה המייצגת של G2 בעלת סדר גודל גבוה יותר משל G1.
 
 - הגדלה ב-1 (++) והקטנה ב-1 (--) לפני ואחרי המספר. פעולה זו תגדיל או תקטין ב-1 את כל המשקלים של הצלעות בגרף.
 - הכפלה בסקלר שלם (`int`) - מכפיל את המשקל של כל הצלעות.
