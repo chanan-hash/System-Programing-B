@@ -28,10 +28,38 @@ Use example: `g1 -= g2`
 3. `-g` unary **'-'**, switching the sign (like nultiply by -1) of each place that is not 0 (means there is an edge).
 
 ### Multiplication operators (* , *=)
+We have 2 kinds of multiplication:
+1. Multiply 2 graphs ```g1 * g2 ```
+multiplying their adjacency matrices, by rules of linear algebra, 
+and then initilize all the diagonal to 0, to keep it as a graph format
+2. multiplying by a scalar:  
+    1. ```g * 2``` 
+    2. ``` 2 * g ```
+
+  we want to enbale the two formats. The first one will be a class function, the second to enable it will need to put the function outside the class but in the namespace.  
+  This is why:  
+  The ```operator*``` function needs to be outside the class because it's a binary operator where the left-hand operand is not of the class type.
+
+In C++, when you define a binary operator as a member function, the left-hand operand must be an object of the class. For example, in the expression ```g1 * 2```, ```g1``` is an object of the Graph class, so you can define operator* as a member function of the Graph class.
+
+However, in the expression ```2 * g1```, ```2``` is not an object of the ```Graph``` class, so you can't define operator* as a member function of the ```Graph``` class. Instead, you need to define ```operator*``` as a non-member function.  
+The non-member ```operator*``` function can be a ***friend*** function if it needs to access private or protected members of the Graph class.
 
 ### Division operator (/=)
+The division operator is defined only on graph with scalar that is not 0.
+We're going over the matrix and dividing each edge by this scalar.
 
-### Incerment and decrement - prefix & postfix
+
+### Incerment and decrement - ++prefix & postfix++
+- ***prefix*** - allow us to do ```++g``` or ```--g```, increment or decrement by 1, only if the edge is not 0.  
+This means we're incrementing (or decreasing) g before we use it or doing function on it.
+```g2 = ++g1```  
+means ```g2``` will be equal to ```g1``` **after** we've incremented it.
+
+- ***postfix*** - allow us to do ```g++``` or ```g--```, increment or decrement by 1, only if the edge is not 0.  
+This means we're incrementing (or decreasing) g after we use it or doing function on it.
+```g2 = g1++```  
+means ```g2``` will be equal to ```g1``` **before** we've incremented it.
 
 ### comparison operator
 Lets define first what is the meaning of graph onw is bigger (or smaller) than other graph
@@ -80,9 +108,3 @@ make test
 ```bash 
 ./test
 ```
-
-- הגדלה ב-1 (++) והקטנה ב-1 (--) לפני ואחרי המספר. פעולה זו תגדיל או תקטין ב-1 את כל המשקלים של הצלעות בגרף.
-- הכפלה בסקלר שלם (`int`) - מכפיל את המשקל של כל הצלעות.
-- הכפלת גרפים - אנחנו מגדירים את פעולת הכפל בין גרף G1 לגרף G2 על ידי מכפלה של המטריצות המייצגות של שני הגרפים. התוצאה צריכה להיות מטריצה המייצגת גרף. ניסיון לבצע כפל בין גרפים בגדלים שונים צריך לזרוק שגיאה.
-- אופרטור פלט - הדפסה הגיונית של הגרף (צורת ההפדסה היא לשיקולכם).
-
