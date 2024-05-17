@@ -79,8 +79,16 @@ For example to do ```g2 >= g1``` we need
 - If not they are not equal
 
 ### Printing by << operator
-
-
+This operator is not a operation on the graph, but we want to have an access to graph private members. For that we'll use ***friend*** keyword - means it is not part of the class members-functions, but it has the access to the private (or protecred) members.
+The function signature will be by using ```ostream``` from standart library - ```std```
+``` cpp
+friend std::ostream &operator<<(std::ostream &os, const Graph &g);
+```
+This will allow us to print the graph by this option:  
+``` cpp
+cout << g1;
+```
+The printing of the graph will be simple print of the adjacency matrix.
 ## Algorithms
 We have included also our `algorithms.cpp` for checking them after using the operators on the graphs.  
 To keep it simple here, a unsymetric graph will be set as a directed graph, otherwise it will be undirected graph.
