@@ -371,7 +371,8 @@ namespace ariel
     {
         if (this->numVertices > other.numVertices)
         {
-            throw std::invalid_argument("g1 has more vertices than g2 check g1 > g2.");
+            // throw std::invalid_argument("g1 has more vertices than g2 check g1 > g2.");
+            return false;
         }
         bool result = false;
         // Checking if g1 is contained in g2, we'll go over g1 and check if all the values are in g2

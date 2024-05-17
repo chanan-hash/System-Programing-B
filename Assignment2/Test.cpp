@@ -265,11 +265,37 @@ TEST_CASE("Testing increment prefix and postfix")
         {2, 3, 0}};
     g4.loadGraph(expectedGraph);
     g5.loadGraph(weightedGraph);
+
     CHECK((g4 == g2) == true);
     CHECK((g3 == g5) == true);
     CHECK((g3 != g2) == true);
 
-    ariel::Graph g6 = ++g1; // will be equal to g2 after increment
+    SUBCASE("Comparing between g2 and g3 algorithms")
+    {
+        // suppose to be the same
+
+        bool g2Connected = ariel::Algorithms::isConnected(g2);
+        bool g3Connected = ariel::Algorithms::isConnected(g3);
+
+        CHECK(g2Connected == g3Connected);
+
+        bool g2Cycle = ariel::Algorithms::isContainsCycle(g2);
+        bool g3Cycle = ariel::Algorithms::isContainsCycle(g3);
+
+        CHECK(g2Cycle == g3Cycle);
+
+        string g2Bipartite = ariel::Algorithms::isBipartite(g2);
+        string g3Bipartite = ariel::Algorithms::isBipartite(g3);
+
+        CHECK(g2Bipartite == g3Bipartite);
+
+        string g2ShortestPath = ariel::Algorithms::shortestPath(g2, 1, 2);
+        string g3ShortestPath = ariel::Algorithms::shortestPath(g3, 1, 2);
+
+        CHECK(g2ShortestPath == g3ShortestPath);
+    }
+
+    ariel::Graph g6 = ++g1; // will be equal to g1 after increment
     vector<vector<int>> graph2 = {
         {0, 2, 0},
         {2, 0, 2},
@@ -314,6 +340,12 @@ TEST_CASE("Testing devrement prefix and postfix")
     g1.loadGraph(graph);
     ariel::Graph g2 = g1--;
 
+    CHECK(ariel::Algorithms::isConnected(g2) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g2) == true);
+    CHECK(ariel::Algorithms::isBipartite(g2) == "The graph is not bipartite");
+    CHECK(ariel::Algorithms::shortestPath(g2, 4, 2) == "Negative cycle detected");
+    CHECK(ariel::Algorithms::negativeCycle(g2) == "Negative cycle detected: 1->2->1");
+
     vector<vector<int>> graph2 = {
         {0, -9, 0, -2, 0},
         {0, 0, -8, 0, 3},
@@ -341,6 +373,12 @@ TEST_CASE("Testing devrement prefix and postfix")
     CHECK((g5 == g6) == true);
     CHECK((g1 != g3) == true); // g1 changed
 
+    CHECK(ariel::Algorithms::isConnected(g5) == true);
+    CHECK(ariel::Algorithms::isContainsCycle(g5) == true);
+    CHECK(ariel::Algorithms::isBipartite(g5) == "The graph is not bipartite");
+    CHECK(ariel::Algorithms::shortestPath(g5, 1, 2) == "Negative cycle detected");
+    CHECK(ariel::Algorithms::shortestPath(g5, 4, 2) == "Negative cycle detected");
+    CHECK(ariel::Algorithms::negativeCycle(g5) == "Negative cycle detected: 1->2->0->1");
 
     SUBCASE("Decrementing zero matrix")
     {
@@ -357,5 +395,43 @@ TEST_CASE("Testing devrement prefix and postfix")
         g4.loadGraph(zeroMatrix);
         CHECK((g3 == g4) == true);
         CHECK((g3 != g4) == false);
+    }
+}
+
+TEST_CASE("Checking comparison operators")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 2, 0}};
+    g1.loadGraph(graph);
+    ariel::Graph g2;
+    vector<vector<int>> weightedGraph = {
+        {0, 1, 1},
+        {1, 0, 2},
+        {1, 2, 0}};
+    g2.loadGraph(weightedGraph);
+
+    CHECK((g1 < g2) == true); // graph 1 is contained in graph 2
+    CHECK((g1 > g2) == false);
+    CHECK((g1 <= g2) == true);
+    CHECK((g1 >= g2) == false);
+
+    SUBCASE("Checking bigger graph")
+    {
+        ariel::Graph g3;
+        vector<vector<int>> weightedGraph2 = {
+            {0, 1, 1, -1, 1},
+            {1, 0, -7, 1, 4},
+            {-25, 1, 0, 2, 1},
+            {1, 5, 1, 0, 1},
+            {9, 1, 1, 3, 0}};
+        g3.loadGraph(weightedGraph2);
+
+        CHECK((g3 < g2) == false);
+        CHECK((g3 > g2) == true);
+        CHECK((g3 <= g2) == false);
+        CHECK((g3 >= g2) == true);
     }
 }
