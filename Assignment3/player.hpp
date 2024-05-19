@@ -6,7 +6,7 @@
 using namespace std;
 namespace ariel
 {
-    class player
+    class Player
     {
     private:
         string name;
@@ -14,6 +14,14 @@ namespace ariel
         // cards ?
 
     public:
+        Player(string name) : name(name), winPoints(0) {} // initilization list
+        // void placeSettelemnt(vector<string> places, vector<int> placesNum, Board &board) {}
+        // void placeRoad(vector<string> places, vector<int> placesNum, Board &board) {}
+        // void rollDice() {}
+        // void endTurn() {}
+        // void trade(Player &other, string give, string take, int giveAmount, int takeAmount) {}
+        // void buyDevelopmentCard() {}
+        // void printPoints() {}
     };
 
 }
