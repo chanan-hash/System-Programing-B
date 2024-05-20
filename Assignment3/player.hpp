@@ -15,13 +15,15 @@ namespace ariel
 
     public:
         Player(string name) : name(name), winPoints(0) {} // initilization list
-        // void placeSettelemnt(vector<string> places, vector<int> placesNum, Board &board) {}
-        // void placeRoad(vector<string> places, vector<int> placesNum, Board &board) {}
-        // void rollDice() {}
-        // void endTurn() {}
-        // void trade(Player &other, string give, string take, int giveAmount, int takeAmount) {}
-        // void buyDevelopmentCard() {}
-        // void printPoints() {}
+        void placeSettelemnt(vector<string> places, vector<int> placesNum, Board &board) {}
+        void placeRoad(vector<string> places, vector<int> placesNum, Board &board) {}
+        void changeToCity(vector<string> places, vector<int> placesNum, Board &board) {}
+        void rollDice() {}
+        void endTurn() {}
+        void trade(Player &other, string give, string take, int giveAmount, int takeAmount) {}
+        void buyDevelopmentCard() {} //will check if he can by if not will print not, if yes will buy and add it to his development cards
+        void printPoints() {}
+        string getName() { return this->name;}
     };
 
 }
