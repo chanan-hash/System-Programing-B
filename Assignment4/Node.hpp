@@ -37,13 +37,36 @@ public:
     // remove a child from the node
     void remove_child(Node<T> *child);
 
-    void delete_children();
+    void delete_children()
+    {
+        children.clear();
+    };
 
     // String representation of the node
+    // string to_string() const
+    // {
+    //     stringstream ss;
+    //     ss << value;
+    //     return ss.str();
+    // }
+
+    /**
+     * To string function. shpw the node value as string
+     */
     string to_string() const
     {
-        stringstream ss;
-        ss << value;
-        return ss.str();
+        string s;
+        if (is_floating_point<T>::value)
+        {
+            s = to_string(value);
+            ostringstrseam os;
+            os << value; // or get_value()
+            s = os.str();
+        }
+        else
+        {
+            s = to_string(value); // or get_value()
+        }
+        return s;
     }
 };
