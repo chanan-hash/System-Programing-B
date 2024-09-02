@@ -1,5 +1,7 @@
 #pragma once
 // Author: chanan-helman
+// chananhelman@gmail.com
+
 /**
  * This class is a node class for our k-nary tree, it contains a value and a vector of children nodes.
  */
@@ -11,6 +13,11 @@
 
 using namespace std;
 
+string to_string(const string &str)
+{
+    return str;
+}
+
 template <typename T> // for generic Node
 class Node
 {
@@ -20,8 +27,14 @@ public:
 
     explicit Node(T value) : value(value) {} // initial list
 
+    // non const getter
+    T &get_value()
+    {
+        return value;
+    }
+
     // getters, inlines for performance
-    T &get_value() const
+    const T &get_value() const
     {
         return value;
     }
@@ -35,37 +48,31 @@ public:
     }
 
     // remove a child from the node
-    void remove_child(Node<T> *child);
+    void remove_child(Node<T> *child)
+    {
+        children.erase(std::remove(children.begin(), children.end(), child), children.end());
+    }
 
     void delete_children()
     {
         children.clear();
     };
 
-    // String representation of the node
-    // string to_string() const
-    // {
-    //     stringstream ss;
-    //     ss << value;
-    //     return ss.str();
-    // }
-
     /**
-     * To string function. shpw the node value as string
+     * To string function. show the node value as string
      */
     string to_string() const
     {
         string s;
-        if (is_floating_point<T>::value)
+        if (std::is_floating_point<T>::value)
         {
-            s = to_string(value);
-            ostringstrseam os;
-            os << value; // or get_value()
+            std::ostringstream os;
+            os << get_value();
             s = os.str();
         }
         else
         {
-            s = to_string(value); // or get_value()
+            s = std::to_string(get_value());
         }
         return s;
     }

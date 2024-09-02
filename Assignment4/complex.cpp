@@ -42,6 +42,8 @@ bool Complex::operator<(const Complex &other)
     return sqrt(pow(real, 2) + pow(imaginary, 2)) < sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
 }
 
+// for some reason, the operator> is not working as expected other < *this
+// TODO - check why
 bool Complex::operator>(const Complex &other)
 {
     return sqrt(pow(real, 2) + pow(imaginary, 2)) > sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
