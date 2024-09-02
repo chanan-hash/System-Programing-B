@@ -36,9 +36,13 @@ public:
     bool operator>(const Complex &other);
     bool operator<=(const Complex &other);
     bool operator>=(const Complex &other);
+    bool operator!=(const Complex &other);
 
     /**
      * Overloads the << operator to print the complex number.
      */
     friend ostream &operator<<(ostream &os, const Complex &complex);
 };
+
+// Function to convert a complex number to a string
+string cmpx_to_str(const Complex &complex);
