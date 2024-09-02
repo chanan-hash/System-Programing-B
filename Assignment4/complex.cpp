@@ -16,9 +16,24 @@ bool Complex::operator==(const Complex &other) const
 // String representation of the complex number
 string Complex::to_string() const
 {
-    stringstream ss;
-    ss << real << " + " << imaginary << "i";
-    return ss.str();
+    std::ostringstream oss;
+    if (real == 0 && imaginary == 0)
+    {
+        oss << "0";
+    }
+    else if (real == 0)
+    {
+        oss << "i" << imaginary;
+    }
+    else if (imaginary == 0)
+    {
+        oss << real;
+    }
+    else
+    {
+        oss << real << (imaginary > 0 ? "+i" : "-i") << abs(imaginary);
+    }
+    return oss.str();
 }
 
 // comparison operators
@@ -27,10 +42,10 @@ bool Complex::operator<(const Complex &other)
     return sqrt(pow(real, 2) + pow(imaginary, 2)) < sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
 }
 
-// bool Complex::operator>(const Complex &other)
-// {
-//     return other < *this; // need to be checked why doesn'y work
-// }
+bool Complex::operator>(const Complex &other)
+{
+    return sqrt(pow(real, 2) + pow(imaginary, 2)) > sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
+}
 
 bool Complex::operator<=(const Complex &other)
 {
