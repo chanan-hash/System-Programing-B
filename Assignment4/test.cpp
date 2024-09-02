@@ -1,5 +1,6 @@
 #include "doctest.h"
 #include "complex.hpp"
+#include "Node.hpp"
 
 using namespace std;
 
