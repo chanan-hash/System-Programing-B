@@ -26,17 +26,17 @@ public:
      * Two complex numbers are equal if their real and imaginary parts are equal.
      * @param other The other complex number to compare with.
      */
+
+    // comparison operators
     bool operator==(const Complex &other) const;
+    bool operator!=(const Complex &other) const;
+    bool operator<(const Complex &other) const;
+    bool operator>(const Complex &other) const;
+    bool operator<=(const Complex &other) const;
+    bool operator>=(const Complex &other) const;
 
     // String representation of the complex number
     string to_string() const;
-
-    // comparison operators
-    bool operator<(const Complex &other);
-    bool operator>(const Complex &other);
-    bool operator<=(const Complex &other);
-    bool operator>=(const Complex &other);
-    bool operator!=(const Complex &other);
 
     /**
      * Overloads the << operator to print the complex number.

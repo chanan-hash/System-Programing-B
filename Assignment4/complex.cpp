@@ -10,7 +10,33 @@ double Complex::get_imaginary() const { return imaginary; }
 // Checks if two complex numbers are equal.
 bool Complex::operator==(const Complex &other) const
 {
-    return real == other.real && imaginary == other.imaginary;
+    return (real == other.real) && (imaginary == other.imaginary);
+}
+bool Complex::operator!=(const Complex &other) const
+{
+    return !(*this == other);
+}
+
+// comparison operators
+bool Complex::operator<(const Complex &other) const
+{
+    return sqrt(pow(real, 2) + pow(imaginary, 2)) < sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
+}
+
+// for some reason, the operator> is not working as expected other < *this
+// TODO - check why
+bool Complex::operator>(const Complex &other) const
+{
+    return other < *this;
+}
+
+bool Complex::operator<=(const Complex &other) const
+{
+    return !(*this > other);
+}
+bool Complex::operator>=(const Complex &other) const
+{
+    return !(*this < other);
 }
 
 // String representation of the complex number
@@ -34,33 +60,6 @@ string Complex::to_string() const
         oss << real << (imaginary > 0 ? "+i" : "-i") << abs(imaginary);
     }
     return oss.str();
-}
-
-// comparison operators
-bool Complex::operator<(const Complex &other)
-{
-    return sqrt(pow(real, 2) + pow(imaginary, 2)) < sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
-}
-
-// for some reason, the operator> is not working as expected other < *this
-// TODO - check why
-bool Complex::operator>(const Complex &other)
-{
-    return sqrt(pow(real, 2) + pow(imaginary, 2)) > sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
-}
-
-bool Complex::operator<=(const Complex &other)
-{
-    return !(*this > other);
-}
-bool Complex::operator>=(const Complex &other)
-{
-    return !(*this < other);
-}
-
-bool Complex::operator!=(const Complex &other)
-{
-    return !(*this == other);
 }
 
 // Overloads the << operator to print the complex number.
