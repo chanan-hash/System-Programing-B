@@ -16,14 +16,36 @@
 template <typename T, int K = 2> // for generic Tree, and K = 2 as default
 class Tree
 {
+
 private:
     Node<T> *root;        // The root of the tree
     size_t size;          // The size of the tree
     int max_children = K; // The maximum number of children for each node
 
 public:
+    //  class inorder_iterator;
+    class preorder_iterator;
+    class postorder_iterator;
+    class inorder_iterator;
+    class BFS_iterator;
+    class DFS_iterator;
+    // class TreeToHeap;
+
     Tree() : root(nullptr), size(0) {} // initial list
-    ~Tree() {}                         // destructor wiil use the iterators to delete all the nodes
+    ~Tree()                            // destructor will use the iterators to delete all the nodes
+    {
+        // we know that tree is connected so we can use the BFS to delete all the nodes
+        BFS_iterator it = begin_BFS();
+        BFS_iterator previous = it;
+        BFS_iterator end = end_BFS();
+        while (it != end)
+        {
+            previous = it;
+            ++it;
+            previous->delete_children(); // delete the children of the node, the vector doing it by itself
+        }
+        root = nullptr;
+    }
 
     void add_root(Node<T> *node)
     {
@@ -43,13 +65,6 @@ public:
         parent->add_child(child);
         size++;
     }
-
-    //  class inorder_iterator;
-    class preorder_iterator;
-    class postorder_iterator;
-    class inorder_iterator;
-    class BFS_iterator;
-    class DFS_iterator;
 
     // The iterators class
 
@@ -231,8 +246,9 @@ public:
                         postorder.push_back(node);
                         s.pop();
                     }
-                    // if we are going up the tree from left child
                 }
+
+                // if we are going up the tree from left child
                 else if (node->get_childrens().size() > 0 && p == node->get_childrens()[0])
                 {
                     if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
@@ -346,7 +362,7 @@ public:
         // operators for the iteration itself
         T &operator*() const
         {
-            return q.front()->value;
+            return q.front()->get_value();
         }
 
         Node<T> *operator->() const
@@ -357,13 +373,18 @@ public:
         // The BFS itself
         BFS_iterator &operator++()
         {
+            if (q.empty())
+            {
+                return *this;
+            }
+
             Node<T> *node = q.front(); // getting the first node in the queue
             q.pop();
             for (int i = 0; i < node->children.size(); i++) // going over the children of the node
             {
-                if (node->children[i] != nullptr) // if the child is not null
+                if (node->get_childrens()[i] != nullptr) // if the child is not null
                 {
-                    q.push(node->children[i]); // pushing the children to the queue
+                    q.push(node->get_childrens()[i]); // pushing the children to the queue
                 }
             }
 
@@ -432,4 +453,63 @@ public:
     {
         return DFS_iterator(nullptr);
     }
+
+    // Tree to Heap iterator
+    // class TreeToHeap
+    // {
+    // private:
+    //     vector<Node<T> *> heap;
+    //     int index;
+
+    // public:
+    //     TreeToHeap(Node<T> *root)
+    //     {
+    //         index = 0; // initial index in the ++ operator we will increase it
+    //         if (root == nullptr)
+    //         {
+    //             return;
+    //         }
+
+    //         // scanning the tree using BFS, and pushing the nodes to the heap
+    //         for (auto it = begin_BFS(); it != end_BFS(); ++it)
+    //         {
+    //             heap.push_back(*it); // pushing the nodes to the heap
+    //         }
+    //         // using the std make_heap function to make the heap
+
+    //         std::make_heap(heap.begin(), heap.end(), [](Node<T> *a, Node<T> *b)
+    //                        { return a->get_value() < b->get_value(); });
+    //     }
+
+    //     // operators for the iteration itself
+    //     T &operator*() { return heap[index]->get_value(); }
+
+    //     Node<T> *operator->() { return heap[0]; }
+
+    //     TreeToHeap &operator++()
+    //     {
+    //         // using the std pop_heap function to pop the root of the heap
+    //         std::pop_heap(heap.begin(), heap.end() - index, [](Node<T> *a, Node<T> *b)
+    //                       { return a->get_value() < b->get_value(); });
+    //         index++; // increasing the index to go over the heap
+    //         return *this;
+    //     }
+
+    //     // comparison operators
+    //     bool operator==(const TreeToHeap &other) const { return heap.size() - index == other.heap.size() - other.index; } // going according the indexes because using vector
+    //     bool operator!=(const TreeToHeap &other) const
+    //     {
+    //         return !(*this == other);
+    //     }
+    // };
+
+    // TreeToHeap begin_TreeToHeap()
+    // {
+    //     return TreeToHeap(root);
+    // }
+
+    // TreeToHeap end_TreeToHeap()
+    // {
+    //     return TreeToHeap(nullptr);
+    // }
 };
