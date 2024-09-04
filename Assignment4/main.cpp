@@ -95,25 +95,27 @@ int main()
     cout << endl;
 
     cout << "Looping Post order:" << endl;
-    for (auto it = tree.begin_postorder(); it != tree.end_postorder(); ++it) {
+    for (auto it = tree.begin_postorder(); it != tree.end_postorder(); ++it)
+    {
         cout << (it)->get_value() << " ";
     }
     cout << endl;
 
-    // cout<< "Looping Tree to Heap:" << endl;
-    // for (auto it = tree.begin_TreeToHeap(); it != tree.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
+    cout << "Looping Tree to Heap:" << endl;
+    for (auto it = tree.begin_TreeToHeap(); it != tree.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
     // checking the generic tree for complex numbers
 
-    // Tree<Complex> tree_cmpx;
     // Node<Complex> node_cmpx1(Complex(1, 2));
     // Node<Complex> node_cmpx2(Complex(1, -2));
     // Node<Complex> node_cmpx3(Complex(3, 4));
     // Node<Complex> node_cmpx4(Complex(5, 6));
     // Node<Complex> node_cmpx5(Complex(7, 8));
+    // Tree<Complex> tree_cmpx;
 
     // tree_cmpx.add_root(&node_cmpx1);
     // tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx2);
@@ -156,64 +158,59 @@ int main()
     // }
     // cout << endl;
 
+    // // checking the generic tree for strings
+    // // checking the generic tree for doubles
+    // Node<double> node_double1(1.1);
+    // Node<double> node_double2(2.2);
+    // Node<double> node_double3(3.3);
+    // Node<double> node_double4(4.4);
+    // Node<double> node_double5(5.5);
+    // Tree<double> tree_double;
 
-    // checking the generic tree for strings
-    // checking the generic tree for doubles
-    Tree<double> tree_double;
-    Node<double> node_double1(1.1);
-    Node<double> node_double2(2.2);
-    Node<double> node_double3(3.3);
-    Node<double> node_double4(4.4);
-    Node<double> node_double5(5.5);
+    // tree_double.add_root(&node_double1);
+    // tree_double.add_sub_node(&node_double1, &node_double2);
+    // tree_double.add_sub_node(&node_double1, &node_double3);
+    // tree_double.add_sub_node(&node_double2, &node_double4);
+    // tree_double.add_sub_node(&node_double2, &node_double5);
 
-    tree_double.add_root(&node_double1);
-    tree_double.add_sub_node(&node_double1, &node_double2);
-    tree_double.add_sub_node(&node_double1, &node_double3);
-    tree_double.add_sub_node(&node_double2, &node_double4);
-    tree_double.add_sub_node(&node_double2, &node_double5);
+    // cout << "Looping BFS for doubles:" << endl;
+    // for (auto it = tree_double.begin_BFS(); it != tree_double.end_BFS(); ++it)
+    // {
+    //     cout << (it)->get_value() << " ";
+    // }
+    // cout << endl;
 
-    cout << "Looping BFS for doubles:" << endl;
-    for (auto it = tree_double.begin_BFS(); it != tree_double.end_BFS(); ++it)
-    {
-        cout << (it)->get_value() << " ";
-    }
-    cout << endl;
+    // cout << "Looping DFS for doubles:" << endl;
 
-    cout << "Looping DFS for doubles:" << endl;
+    // for (auto it = tree_double.begin_DFS(); it != tree_double.end_DFS(); ++it)
+    // {
+    //     cout << (it)->get_value() << " ";
+    // }
 
-    for (auto it = tree_double.begin_DFS(); it != tree_double.end_DFS(); ++it)
-    {
-        cout << (it)->get_value() << " ";
-    }
+    // cout << endl;
 
-    cout << endl;
+    // cout << "Looping Pre order for doubles:" << endl;
+    // for (auto it = tree_double.begin_preorder(); it != tree_double.end_preorder(); ++it)
+    // {
+    //     cout << (it)->get_value() << " ";
+    // }
+    // cout << endl;
 
-    cout << "Looping Pre order for doubles:" << endl;
-    for (auto it = tree_double.begin_preorder(); it != tree_double.end_preorder(); ++it)
-    {
-        cout << (it)->get_value() << " ";
-    }
-    cout << endl;
+    // cout << "Looping In order for doubles:" << endl;
+    // for (auto it = tree_double.begin_inorder(); it != tree_double.end_inorder(); ++it)
+    // {
+    //     cout << (it)->get_value() << " ";
+    // }
+    // cout << endl;
 
-    cout << "Looping In order for doubles:" << endl;
-    for (auto it = tree_double.begin_inorder(); it != tree_double.end_inorder(); ++it)
-    {
-        cout << (it)->get_value() << " ";
-    }
-    cout << endl;
-
-    cout << "Looping Post order for doubles:" << endl;
-    for (auto it = tree_double.begin_postorder(); it != tree_double.end_postorder(); ++it)
-    {
-        cout << (it)->get_value() << " ";
-    }
-    cout << endl;
-
-    
-
+    // cout << "Looping Post order for doubles:" << endl;
+    // for (auto it = tree_double.begin_postorder(); it != tree_double.end_postorder(); ++it)
+    // {
+    //     cout << (it)->get_value() << " ";
+    // }
+    // cout << endl;
 
     // checking the generic tree for char
-
 
     // checking the generic tree for int but has 4 children each node
 

@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <algorithm> // for the heap
 
 #include "Node.hpp" // include the node class
 
@@ -380,7 +381,7 @@ public:
 
             Node<T> *node = q.front(); // getting the first node in the queue
             q.pop();
-            for (int i = 0; i < node->children.size(); i++) // going over the children of the node
+            for (size_t i = 0; i < node->children.size(); i++) // going over the children of the node
             {
                 if (node->get_childrens()[i] != nullptr) // if the child is not null
                 {
@@ -455,61 +456,62 @@ public:
     }
 
     // Tree to Heap iterator
-    // class TreeToHeap
-    // {
-    // private:
-    //     vector<Node<T> *> heap;
-    //     int index;
+    class TreeToHeap
+    {
+    private:
+        vector<Node<T> *> heap;
+        int index;
 
-    // public:
-    //     TreeToHeap(Node<T> *root)
-    //     {
-    //         index = 0; // initial index in the ++ operator we will increase it
-    //         if (root == nullptr)
-    //         {
-    //             return;
-    //         }
+    public:
+        TreeToHeap(Node<T> *root)
+        {
+            index = 0; // initial index in the ++ operator we will increase it
+            if (root == nullptr)
+            {
+                return;
+            }
+            BFS_iterator it = BFS_iterator(root); // using the BFS iterator to go over the tree
+            BFS_iterator end = BFS_iterator(nullptr);
+            // scanning the tree using BFS, and pushing the nodes to the heap
+            while (it != end)
+            {
+                heap.push_back(it.operator->()); // pushing the nodes to the heap
+                ++it;
+            }
 
-    //         // scanning the tree using BFS, and pushing the nodes to the heap
-    //         for (auto it = begin_BFS(); it != end_BFS(); ++it)
-    //         {
-    //             heap.push_back(*it); // pushing the nodes to the heap
-    //         }
-    //         // using the std make_heap function to make the heap
+            std::make_heap(heap.begin(), heap.end(), [](Node<T> *a, Node<T> *b)
+                           { return a->get_value() < b->get_value(); });
+        }
 
-    //         std::make_heap(heap.begin(), heap.end(), [](Node<T> *a, Node<T> *b)
-    //                        { return a->get_value() < b->get_value(); });
-    //     }
+        // operators for the iteration itself
+        T &operator*() { return heap[index]->get_value(); }
 
-    //     // operators for the iteration itself
-    //     T &operator*() { return heap[index]->get_value(); }
+        Node<T> *operator->() { return heap[0]; }
 
-    //     Node<T> *operator->() { return heap[0]; }
+        TreeToHeap &operator++()
+        {
+            // using the std pop_heap function to pop the root of the heap
+            std::pop_heap(heap.begin(), heap.end() - index, [](Node<T> *a, Node<T> *b)
+                          { return a->get_value() < b->get_value(); });
+            index++; // increasing the index to go over the heap
+            return *this;
+        }
 
-    //     TreeToHeap &operator++()
-    //     {
-    //         // using the std pop_heap function to pop the root of the heap
-    //         std::pop_heap(heap.begin(), heap.end() - index, [](Node<T> *a, Node<T> *b)
-    //                       { return a->get_value() < b->get_value(); });
-    //         index++; // increasing the index to go over the heap
-    //         return *this;
-    //     }
+        // comparison operators
+        bool operator==(const TreeToHeap &other) const { return heap.size() - index == other.heap.size() - other.index; } // going according the indexes because using vector
+        bool operator!=(const TreeToHeap &other) const
+        {
+            return !(*this == other);
+        }
+    };
 
-    //     // comparison operators
-    //     bool operator==(const TreeToHeap &other) const { return heap.size() - index == other.heap.size() - other.index; } // going according the indexes because using vector
-    //     bool operator!=(const TreeToHeap &other) const
-    //     {
-    //         return !(*this == other);
-    //     }
-    // };
+    TreeToHeap begin_TreeToHeap()
+    {
+        return TreeToHeap(root);
+    }
 
-    // TreeToHeap begin_TreeToHeap()
-    // {
-    //     return TreeToHeap(root);
-    // }
-
-    // TreeToHeap end_TreeToHeap()
-    // {
-    //     return TreeToHeap(nullptr);
-    // }
+    TreeToHeap end_TreeToHeap()
+    {
+        return TreeToHeap(nullptr);
+    }
 };
