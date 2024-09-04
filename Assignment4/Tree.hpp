@@ -84,8 +84,7 @@ public:
             while (root != nullptr)
             {
                 s.push(root);
-                if (!root->children.empty() && root->children.size() > 0)
-
+                if (!root->get_childrens().empty() && root->get_childrens().size() > 0 && root->get_childrens()[0] != nullptr)
                 {
                     root = root->children[0]; // the left child, going over an array
                 }
@@ -113,20 +112,15 @@ public:
         {
             Node<T> *node = s.top();
             s.pop();
-            if (!node->children.empty() && node->children.size() > 1)
+            if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
             {
-                Node<T> *right = node->children[1];
-                while (right != nullptr)
+                Node<T> *right = node->get_childrens()[1]; // the right child
+                s.push(right);                            // pushing the right child
+                Node<T> *left = right;                    // the left child of the right child
+                while (left->get_childrens().size() > 0 && left->get_childrens()[0] != nullptr)
                 {
-                    s.push(right);
-                    if (!right->children.empty() && right->children.size() > 0)
-                    {
-                        right = right->children[0];
-                    }
-                    else
-                    {
-                        right = nullptr;
-                    }
+                    left = left->get_childrens()[0]; // going over the left children
+                    s.push(left);                    // pushing the left child
                 }
             }
 
@@ -180,16 +174,22 @@ public:
             Node<T> *node = s.top();
             s.pop();
             // pushing right child first
-            if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
+            // if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
+            // {
+            //     s.push(node->get_childrens()[1]);
+            // }
+            // // left child
+            // if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
+            // {
+            //     s.push(node->get_childrens()[0]);
+            // }
+            for (int i = node->children.size() - 1; i >= 0; i--)
             {
-                s.push(node->get_childrens()[1]);
+                if (node->children[i] != nullptr)
+                {
+                    s.push(node->children[i]);
+                }
             }
-            // left child
-            if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
-            {
-                s.push(node->get_childrens()[0]);
-            }
-
             return *this; // Return a reference to this iterator to allow chaining.
         }
 

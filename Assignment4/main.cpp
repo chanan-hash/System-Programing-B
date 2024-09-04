@@ -213,6 +213,80 @@ int main()
     // checking the generic tree for char
 
     // checking the generic tree for int but has 4 children each node
+    Node<int> node_int1(1);
+    Node<int> node_int2(2);
+    Node<int> node_int3(3);
+    Node<int> node_int4(4);
+    Node<int> node_int5(5);
+    Node<int> node_int6(6);
+    Node<int> node_int7(7);
+    Node<int> node_int8(8);
+    Node<int> node_int9(9);
+    
+
+    Tree<int, 4> tree_int; // declearing the tree after the nodes
+
+    tree_int.add_root(&node_int1);
+    tree_int.add_sub_node(&node_int1, &node_int2);
+    tree_int.add_sub_node(&node_int1, &node_int3);
+    tree_int.add_sub_node(&node_int1, &node_int4);
+    tree_int.add_sub_node(&node_int1, &node_int5);
+    tree_int.add_sub_node(&node_int2, &node_int6);
+    tree_int.add_sub_node(&node_int2, &node_int7);
+    tree_int.add_sub_node(&node_int2, &node_int8);
+    tree_int.add_sub_node(&node_int2, &node_int9);
+
+    // The tree should look like this:
+    //        1
+    //     /  |  |  \.
+    //    2   3  4   5
+    //   /|\.
+    //  6 7 8 9
+
+    cout << "Looping BFS for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_BFS(); it != tree_int.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
+
+    cout << "Looping DFS for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_DFS(); it != tree_int.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
+
+    cout << "Looping Pre order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_preorder(); it != tree_int.end_preorder(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
+
+    cout << "Looping In order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_inorder(); it != tree_int.end_inorder(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+
+    cout << endl;
+
+    cout << "Looping Post order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_postorder(); it != tree_int.end_postorder(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
+
+    cout << "Looping Tree to Heap for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_TreeToHeap(); it != tree_int.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
+
+
 
     return 0;
 }
