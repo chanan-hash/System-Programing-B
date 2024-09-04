@@ -188,6 +188,7 @@ public:
             return !(*this == other);
         }
     };
+
     // An postorder iterator - Left, Right, Root
     class postorder_iterator
     {
@@ -198,23 +199,64 @@ public:
     public:
         postorder_iterator(Node<T> *root)
         {
+            index = 0;
+
+            if (root == nullptr) // if the root is null
+            {
+                return;
+            }
+
             stack<Node<T> *> s;
             s.push(root);
+            Node<T> *p = nullptr; // previous node
+
             while (!s.empty())
             {
                 Node<T> *node = s.top();
-                s.pop();
-                postorder.push_back(node);
-                for (int i = 0; i < node->get_childrens().size(); i++)
+                //  if we are going down the tree
+                if (p == nullptr || (p->get_childrens().size() > 0 && p->get_childrens()[0] == node) || (p->get_childrens().size() > 1 && p->get_childrens()[1] == node))
                 {
-                    s.push(node->get_childrens()[i]);
+                    // if he has left child
+                    if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
+                    {
+                        s.push(node->get_childrens()[0]); // go left
+                    }
+                    // if he has right child
+                    else if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
+                    {
+                        s.push(node->get_childrens()[1]); // go right
+                    }
+                    else
+                    { // leaf
+                        postorder.push_back(node);
+                        s.pop();
+                    }
+                    // if we are going up the tree from left child
                 }
+                else if (node->get_childrens().size() > 0 && p == node->get_childrens()[0])
+                {
+                    if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
+                    { // has right child
+                        s.push(node->get_childrens()[1]);
+                    }
+                    else
+                    {
+                        postorder.push_back(node);
+                        s.pop();
+                    }
+                    // if we are going up the tree from right child
+                }
+                else if (node->get_childrens().size() > 1 && p == node->get_childrens()[1])
+                {
+                    postorder.push_back(node);
+                    s.pop();
+                }
+                p = node;
             }
-            index = 0;
         }
 
         // operator for the iteration itself
-        T &operator*() { return postorder[index]->get_data(); }
+        T &operator*() { return postorder[index]->get_value(); }
 
         Node<T> *operator->() { return postorder[index]; }
 

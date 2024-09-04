@@ -94,11 +94,11 @@ int main()
     }
     cout << endl;
 
-    // cout << "Looping Post order:" << endl;
-    // for (auto it = tree.begin_postorder(); it != tree.end_postorder(); ++it) {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order:" << endl;
+    for (auto it = tree.begin_postorder(); it != tree.end_postorder(); ++it) {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
     return 0;
 }
