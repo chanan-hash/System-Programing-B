@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include <vector>
 #include <iostream>
-#include <sstream>
-#include <string>
-#include <stdexcept>
-#include <stack> // for the iterators
 #include <queue> // for the iterators
+#include <sstream>
+#include <stack> // for the iterators
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 #include "Node.hpp" // include the node class
 
@@ -38,348 +38,356 @@ public:
     {
         if (parent->get_childrens().size() >= K)
         {
-            throw runtime_error "The parent has reached the maximum number of children";
+            throw runtime_error("The parent has the maximum number of children");
         }
         parent->add_child(child);
         size++;
     }
 
-    // Iterators for the tree
-    inorder_iterator<T> begin_in_order()
+    //  class inorder_iterator;
+    class preorder_iterator;
+    class postorder_iterator;
+    class inorder_iterator;
+    class BFS_iterator;
+    class DFS_iterator;
+
+    // The iterators class
+
+    // An inorder iterator - Left, Root, Right
+    class inorder_iterator
     {
-        return inorder_iterator<T>(this->root);
-    }
+    private:
+        // Node<T> *current;
+        stack<Node<T> *> s;
 
-    inorder_iterator<T> end_in_order()
-    {
-        return inorder_iterator<T>(nullptr);
-    }
-
-    preorder_iterator<T> begin_pre_order()
-    {
-        return preorder_iterator<T>(this->root);
-    }
-
-    preorder_iterator<T> end_pre_order()
-    {
-        return preorder_iterator<T>(nullptr);
-    }
-
-    postorder_iterator<T> begin_post_order()
-    {
-        return postorder_iterator<T>(this->root);
-    }
-
-    postorder_iterator<T> end_post_order()
-    {
-        return postorder_iterator<T>(nullptr);
-    }
-};
-
-// The iterators classes
-
-// An inorder iterator - Left, Root, Right
-template <typename T>
-class inorder_iterator
-{
-private:
-    Node<T> *current;
-    stack<Node<T> *> s;
-
-public:
-    inorder_irerator(Node<T> *root)
-    {
-        // push all the left children of the root
-        current = root;
-        while (current != nullptr)
+    public:
+        inorder_iterator(Node<T> *root)
         {
-            s.push(current);
-            if (!root->children.empty())
+            // push all the left children of the root
+            s.push(nullptr); // to know when to stop
+            while (root != nullptr)
             {
-                current = root->children[0]; // the left child, going over an array
-            }
-            else
-            {
-                current = nullptr;
-            }
-        }
-    }
+                s.push(root);
+                if (!root->children.empty() && root->children.size() > 0)
 
-    // operators for the iteration itself
-    T &operator*() const // getting the value of the current node
-    {
-        return current->value;
-    }
-
-    // getting the pointer to the current node
-    Node<T> *operator->() const
-    {
-        return &current->value;
-    }
-
-    // the ++ operator
-    inorder_iterator &operator++()
-    {
-        if (s.empty())
-        {
-            current = nullptr;
-            return *this;
-        }
-        current = s.top();
-        s.pop();
-        if (!current->children.empty() && current->children.size() > 1)
-        {
-            Node<T> *node_right = current->children[1]; // means there is a right child to go over
-            while (node_right != nullptr)
-            {
-                s.push(node_right);
-                if (!node_right->children.empty())
                 {
-                    node_right = node_right->children[0];
+                    root = root->children[0]; // the left child, going over an array
                 }
                 else
                 {
-                    node_right = nullptr;
+                    root = nullptr;
                 }
             }
         }
-        return *this;
-    }
 
-    // comparison operators
-
-    bool operator==(const inorder_iterator &other) const
-    {
-        return current == other.current;
-    }
-
-    bool operator!=(const inorder_iterator &other) const
-    {
-        return !(*this == other);
-    }
-};
-
-// An preorder iterator - Root, Left, Right
-template <typename T>
-class preorder_iterator
-{
-private:
-    stack<Node<T> *> s;
-
-public:
-    preorder_iterator(Node<T> *root)
-    {
-        s.push(nullptr); // to know when to stop
-        if (root != nullptr)
+        // operators for the iteration itself
+        T &operator*() const // getting the value of the current node
         {
-            s.push(root);
-        }
-    }
-
-    // operators for the iteration itself
-    T &operator*() const // getting the value of the current node
-    {
-        return s.top()->value;
-    }
-
-    // getting the pointer to the current node
-    Node<T> *operator->() const
-    {
-        return s.top();
-    }
-
-    // the ++ operator
-    preorder_iterator &operator++()
-    {
-        Node<T> *node = s.top();
-        s.pop();
-        // pushing right child first
-        if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
-        {
-            s.push(node->get_childrens()[1]);
-        }
-        // left child
-        if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
-        {
-            s.push(node->get_childrens()[0]);
+            return s.top()->value;
         }
 
-        return *this; // Return a reference to this iterator to allow chaining.
-    }
+        // getting the pointer to the current node
+        Node<T> *operator->() const
+        {
+            return s.top();
+        }
 
-    // comparison operators
-    bool operator==(const preorder_iterator &other) const
-    {
-        return s.top() == other.s.top();
-    }
-
-    bool operator!=(const preorder_iterator &other) const
-    {
-        return !(*this == other);
-    }
-};
-
-// An postorder iterator - Left, Right, Root
-template <typename T>
-class postorder_iterator
-{
-private:
-    vector<Node<T> *> postorder;
-    int index;
-
-public:
-    postorder_iterator(Node<T> *root)
-    {
-        stack<Node<T> *> s;
-        s.push(root);
-        while (!s.empty())
+        // the ++ operator
+        inorder_iterator &operator++()
         {
             Node<T> *node = s.top();
             s.pop();
-            postorder.push_back(node);
-            for (int i = 0; i < node->get_childrens().size(); i++)
+            if (!node->children.empty() && node->children.size() > 1)
             {
-                s.push(node->get_childrens()[i]);
+                Node<T> *right = node->children[1];
+                while (right != nullptr)
+                {
+                    s.push(right);
+                    if (!right->children.empty() && right->children.size() > 0)
+                    {
+                        right = right->children[0];
+                    }
+                    else
+                    {
+                        right = nullptr;
+                    }
+                }
             }
+
+            return *this; // Return a reference to this iterator to allow chaining.
         }
-        index = 0;
-    }
 
-    // operator for the iteration itself
-    T &operator*() { return post_order[index]->get_data(); }
+        // comparison operators
 
-    Node<T> *operator->() { return post_order[index]; }
-
-    postorder_iterator &operator++()
-    {
-        index++;      // increase the index will go over the vector to the next node
-        return *this; // Return a reference to this iterator to allow chaining.
-    }
-
-    // comparison operators
-    bool operator==(const post_order_iterator &other) const { return post_order.size() - index == other.post_order.size() - other.index; } // going according the indexes because using vector
-    bool operator!=(const post_order_iterator &other) const
-    {
-        return !(*this == other);
-    }
-};
-
-// BFS iterator
-// Runing BFS on the tree
-template <typename T>
-class bfs_iterator
-{
-private:
-    queue<Node<T> *> q;
-
-public:
-    bfs_iterator(Node<T> *root)
-    {
-        if (root == nullptr)
+        bool operator==(const inorder_iterator &other) const
         {
-
-            return;
+            return s.top() == other.s.top();
         }
-    }
-    q.push(root); // to start the BFS from the root
 
-    // operators for the iteration itself
-    T &operator*() const
-    {
-        return q.front()->value;
-    }
-
-    Node<T> *operator->() const
-    {
-        return q.front();
-    }
-
-    // The BFS itself
-    bfs_iterator &operator++()
-    {
-        Node<T> *node = q.front(); // getting the first node in the queue
-        q.pop();
-        for (int i = 0; i < node->children.size(); i++) // going over the children of the node
+        bool operator!=(const inorder_iterator &other) const
         {
-            if (node->children[i] != nullptr) // if the child is not null
+            return !(*this == other);
+        }
+    };
+
+    // An preorder iterator - Root, Left, Right
+    class preorder_iterator
+    {
+    private:
+        stack<Node<T> *> s;
+
+    public:
+        preorder_iterator(Node<T> *root)
+        {
+            s.push(nullptr); // to know when to stop
+            if (root != nullptr)
             {
-                q.push(node->children[i]); // pushing the children to the queue
+                s.push(root);
             }
         }
 
-        return *this;
-    }
-
-    // comparison operators
-    bool operator==(const bfs_iterator &other) const
-    {
-        return q == other.q; // comparing the queues or to compare the size of the queue or the references
-    }
-
-    bool operator!=(const bfs_iterator &other) const
-    {
-        return !(*this == other);
-    }
-};
-
-// DFS iterator
-// Runing DFS on the tree
-template <typename T>
-class dfs_iterator
-{
-private:
-    stack<Node<T> *> s;
-
-public:
-    dfs_iterator(Node<T> *root)
-    {
-        if (root == nullptr)
+        // operators for the iteration itself
+        T &operator*() const // getting the value of the current node
         {
-            return;
+            return s.top()->value;
         }
-        s.push(root); // to start the DFS from the root
-    }
 
-    // operators for the iteration itself
-    T &operator*() const // getting node's value
-    {
-        return s.top()->value;
-    }
-
-    Node<T> *operator->() const // getting the node
-    {
-        return s.top();
-    }
-
-    // The DFS itself
-    dfs_iterator &operator++()
-    {
-        Node<T> *node = s.top();                             // getting the top node
-        s.pop();                                             // removing the top node
-        for (int i = node->children.size() - 1; i >= 0; i--) // going over the children of the node
+        // getting the pointer to the current node
+        Node<T> *operator->() const
         {
-            if (node->children[i] != nullptr) // if the child is not null
+            return s.top();
+        }
+
+        // the ++ operator
+        preorder_iterator &operator++()
+        {
+            Node<T> *node = s.top();
+            s.pop();
+            // pushing right child first
+            if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
             {
-                s.push(node->children[i]); // pushing the children to the stack
+                s.push(node->get_childrens()[1]);
             }
+            // left child
+            if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
+            {
+                s.push(node->get_childrens()[0]);
+            }
+
+            return *this; // Return a reference to this iterator to allow chaining.
         }
 
-        return *this; // return a reference to this iterator to allow chaining
+        // comparison operators
+        bool operator==(const preorder_iterator &other) const
+        {
+            return s.top() == other.s.top();
+        }
+
+        bool operator!=(const preorder_iterator &other) const
+        {
+            return !(*this == other);
+        }
+    };
+    // An postorder iterator - Left, Right, Root
+    class postorder_iterator
+    {
+    private:
+        vector<Node<T> *> postorder;
+        int index;
+
+    public:
+        postorder_iterator(Node<T> *root)
+        {
+            stack<Node<T> *> s;
+            s.push(root);
+            while (!s.empty())
+            {
+                Node<T> *node = s.top();
+                s.pop();
+                postorder.push_back(node);
+                for (int i = 0; i < node->get_childrens().size(); i++)
+                {
+                    s.push(node->get_childrens()[i]);
+                }
+            }
+            index = 0;
+        }
+
+        // operator for the iteration itself
+        T &operator*() { return postorder[index]->get_data(); }
+
+        Node<T> *operator->() { return postorder[index]; }
+
+        postorder_iterator &operator++()
+        {
+            index++;      // increase the index will go over the vector to the next node
+            return *this; // Return a reference to this iterator to allow chaining.
+        }
+
+        // comparison operators
+        bool operator==(const postorder_iterator &other) const { return postorder.size() - index == other.postorder.size() - other.index; } // going according the indexes because using vector
+        bool operator!=(const postorder_iterator &other) const
+        {
+            return !(*this == other);
+        }
+    };
+
+    class DFS_iterator
+    {
+    private:
+        stack<Node<T> *> s;
+
+    public:
+        DFS_iterator(Node<T> *root)
+        {
+            if (root == nullptr)
+            {
+                return;
+            }
+            s.push(root); // to start the DFS from the root
+        }
+
+        // operators for the iteration itself
+        T &operator*() const // getting node's value
+        {
+            return s.top()->value;
+        }
+
+        Node<T> *operator->() const // getting the node
+        {
+            return s.top();
+        }
+
+        // The DFS itself
+        DFS_iterator &operator++()
+        {
+            Node<T> *node = s.top();                             // getting the top node
+            s.pop();                                             // removing the top node
+            for (int i = node->children.size() - 1; i >= 0; i--) // going over the children of the node
+            {
+                if (node->children[i] != nullptr) // if the child is not null
+                {
+                    s.push(node->children[i]); // pushing the children to the stack
+                }
+            }
+
+            return *this; // return a reference to this iterator to allow chaining
+        }
+
+        // comparison operators
+        bool operator==(const DFS_iterator &other) const
+        {
+            return s == other.s; // comparing the stacks or to compare the size of the stack or the references
+        }
+
+        bool operator!=(const DFS_iterator &other) const
+        {
+            return !(*this == other);
+        }
+    };
+
+    class BFS_iterator
+    {
+    private:
+        queue<Node<T> *> q;
+
+    public:
+        BFS_iterator(Node<T> *root)
+        {
+            if (root == nullptr)
+            {
+                return;
+            }
+            q.push(root); // to start the BFS from the root
+        }
+
+        // operators for the iteration itself
+        T &operator*() const
+        {
+            return q.front()->value;
+        }
+
+        Node<T> *operator->() const
+        {
+            return q.front();
+        }
+
+        // The BFS itself
+        BFS_iterator &operator++()
+        {
+            Node<T> *node = q.front(); // getting the first node in the queue
+            q.pop();
+            for (int i = 0; i < node->children.size(); i++) // going over the children of the node
+            {
+                if (node->children[i] != nullptr) // if the child is not null
+                {
+                    q.push(node->children[i]); // pushing the children to the queue
+                }
+            }
+
+            return *this;
+        }
+
+        // comparison operators
+        bool operator==(const BFS_iterator &other) const
+        {
+            return q == other.q; // comparing the queues or to compare the size of the queue or the references
+        }
+
+        bool operator!=(const BFS_iterator &other) const
+        {
+            return !(*this == other);
+        }
+    };
+
+    // methods to start and end the iterators
+    inorder_iterator begin_inorder()
+    {
+        return inorder_iterator(root);
     }
 
-    // comparison operators
-    bool operator==(const dfs_iterator &other) const
+    inorder_iterator end_inorder()
     {
-        return s == other.s; // comparing the stacks or to compare the size of the stack or the references
+        return inorder_iterator(nullptr);
     }
 
-    bool operator!=(const dfs_iterator &other) const
+    preorder_iterator begin_preorder()
     {
-        return !(*this == other);
+        return preorder_iterator(root);
+    }
+
+    preorder_iterator end_preorder()
+    {
+        return preorder_iterator(nullptr);
+    }
+
+    postorder_iterator begin_postorder()
+    {
+        return postorder_iterator(root);
+    }
+
+    postorder_iterator end_postorder()
+    {
+        return postorder_iterator(nullptr);
+    }
+
+    BFS_iterator begin_BFS()
+    {
+        return BFS_iterator(root);
+    }
+
+    BFS_iterator end_BFS()
+    {
+        return BFS_iterator(nullptr);
+    }
+
+    DFS_iterator begin_DFS()
+    {
+        return DFS_iterator(root);
+    }
+
+    DFS_iterator end_DFS()
+    {
+        return DFS_iterator(nullptr);
     }
 };
-
-// 
-
-
-// The end of the Tree.hpp file
