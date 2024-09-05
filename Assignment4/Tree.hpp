@@ -115,8 +115,8 @@ public:
             if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
             {
                 Node<T> *right = node->get_childrens()[1]; // the right child
-                s.push(right);                            // pushing the right child
-                Node<T> *left = right;                    // the left child of the right child
+                s.push(right);                             // pushing the right child
+                Node<T> *left = right;                     // the left child of the right child
                 while (left->get_childrens().size() > 0 && left->get_childrens()[0] != nullptr)
                 {
                     left = left->get_childrens()[0]; // going over the left children
@@ -174,21 +174,14 @@ public:
             Node<T> *node = s.top();
             s.pop();
             // pushing right child first
-            // if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
-            // {
-            //     s.push(node->get_childrens()[1]);
-            // }
-            // // left child
-            // if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
-            // {
-            //     s.push(node->get_childrens()[0]);
-            // }
-            for (int i = node->children.size() - 1; i >= 0; i--)
+            if (node->get_childrens().size() > 1 && node->get_childrens()[1] != nullptr)
             {
-                if (node->children[i] != nullptr)
-                {
-                    s.push(node->children[i]);
-                }
+                s.push(node->get_childrens()[1]);
+            }
+            // left child
+            if (node->get_childrens().size() > 0 && node->get_childrens()[0] != nullptr)
+            {
+                s.push(node->get_childrens()[0]);
             }
             return *this; // Return a reference to this iterator to allow chaining.
         }
@@ -404,58 +397,6 @@ public:
         }
     };
 
-    // methods to start and end the iterators
-    inorder_iterator begin_inorder()
-    {
-        return inorder_iterator(root);
-    }
-
-    inorder_iterator end_inorder()
-    {
-        return inorder_iterator(nullptr);
-    }
-
-    preorder_iterator begin_preorder()
-    {
-        return preorder_iterator(root);
-    }
-
-    preorder_iterator end_preorder()
-    {
-        return preorder_iterator(nullptr);
-    }
-
-    postorder_iterator begin_postorder()
-    {
-        return postorder_iterator(root);
-    }
-
-    postorder_iterator end_postorder()
-    {
-        return postorder_iterator(nullptr);
-    }
-
-    BFS_iterator begin_BFS()
-    {
-        return BFS_iterator(root);
-    }
-
-    BFS_iterator end_BFS()
-    {
-        return BFS_iterator(nullptr);
-    }
-
-    DFS_iterator begin_DFS()
-    {
-        return DFS_iterator(root);
-    }
-
-    DFS_iterator end_DFS()
-    {
-        return DFS_iterator(nullptr);
-    }
-
-    // Tree to Heap iterator
     class TreeToHeap
     {
     private:
@@ -505,6 +446,63 @@ public:
         }
     };
 
+    // according to the assignment instructions we need to use the DFS iterator if K is not 2
+    // This would change the tree-traversal if needed iterators to the DFS iterators
+    using iterator_in_order = typename std::conditional<K == 2, inorder_iterator, DFS_iterator>::type;
+    using iterator_pre_order = typename std::conditional<K == 2, preorder_iterator, DFS_iterator>::type;
+    using iterator_post_order = typename std::conditional<K == 2, postorder_iterator, DFS_iterator>::type;
+
+    // Methods to start and end the iterators
+    BFS_iterator begin_BFS()
+    {
+        return BFS_iterator(root);
+    }
+
+    BFS_iterator end_BFS()
+    {
+        return BFS_iterator(nullptr);
+    }
+
+    iterator_in_order begin_in_order()
+    {
+        return iterator_in_order(root);
+    }
+
+    iterator_in_order end_in_order()
+    {
+        return iterator_in_order(nullptr);
+    }
+
+    iterator_pre_order begin_pre_order()
+    {
+        return iterator_pre_order(root);
+    }
+
+    iterator_pre_order end_pre_order()
+    {
+        return iterator_pre_order(nullptr);
+    }
+
+    iterator_post_order begin_post_order()
+    {
+        return iterator_post_order(root);
+    }
+
+    iterator_post_order end_post_order()
+    {
+        return iterator_post_order(nullptr);
+    }
+
+    DFS_iterator begin_DFS()
+    {
+        return DFS_iterator(root);
+    }
+
+    DFS_iterator end_DFS()
+    {
+        return DFS_iterator(nullptr);
+    }
+    // Tree to Heap iterator
     TreeToHeap begin_TreeToHeap()
     {
         return TreeToHeap(root);

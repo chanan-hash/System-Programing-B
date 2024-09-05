@@ -81,21 +81,21 @@ int main()
     cout << endl;
 
     cout << "Looping Pre order:" << endl;
-    for (auto it = tree.begin_preorder(); it != tree.end_preorder(); ++it)
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
     cout << endl;
 
     cout << "Looping In order:" << endl;
-    for (auto it = tree.begin_inorder(); it != tree.end_inorder(); ++it)
+    for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
     cout << endl;
 
     cout << "Looping Post order:" << endl;
-    for (auto it = tree.begin_postorder(); it != tree.end_postorder(); ++it)
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
@@ -258,14 +258,14 @@ int main()
     cout << endl;
 
     cout << "Looping Pre order for int with 4 children:" << endl;
-    for (auto it = tree_int.begin_preorder(); it != tree_int.end_preorder(); ++it)
+    for (auto it = tree_int.begin_pre_order(); it != tree_int.end_pre_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
     cout << endl;
 
     cout << "Looping In order for int with 4 children:" << endl;
-    for (auto it = tree_int.begin_inorder(); it != tree_int.end_inorder(); ++it)
+    for (auto it = tree_int.begin_in_order(); it != tree_int.end_in_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
@@ -273,7 +273,7 @@ int main()
     cout << endl;
 
     cout << "Looping Post order for int with 4 children:" << endl;
-    for (auto it = tree_int.begin_postorder(); it != tree_int.end_postorder(); ++it)
+    for (auto it = tree_int.begin_post_order(); it != tree_int.end_post_order(); ++it)
     {
         cout << (it)->get_value() << " ";
     }
