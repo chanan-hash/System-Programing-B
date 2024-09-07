@@ -32,8 +32,10 @@ public:
     class DFS_iterator;
     // class TreeToHeap;
 
-    Tree() : root(nullptr), size(0) {} // initial list
-    ~Tree()                            // destructor will use the iterators to delete all the nodes
+    Tree() : root(nullptr), size(0) {}                   // constructor with the root value as initial list
+    Tree(T value) : root(new Node<T>(value)), size(1) {} // constructor with the root value as initial list
+
+    ~Tree() // destructor will use the iterators to delete all the nodes
     {
         // we know that tree is connected so we can use the BFS to delete all the nodes
         BFS_iterator it = begin_BFS();
@@ -46,10 +48,17 @@ public:
             previous->delete_children(); // delete the children of the node, the vector doing it by itself
         }
         root = nullptr;
+
+        // delete the root
+        delete[] root;
     }
 
     void add_root(Node<T> *node)
     {
+        if (root != nullptr)
+        {
+            throw runtime_error("The root already exists");
+        }
         this->root = node;
         size++;
     }
