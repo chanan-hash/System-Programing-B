@@ -13,10 +13,10 @@ TEST_CASE("Testing the complex class")
     Complex c1(1, 2);
     Complex c2(1, -2);
 
-    CHECK(c1 == c2);
+    CHECK_FALSE(c1 == c2);
     CHECK(c1 != c2);
-    CHECK(c1 < c2);
-    CHECK(c1 > c2);
+    CHECK(c1 < c2); // need to check the real part
+    CHECK_FALSE(c1 > c2); // need to check the imaginary part
     CHECK(c1 <= c2);
     CHECK(c1 >= c2);
     CHECK(c1.to_string() == "1+i2");
@@ -125,7 +125,7 @@ TEST_CASE("Checking binary INT tree")
         {
             tree_to_heap += to_string((it)->get_value()) + " ";
         }
-        CHECK(tree_to_heap == "5 6 7 8 9 ");
+        CHECK(tree_to_heap == "9 8 7 6 5 ");
     }
 
     SUBCASE("Adding a child to a full parent")

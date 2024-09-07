@@ -108,7 +108,7 @@ int main()
     }
     cout << endl;
 
-    cout << tree << endl;
+    // cout << tree << endl;
 
     // checking the generic tree for complex numbers
 

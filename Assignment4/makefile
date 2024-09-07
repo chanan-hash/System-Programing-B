@@ -1,66 +1,39 @@
 #Authors: Chanan helman
 #chananhelman@gmail.com
-
-
-# all: main #test
-
-# .PHONY: all clean
-
-# main: main.o complex.o
-# 	g++ -g -Wall -o main main.o complex.o
-
-# #test: test.o complex.o
-# #	g++ -g -Wall -v -o test test.o complex.o
-
-# #test.o: test.cpp complex.hpp Node.hpp Tree.hpp doctest.h
-# #	g++ -g -Wall -c test.cpp -o test.o
-
-# #valgrind:
-# #	valgrind --leak-check=full ./main
-
-# complex.o: complex.cpp complex.hpp
-# 	g++ -g -Wall -c complex.cpp
-
-# main.o: main.cpp complex.hpp Node.hpp Tree.hpp
-# 	g++ -g -Wall -c main.cpp
-
-# clean:
-# 	rm -f main *.o
 # Compiler
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -std=c++11 -Wall -I/usr/include/SFML
+CXXFLAGS = -std=c++17 -g -Wall -Wextra -Werror
 
 # Linker flags
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files
-SRCS = main.cpp complex.cpp
 
-# Header files
-HEADERS = Tree.hpp Node.hpp complex.hpp
+VALGRIND_FLAGS = -v --leak-check=full --show-leak-kinds=all --error-exitcode=99
 
-# Object files
-OBJS = $(SRCS:.cpp=.o)
+TEST_SRC = Tree.hpp TestCounter.cpp complex.cpp test.cpp Node.hpp
 
-# Executable name
-EXEC = tree_visualization
+# Phony targets
+.PHONY: all clean
 
-# Default target
-all: $(EXEC)
 
-# Link the executable
-$(EXEC): $(OBJS)
-	$(CXX) $(OBJS) -o $(EXEC) $(LDFLAGS)
+valgrind: $(DEMO) $(TEST_SRC)
+#	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./demo 2>&1 | { egrep "lost| at " || true; }
+	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
+
+test: test.o complex.o TestCounter.o
+	$(CXX) $(CXXFLAGS) $(TEST_SRC) -o test $(LDFLAGS)
+	./test
+
+tidy:
+	clang-tidy $(SOURCES) -checks=bugprone-*,clang-analyzer-*,cppcoreguidelines-*,performance-*,portability-*,readability-*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-owning-memory --warnings-as-errors=-* --
 
 # Compile source files into object files
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean up build files
 clean:
-	rm -f $(OBJS) $(EXEC)
-
-# Phony targets
-.PHONY: all clean
+	rm -f *.o test valgrind

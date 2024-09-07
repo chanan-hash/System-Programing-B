@@ -1,10 +1,13 @@
-#pragma once
+// #pragma once
 // Author: chanan-helman
 // chananhelman@gmail.com
 
 /**
  * This class is a node class for our k-nary tree, it contains a value and a vector of children nodes.
  */
+
+#ifndef NODE_HPP
+#define NODE_HPP
 
 #include <vector>
 #include <iostream>
@@ -86,3 +89,5 @@ public:
         return s;
     }
 };
+
+#endif // NODE_HPP

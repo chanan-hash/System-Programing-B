@@ -1,7 +1,9 @@
 // Authors: Chanan helman
 // chananhelman@gmail.com
 
-#pragma once
+//#pragma once
+#ifndef TREE_HPP
+#define TREE_HPP
 
 #include <iostream>
 #include <queue> // for the iterators
@@ -526,87 +528,88 @@ public:
     // drawing the tree using the graphics
 
     // Overload the << operator
-    friend std::ostream &operator<<(std::ostream &os, const Tree<T> &tree)
-    {
-        if (!tree.root)
-        {
-            os << "Tree is empty";
-            return os;
-        }
+    // friend std::ostream &operator<<(std::ostream &os, const Tree<T> &tree)
+    // {
+    //     if (!tree.root)
+    //     {
+    //         os << "Tree is empty";
+    //         return os;
+    //     }
 
-        // Create an SFML window
-        sf::RenderWindow window(sf::VideoMode(800, 600), "Tree Visualization");
+    //     // Create an SFML window
+    //     sf::RenderWindow window(sf::VideoMode(800, 600), "Tree Visualization");
 
-        // Main loop
-        while (window.isOpen())
-        {
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
+    //     // Main loop
+    //     while (window.isOpen())
+    //     {
+    //         sf::Event event;
+    //         while (window.pollEvent(event))
+    //         {
+    //             if (event.type == sf::Event::Closed)
+    //                 window.close();
+    //         }
 
-            window.clear(sf::Color::White);
+    //         window.clear(sf::Color::White);
 
-            // Draw the tree
-            drawTree(window, tree);
+    //         // Draw the tree
+    //         drawTree(window, tree);
 
-            window.display();
-        }
+    //         window.display();
+    //     }
 
-        return os;
-    }
+    //     return os;
+    // }
 
-    // Function to draw the tree
-    static void drawTree(sf::RenderWindow &window, const Tree<T> &tree)
-    {
-        if (!tree.root)
-            return;
-        drawNode(window, tree.root, 400, 50, 200, 100);
-    }
+    // // Function to draw the tree
+    // static void drawTree(sf::RenderWindow &window, const Tree<T> &tree)
+    // {
+    //     if (!tree.root)
+    //         return;
+    //     drawNode(window, tree.root, 400, 50, 200, 100);
+    // }
 
-    // Function to draw a node
-    static void drawNode(sf::RenderWindow &window, Node<T> *node, float x, float y, float offsetX, float offsetY)
-    {
-        if (!node)
-            return;
+    // // Function to draw a node
+    // static void drawNode(sf::RenderWindow &window, Node<T> *node, float x, float y, float offsetX, float offsetY)
+    // {
+    //     if (!node)
+    //         return;
 
-        // Draw the node
-        sf::CircleShape circle(20);
-        circle.setFillColor(sf::Color::Green);
-        circle.setPosition(x, y);
-        window.draw(circle);
+    //     // Draw the node
+    //     sf::CircleShape circle(20);
+    //     circle.setFillColor(sf::Color::Green);
+    //     circle.setPosition(x, y);
+    //     window.draw(circle);
 
-        // Draw the node value
-        sf::Font font;
-        if (!font.loadFromFile("arial.ttf"))
-        {
-            // Handle error
-        }
-        sf::Text text;
-        text.setFont(font);
-        text.setString(to_string(node->get_value()));
-        text.setCharacterSize(12);
-        text.setFillColor(sf::Color::Black);
-        text.setPosition(x + 10, y + 10);
-        window.draw(text);
+    //     // Draw the node value
+    //     sf::Font font;
+    //     if (!font.loadFromFile("arial.ttf"))
+    //     {
+    //         // Handle error
+    //     }
+    //     sf::Text text;
+    //     text.setFont(font);
+    //     text.setString(to_string(node->get_value()));
+    //     text.setCharacterSize(12);
+    //     text.setFillColor(sf::Color::Black);
+    //     text.setPosition(x + 10, y + 10);
+    //     window.draw(text);
 
-        // Draw the children
-        float childX = x - offsetX;
-        float childY = y + offsetY;
-        for (Node<T> *child : node->children)
-        {
-            // Draw the edge
-            sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(x + 20, y + 20)),
-                sf::Vertex(sf::Vector2f(childX + 20, childY + 20))};
-            window.draw(line, 2, sf::Lines);
+    //     // Draw the children
+    //     float childX = x - offsetX;
+    //     float childY = y + offsetY;
+    //     for (Node<T> *child : node->children)
+    //     {
+    //         // Draw the edge
+    //         sf::Vertex line[] = {
+    //             sf::Vertex(sf::Vector2f(x + 20, y + 20)),
+    //             sf::Vertex(sf::Vector2f(childX + 20, childY + 20))};
+    //         window.draw(line, 2, sf::Lines);
 
-            // Recursively draw the child node
-            drawNode(window, child, childX, childY, offsetX / 2, offsetY);
+    //         // Recursively draw the child node
+    //         drawNode(window, child, childX, childY, offsetX / 2, offsetY);
 
-            childX += offsetX;
-        }
-    }
+    //         childX += offsetX;
+    //     }
+    // }
 };
+#endif // TREE_HPP
