@@ -1,3 +1,6 @@
+// Authors: Chanan helman
+// chananhelman@gmail.com
+
 #include "doctest.h"
 #include "complex.hpp"
 #include "Tree.hpp"

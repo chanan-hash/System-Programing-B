@@ -108,6 +108,8 @@ int main()
     }
     cout << endl;
 
+    cout << tree << endl;
+
     // checking the generic tree for complex numbers
 
     Node<Complex> node_cmpx1(Complex(1, 2));
@@ -377,8 +379,6 @@ int main()
     }
 
     cout << endl;
-
-    // checking the generic tree for char but has 5 children each node
 
     return 0;
 }
