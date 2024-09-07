@@ -20,7 +20,7 @@ bool Complex::operator!=(const Complex &other) const
 // comparison operators
 bool Complex::operator<(const Complex &other) const
 {
-    return sqrt(pow(real, 2) + pow(imaginary, 2)) < sqrt(pow(other.real, 2) + pow(other.imaginary, 2));
+    return real > other.real && imaginary > other.imaginary;
 }
 
 // for some reason, the operator> is not working as expected other < *this

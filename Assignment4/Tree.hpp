@@ -1,7 +1,7 @@
 // Authors: Chanan helman
 // chananhelman@gmail.com
 
-//#pragma once
+// #pragma once
 #ifndef TREE_HPP
 #define TREE_HPP
 
@@ -13,9 +13,14 @@
 #include <string>
 #include <vector>
 #include <algorithm> // for the heap
+#include <map>       // for the draw function
+#include <iomanip>   // for the draw function
+
 
 #include "Node.hpp"          // include the node class
 #include <SFML/Graphics.hpp> // for the graphics
+
+const float NODE_RADIUS = 61.0f;
 
 template <typename T, int K = 2> // for generic Tree, and K = 2 as default
 class Tree
@@ -525,91 +530,112 @@ public:
         return TreeToHeap(nullptr);
     }
 
-    // drawing the tree using the graphics
+    // The draw function for the tree
+    // cout operator
+    friend std::ostream &operator<<(std::ostream &os, Tree<T, K> &tree)
+    {
+        Node<T> *root = tree.get_root();
 
-    // Overload the << operator
-    // friend std::ostream &operator<<(std::ostream &os, const Tree<T> &tree)
-    // {
-    //     if (!tree.root)
-    //     {
-    //         os << "Tree is empty";
-    //         return os;
-    //     }
+        if (root == nullptr)
+        {
+            os << "Error: Tree is empty." << std::endl;
+            return os;
+        }
+        os << "Generate GUI..." << std::endl;
 
-    //     // Create an SFML window
-    //     sf::RenderWindow window(sf::VideoMode(800, 600), "Tree Visualization");
+        sf::Font font;
+        if (!font.loadFromFile("ALBAS.TTF"))
+        {
+            std::cerr << "Failed to load font file " << std::endl;
+            return os;
+        }
+        sf::RenderWindow window(sf::VideoMode(800, 800), "**********MY_TREE**********");
+        window.setVerticalSyncEnabled(true); // Attempt to enable vertical sync
 
-    //     // Main loop
-    //     while (window.isOpen())
-    //     {
-    //         sf::Event event;
-    //         while (window.pollEvent(event))
-    //         {
-    //             if (event.type == sf::Event::Closed)
-    //                 window.close();
-    //         }
+        while (window.isOpen())
+        {
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
 
-    //         window.clear(sf::Color::White);
+            window.clear(sf::Color::Black);
+            tree.drawTree(window, font);
+            window.display();
+        }
+        return os;
+    }
 
-    //         // Draw the tree
-    //         drawTree(window, tree);
+    void drawTree(sf::RenderWindow &window, sf::Font &font)
+    {
+        if (this->root == nullptr)
+            return;
 
-    //         window.display();
-    //     }
+        // Create a map to store positions of each node
+        std::map<Node<T> *, sf::Vector2f> positions;
+        float start_x = window.getSize().x / 2;
+        float start_y = NODE_RADIUS * 2;
+        float horizontal_spacing = window.getSize().x / 2.5; // Increased horizontal spacing
+        calculate_positions(this->root, positions, start_x, start_y, horizontal_spacing);
 
-    //     return os;
-    // }
+        for (auto &entry : positions)
+        {
+            draw_node(window, entry.first, entry.second, font, positions);
+        }
+    }
 
-    // // Function to draw the tree
-    // static void drawTree(sf::RenderWindow &window, const Tree<T> &tree)
-    // {
-    //     if (!tree.root)
-    //         return;
-    //     drawNode(window, tree.root, 400, 50, 200, 100);
-    // }
+    void calculate_positions(Node<T> *node, std::map<Node<T> *, sf::Vector2f> &positions, float x, float y, float horizontal_spacing)
+    {
+        if (node == nullptr)
+            return;
 
-    // // Function to draw a node
-    // static void drawNode(sf::RenderWindow &window, Node<T> *node, float x, float y, float offsetX, float offsetY)
-    // {
-    //     if (!node)
-    //         return;
+        positions[node] = sf::Vector2f(x, y);
+        float child_x = x - ((node->get_childrens().size() - 1) * horizontal_spacing / 2);
+        float child_y = y + NODE_RADIUS * 3; // Increased vertical spacing
 
-    //     // Draw the node
-    //     sf::CircleShape circle(20);
-    //     circle.setFillColor(sf::Color::Green);
-    //     circle.setPosition(x, y);
-    //     window.draw(circle);
+        for (auto child : node->get_childrens())
+        {
+            calculate_positions(child, positions, child_x, child_y, horizontal_spacing / 2);
+            child_x += horizontal_spacing;
+        }
+    }
 
-    //     // Draw the node value
-    //     sf::Font font;
-    //     if (!font.loadFromFile("arial.ttf"))
-    //     {
-    //         // Handle error
-    //     }
-    //     sf::Text text;
-    //     text.setFont(font);
-    //     text.setString(to_string(node->get_value()));
-    //     text.setCharacterSize(12);
-    //     text.setFillColor(sf::Color::Black);
-    //     text.setPosition(x + 10, y + 10);
-    //     window.draw(text);
+    void draw_node(sf::RenderWindow &window, Node<T> *node, sf::Vector2f position, sf::Font &font, const std::map<Node<T> *, sf::Vector2f> &positions)
+    {
+        sf::CircleShape circle(NODE_RADIUS);
+        circle.setFillColor(sf::Color::Magenta);
+        circle.setOrigin(NODE_RADIUS, NODE_RADIUS);
+        circle.setPosition(position);
 
-    //     // Draw the children
-    //     float childX = x - offsetX;
-    //     float childY = y + offsetY;
-    //     for (Node<T> *child : node->children)
-    //     {
-    //         // Draw the edge
-    //         sf::Vertex line[] = {
-    //             sf::Vertex(sf::Vector2f(x + 20, y + 20)),
-    //             sf::Vertex(sf::Vector2f(childX + 20, childY + 20))};
-    //         window.draw(line, 2, sf::Lines);
+        sf::Text text;
+        text.setFont(font);
+        if constexpr (std::is_same<T, std::string>::value)
+        {
+            text.setString(node->get_value());
+        }
+        else
+        {
+            std::ostringstream oss;
+            oss << std::fixed << std::setprecision(1) << node->get_value();
+            text.setString(oss.str());
+        }
+        text.setCharacterSize(25);
+        text.setFillColor(sf::Color::Black);
+        text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+        text.setPosition(position);
 
-    //         // Recursively draw the child node
-    //         drawNode(window, child, childX, childY, offsetX / 2, offsetY);
+        window.draw(circle);
+        window.draw(text);
 
-    //         childX += offsetX;
-    //     }
-    // }
+        for (auto child : node->get_childrens())
+        {
+            sf::Vertex line[] = {
+                sf::Vertex(position),
+                sf::Vertex(positions.at(child))};
+            window.draw(line, 2, sf::Lines);
+        }
+    }
 };
 #endif // TREE_HPP

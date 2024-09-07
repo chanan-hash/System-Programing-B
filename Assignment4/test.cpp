@@ -15,8 +15,8 @@ TEST_CASE("Testing the complex class")
 
     CHECK_FALSE(c1 == c2);
     CHECK(c1 != c2);
-    CHECK(c1 < c2); // need to check the real part
-    CHECK_FALSE(c1 > c2); // need to check the imaginary part
+    CHECK_FALSE(c1 < c2);
+    CHECK_FALSE(c1 > c2); 
     CHECK(c1 <= c2);
     CHECK(c1 >= c2);
     CHECK(c1.to_string() == "1+i2");

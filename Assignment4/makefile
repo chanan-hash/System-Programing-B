@@ -15,12 +15,16 @@ VALGRIND_FLAGS = -v --leak-check=full --show-leak-kinds=all --error-exitcode=99
 
 TEST_SRC = Tree.hpp TestCounter.cpp complex.cpp test.cpp Node.hpp
 
+SRC = main.cpp Tree.hpp complex.cpp Node.hpp
+
 # Phony targets
 .PHONY: all clean
 
+tree: $(SRC)
+	$(CXX) $(CXXFLAGS) $(SRC) -o tree $(LDFLAGS)
 
-valgrind: $(DEMO) $(TEST_SRC)
-#	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./demo 2>&1 | { egrep "lost| at " || true; }
+valgrind: $(SRC) $(TEST_SRC)
+	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./tree 2>&1 | { egrep "lost| at " || true; }
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 
 test: test.o complex.o TestCounter.o
@@ -36,4 +40,4 @@ tidy:
 
 # Clean up build files
 clean:
-	rm -f *.o test valgrind
+	rm -f *.o test valgrind tree
