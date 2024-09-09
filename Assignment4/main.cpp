@@ -167,6 +167,7 @@ int main()
     }
     cout << endl;
 
+    cout << tree_cmpx << endl;
 
     // checking the generic tree for strings
     // checking the generic tree for doubles
@@ -226,6 +227,8 @@ int main()
         cout << (it)->get_value() << " ";
     }
     cout << endl;
+
+    cout << tree_double << endl;
 
     // checking the generic tree for char
 
@@ -303,16 +306,16 @@ int main()
     cout << endl;
 
     // checking the generic tree for string but has 3 children each node
-    Node<string> node_str1("1");
-    Node<string> node_str2("2");
-    Node<string> node_str3("3");
-    Node<string> node_str4("4");
-    Node<string> node_str5("5");
-    Node<string> node_str6("6");
-    Node<string> node_str7("7");
-    Node<string> node_str8("8");
-    Node<string> node_str9("9");
-    Node<string> node_str10("10");
+    Node<string> node_str1("chanan");
+    Node<string> node_str2("hello");
+    Node<string> node_str3("world");
+    Node<string> node_str4("this");
+    Node<string> node_str5("is");
+    Node<string> node_str6("a");
+    Node<string> node_str7("gui");
+    Node<string> node_str8("for");
+    Node<string> node_str9("the");
+    Node<string> node_str10("tree");
 
     Tree<string, 3> tree_str; // declearing the tree after the nodes
 

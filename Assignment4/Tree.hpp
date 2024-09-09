@@ -16,7 +16,6 @@
 #include <map>       // for the draw function
 #include <iomanip>   // for the draw function
 
-
 #include "Node.hpp"          // include the node class
 #include <SFML/Graphics.hpp> // for the graphics
 
@@ -531,7 +530,8 @@ public:
     }
 
     // The draw function for the tree
-    // cout operator
+    // cout operator with gui
+    // Friend function to overload the << operator
     friend std::ostream &operator<<(std::ostream &os, Tree<T, K> &tree)
     {
         Node<T> *root = tree.get_root();
@@ -541,15 +541,25 @@ public:
             os << "Error: Tree is empty." << std::endl;
             return os;
         }
-        os << "Generate GUI..." << std::endl;
+        os << "Generating GUI, displaying tree..." << std::endl;
 
         sf::Font font;
-        if (!font.loadFromFile("ALBAS.TTF"))
+        if (!font.loadFromFile("Arimo-Italic-VariableFont_wght.ttf"))
         {
             std::cerr << "Failed to load font file " << std::endl;
             return os;
         }
-        sf::RenderWindow window(sf::VideoMode(800, 800), "**********MY_TREE**********");
+
+        // Get desktop resolution
+        sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+
+        // Calculate window size as a percentage of the desktop resolution
+        float widthPercent = 0.8f;  // 80% of the desktop width
+        float heightPercent = 0.8f; // 80% of the desktop height
+        unsigned int windowWidth = static_cast<unsigned int>(desktop.width * widthPercent);
+        unsigned int windowHeight = static_cast<unsigned int>(desktop.height * heightPercent);
+
+        sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Tree GUI");
         window.setVerticalSyncEnabled(true); // Attempt to enable vertical sync
 
         while (window.isOpen())
@@ -561,7 +571,7 @@ public:
                     window.close();
             }
 
-            window.clear(sf::Color::Black);
+            window.clear(sf::Color::Blue); // Background color
             tree.drawTree(window, font);
             window.display();
         }
@@ -604,11 +614,23 @@ public:
 
     void draw_node(sf::RenderWindow &window, Node<T> *node, sf::Vector2f position, sf::Font &font, const std::map<Node<T> *, sf::Vector2f> &positions)
     {
+        // Draw lines to children first
+        for (auto child : node->get_childrens())
+        {
+            sf::Vertex line[] = {
+                sf::Vertex(position),
+                sf::Vertex(positions.at(child))};
+            window.draw(line, 2, sf::Lines);
+        }
+
+        // Draw the node circle
         sf::CircleShape circle(NODE_RADIUS);
-        circle.setFillColor(sf::Color::Magenta);
+        circle.setFillColor(sf::Color::Yellow);
         circle.setOrigin(NODE_RADIUS, NODE_RADIUS);
         circle.setPosition(position);
+        window.draw(circle);
 
+        // Draw the node text
         sf::Text text;
         text.setFont(font);
         if constexpr (std::is_same<T, std::string>::value)
@@ -622,20 +644,10 @@ public:
             text.setString(oss.str());
         }
         text.setCharacterSize(25);
-        text.setFillColor(sf::Color::Black);
+        text.setFillColor(sf::Color::Black); // Text color
         text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
         text.setPosition(position);
-
-        window.draw(circle);
         window.draw(text);
-
-        for (auto child : node->get_childrens())
-        {
-            sf::Vertex line[] = {
-                sf::Vertex(position),
-                sf::Vertex(positions.at(child))};
-            window.draw(line, 2, sf::Lines);
-        }
     }
 };
 #endif // TREE_HPP
