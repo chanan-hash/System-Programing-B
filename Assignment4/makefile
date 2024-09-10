@@ -21,6 +21,7 @@ SRC = main.cpp Tree.hpp complex.cpp Node.hpp
 
 tree: $(SRC)
 	$(CXX) $(CXXFLAGS) $(SRC) -o tree $(LDFLAGS)
+	./tree
 
 test: test.o complex.o TestCounter.o
 	$(CXX) $(CXXFLAGS) $(TEST_SRC) -o test $(LDFLAGS)
