@@ -14,7 +14,12 @@ The class also overloading the basic operators (+ , - , = , < , etc..).
 The idea is to shoe that our Node and Tree will be able to get also types and objects that we define.
 
 ### Tree class
-<This is our main class>
+This is our main class.
+This calss represent a K-nary tree, by default it a binary tree.
+Each tree has it's root to start from, size, and how many children can each node hold
+The tree is build from nodes.
+
+we have the basic method `add_root` that adding a root to the tree and `add_sub_node` to add children for each node we want.
 
 ## Iterators
 To iterate a graph, or in our case tree, we have all kinds of way here we implemented few of the known.  
@@ -27,8 +32,8 @@ To iterate a graph, or in our case tree, we have all kinds of way here we implem
 
 For each tree that is not a `binary-tree` the 3 simple tree traversal (pre/in/post-order) we used DFS, as the guids of the assignment
 
-Each Irerator is a nested class in the tree class.
-Each iterator is implementing it's own way for iteration (how to use the == operator, and what the ++ operator will show next, and the iteration itself).
+Each Irerator is a nested class in the tree class.  
+Each iterator is implementing it's own way for iteration (how to use the == operator, and what the ++ operator will show next, how to get the value by * ,and the iteration itself, etc).
 
 After this in for each iterator, there is the function the activates it, for example:  
 `begin_BFS()` - returning the BFS iteratos from the root
