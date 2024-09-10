@@ -39,8 +39,8 @@ and the program will run.
 You can also run `make tree`.  
 It will show you the tree in a window, and prints in the terminal of all the iterators.
 For each tree it will open a window, so to see the next tree you need to close the current window, and automatically it will open the next one.  
-Here is example of what you'll see:
-![Example Image](Screenshot from 2024-09-10 09-41-24.png)
+Here is example of what you'll see:  
+![Example Image](TreeGuiExmp.png)
 
 ### Test
 For testing our program we've used `doctest.h`.
