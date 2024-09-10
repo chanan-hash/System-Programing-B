@@ -11,7 +11,7 @@ In this project we are creating a tree graph that can be in default a `binary tr
 ## Runing the project
 To run this project at first clone this repo
 ```bash
-git clone 
+git clone https://github.com/chanan-hash/Tree-Iterators.git
 ```
 
 Then you should ensure that you have g++ compiler. if not you can installl it with all `c` and `c++` needed
@@ -44,3 +44,5 @@ Here is example of what you'll see:
 For testing our program we've used `doctest.h`.
 To run the test just write
 `make test` and it'll run the test automatically
+
+### HAVE FUN! : ) 
