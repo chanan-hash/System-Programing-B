@@ -13,49 +13,49 @@ using namespace std;
 int main()
 {
     // Checking the complex class
-    // Complex c1(1, 2);
-    // Complex c2(1, -2);
+    Complex c1(1, 2);
+    Complex c2(1, -2);
 
-    // cout << "c1: " << c1 << endl;
-    // cout << "c2: " << c2 << endl;
+    cout << "c1: " << c1 << endl;
+    cout << "c2: " << c2 << endl;
 
-    // cout << "c1 == c2: " << (c1 == c2) << endl;
-    // cout << "c1 != c2: " << (c1 != c2) << endl;
-    // cout << "c1 < c2: " << (c1 < c2) << endl;
-    // cout << "c1 > c2: " << (c1 > c2) << endl;
-    // cout << "c1 <= c2: " << (c1 <= c2) << endl;
-    // cout << "c1 >= c2: " << (c1 >= c2) << endl;
+    cout << "c1 == c2: " << (c1 == c2) << endl;
+    cout << "c1 != c2: " << (c1 != c2) << endl;
+    cout << "c1 < c2: " << (c1 < c2) << endl;
+    cout << "c1 > c2: " << (c1 > c2) << endl;
+    cout << "c1 <= c2: " << (c1 <= c2) << endl;
+    cout << "c1 >= c2: " << (c1 >= c2) << endl;
 
-    // cout << "c1 to string: " << c1.to_string() << endl;
-    // cout << "c2 to string: " << c2.to_string() << endl;
+    cout << "c1 to string: " << c1.to_string() << endl;
+    cout << "c2 to string: " << c2.to_string() << endl;
 
-    // // Checking the Node class
-    // Node<int> node1(5);
-    // Node<int> node2(6);
-    // Node<int> node3(7);
-    // Node<int> node4(8);
-    // Node<int> node5(9);
+    // Checking the Node class
+    Node<int> node1(5);
+    Node<int> node2(6);
+    Node<int> node3(7);
+    Node<int> node4(8);
+    Node<int> node5(9);
 
-    // cout << "node1: " << node1.get_value() << endl;
-    // cout << "node2: " << node2.get_value() << endl;
+    cout << "node1: " << node1.get_value() << endl;
+    cout << "node2: " << node2.get_value() << endl;
 
-    // node1.add_child(&node2);
+    node1.add_child(&node2);
 
-    // cout << "node1 children: " << node1.get_childrens().size() << endl;
+    cout << "node1 children: " << node1.get_childrens().size() << endl;
 
-    // node1.delete_children();
+    node1.delete_children();
 
-    // cout << "node1 children: " << node1.get_childrens().size() << endl;
+    cout << "node1 children: " << node1.get_childrens().size() << endl;
 
-    // cout << "To string: " << node1.to_string() << endl;
+    cout << "To string: " << node1.to_string() << endl;
 
-    // Tree<int> tree;
-    // tree.add_root(&node1);
-    // tree.add_sub_node(&node1, &node2);
-    // tree.add_sub_node(&node1, &node3);
-    // // tree.add_sub_node(&node1, &node4); should throw an exception
-    // tree.add_sub_node(&node2, &node4);
-    // tree.add_sub_node(&node2, &node5);
+    Tree<int> tree;
+    tree.add_root(&node1);
+    tree.add_sub_node(&node1, &node2);
+    tree.add_sub_node(&node1, &node3);
+    // tree.add_sub_node(&node1, &node4); should throw an exception
+    tree.add_sub_node(&node2, &node4);
+    tree.add_sub_node(&node2, &node5);
 
     /**
      *        5
@@ -65,346 +65,346 @@ int main()
      * 8   9
      */
 
-    // // Looping through the tree using iterators
-    // cout << "Looping DFS:" << endl;
-    // for (auto it = tree.begin_DFS(); it != tree.end_DFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    // Looping through the tree using iterators
+    cout << "Looping DFS:" << endl;
+    for (auto it = tree.begin_DFS(); it != tree.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping BFS:" << endl;
-    // for (auto it = tree.begin_BFS(); it != tree.end_BFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping BFS:" << endl;
+    for (auto it = tree.begin_BFS(); it != tree.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Pre order:" << endl;
-    // for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Pre order:" << endl;
+    for (auto it = tree.begin_pre_order(); it != tree.end_pre_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping In order:" << endl;
-    // for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping In order:" << endl;
+    for (auto it = tree.begin_in_order(); it != tree.end_in_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Post order:" << endl;
-    // for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order:" << endl;
+    for (auto it = tree.begin_post_order(); it != tree.end_post_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Tree to Heap:" << endl;
-    // for (auto it = tree.begin_TreeToHeap(); it != tree.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Tree to Heap:" << endl;
+    for (auto it = tree.begin_TreeToHeap(); it != tree.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << tree << endl;
+    cout << tree << endl;
 
-    // // checking the generic tree for complex numbers
+    // checking the generic tree for complex numbers
 
-    // Node<Complex> node_cmpx1(Complex(1, 2));
-    // Node<Complex> node_cmpx2(Complex(1, -2));
-    // Node<Complex> node_cmpx3(Complex(3, 4));
-    // Node<Complex> node_cmpx4(Complex(5, 6));
-    // Node<Complex> node_cmpx5(Complex(7, 8));
-    // Tree<Complex> tree_cmpx;
+    Node<Complex> node_cmpx1(Complex(1, 2));
+    Node<Complex> node_cmpx2(Complex(1, -2));
+    Node<Complex> node_cmpx3(Complex(3, 4));
+    Node<Complex> node_cmpx4(Complex(5, 6));
+    Node<Complex> node_cmpx5(Complex(7, 8));
+    Tree<Complex> tree_cmpx;
 
-    // tree_cmpx.add_root(&node_cmpx1);
-    // tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx2);
-    // tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx3);
-    // tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx4);
-    // tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx5);
+    tree_cmpx.add_root(&node_cmpx1);
+    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx2);
+    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx3);
+    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx4);
+    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx5);
 
-    // cout << "Looping BFS for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_BFS(); it != tree_cmpx.end_BFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping BFS for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_BFS(); it != tree_cmpx.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping DFS for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_DFS(); it != tree_cmpx.end_DFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping DFS for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_DFS(); it != tree_cmpx.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Pre order for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_pre_order(); it != tree_cmpx.end_pre_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Pre order for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_pre_order(); it != tree_cmpx.end_pre_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping In order for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_in_order(); it != tree_cmpx.end_in_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping In order for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_in_order(); it != tree_cmpx.end_in_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Post order for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_post_order(); it != tree_cmpx.end_post_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_post_order(); it != tree_cmpx.end_post_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Tree to Heap for complex numbers:" << endl;
-    // for (auto it = tree_cmpx.begin_TreeToHeap(); it != tree_cmpx.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Tree to Heap for complex numbers:" << endl;
+    for (auto it = tree_cmpx.begin_TreeToHeap(); it != tree_cmpx.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << tree_cmpx << endl;
+    cout << tree_cmpx << endl;
 
-    // // checking the generic tree for strings
-    // // checking the generic tree for doubles
-    // Node<double> node_double1(1.1);
-    // Node<double> node_double2(2.2);
-    // Node<double> node_double3(3.3);
-    // Node<double> node_double4(4.4);
-    // Node<double> node_double5(5.5);
-    // Tree<double> tree_double;
+    // checking the generic tree for strings
+    // checking the generic tree for doubles
+    Node<double> node_double1(1.1);
+    Node<double> node_double2(2.2);
+    Node<double> node_double3(3.3);
+    Node<double> node_double4(4.4);
+    Node<double> node_double5(5.5);
+    Tree<double> tree_double;
 
-    // tree_double.add_root(&node_double1);
-    // tree_double.add_sub_node(&node_double1, &node_double2);
-    // tree_double.add_sub_node(&node_double1, &node_double3);
-    // tree_double.add_sub_node(&node_double2, &node_double4);
-    // tree_double.add_sub_node(&node_double2, &node_double5);
+    tree_double.add_root(&node_double1);
+    tree_double.add_sub_node(&node_double1, &node_double2);
+    tree_double.add_sub_node(&node_double1, &node_double3);
+    tree_double.add_sub_node(&node_double2, &node_double4);
+    tree_double.add_sub_node(&node_double2, &node_double5);
 
-    // cout << "Looping BFS for doubles:" << endl;
-    // for (auto it = tree_double.begin_BFS(); it != tree_double.end_BFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping BFS for doubles:" << endl;
+    for (auto it = tree_double.begin_BFS(); it != tree_double.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping DFS for doubles:" << endl;
+    cout << "Looping DFS for doubles:" << endl;
 
-    // for (auto it = tree_double.begin_DFS(); it != tree_double.end_DFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
+    for (auto it = tree_double.begin_DFS(); it != tree_double.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
 
-    // cout << endl;
+    cout << endl;
 
-    // cout << "Looping Pre order for doubles:" << endl;
-    // for (auto it = tree_double.begin_pre_order(); it != tree_double.end_pre_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Pre order for doubles:" << endl;
+    for (auto it = tree_double.begin_pre_order(); it != tree_double.end_pre_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping In order for doubles:" << endl;
-    // for (auto it = tree_double.begin_in_order(); it != tree_double.end_in_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping In order for doubles:" << endl;
+    for (auto it = tree_double.begin_in_order(); it != tree_double.end_in_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Post order for doubles:" << endl;
-    // for (auto it = tree_double.begin_post_order(); it != tree_double.end_post_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order for doubles:" << endl;
+    for (auto it = tree_double.begin_post_order(); it != tree_double.end_post_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Tree to Heap for doubles:" << endl;
-    // for (auto it = tree_double.begin_TreeToHeap(); it != tree_double.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Tree to Heap for doubles:" << endl;
+    for (auto it = tree_double.begin_TreeToHeap(); it != tree_double.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << tree_double << endl;
+    cout << tree_double << endl;
 
-    // // checking the generic tree for char
+    // checking the generic tree for char
 
-    // // checking the generic tree for int but has 4 children each node
-    // Node<int> node_int1(1);
-    // Node<int> node_int2(2);
-    // Node<int> node_int3(3);
-    // Node<int> node_int4(4);
-    // Node<int> node_int5(5);
-    // Node<int> node_int6(6);
-    // Node<int> node_int7(7);
-    // Node<int> node_int8(8);
-    // Node<int> node_int9(9);
+    // checking the generic tree for int but has 4 children each node
+    Node<int> node_int1(1);
+    Node<int> node_int2(2);
+    Node<int> node_int3(3);
+    Node<int> node_int4(4);
+    Node<int> node_int5(5);
+    Node<int> node_int6(6);
+    Node<int> node_int7(7);
+    Node<int> node_int8(8);
+    Node<int> node_int9(9);
 
-    // Tree<int, 4> tree_int; // declearing the tree after the nodes
+    Tree<int, 4> tree_int; // declearing the tree after the nodes
 
-    // tree_int.add_root(&node_int1);
-    // tree_int.add_sub_node(&node_int1, &node_int2);
-    // tree_int.add_sub_node(&node_int1, &node_int3);
-    // tree_int.add_sub_node(&node_int1, &node_int4);
-    // tree_int.add_sub_node(&node_int1, &node_int5);
-    // tree_int.add_sub_node(&node_int2, &node_int6);
-    // tree_int.add_sub_node(&node_int2, &node_int7);
-    // tree_int.add_sub_node(&node_int2, &node_int8);
-    // tree_int.add_sub_node(&node_int2, &node_int9);
+    tree_int.add_root(&node_int1);
+    tree_int.add_sub_node(&node_int1, &node_int2);
+    tree_int.add_sub_node(&node_int1, &node_int3);
+    tree_int.add_sub_node(&node_int1, &node_int4);
+    tree_int.add_sub_node(&node_int1, &node_int5);
+    tree_int.add_sub_node(&node_int2, &node_int6);
+    tree_int.add_sub_node(&node_int2, &node_int7);
+    tree_int.add_sub_node(&node_int2, &node_int8);
+    tree_int.add_sub_node(&node_int2, &node_int9);
 
-    // // The tree should look like this:
-    // //        1
-    // //     /  |  |  \.
-    // //    2   3  4   5
-    // //   /|\.
-    // //  6 7 8 9
+    // The tree should look like this:
+    //        1
+    //     /  |  |  \.
+    //    2   3  4   5
+    //   /|\.
+    //  6 7 8 9
 
-    // cout << "Looping BFS for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_BFS(); it != tree_int.end_BFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping BFS for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_BFS(); it != tree_int.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping DFS for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_DFS(); it != tree_int.end_DFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping DFS for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_DFS(); it != tree_int.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Pre order for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_pre_order(); it != tree_int.end_pre_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Pre order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_pre_order(); it != tree_int.end_pre_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping In order for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_in_order(); it != tree_int.end_in_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
+    cout << "Looping In order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_in_order(); it != tree_int.end_in_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
 
-    // cout << endl;
+    cout << endl;
 
-    // cout << "Looping Post order for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_post_order(); it != tree_int.end_post_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_post_order(); it != tree_int.end_post_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Tree to Heap for int with 4 children:" << endl;
-    // for (auto it = tree_int.begin_TreeToHeap(); it != tree_int.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Tree to Heap for int with 4 children:" << endl;
+    for (auto it = tree_int.begin_TreeToHeap(); it != tree_int.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // // checking the generic tree for string but has 3 children each node
-    // Node<string> node_str1("chanan");
-    // Node<string> node_str2("hello");
-    // Node<string> node_str3("world");
-    // Node<string> node_str4("this");
-    // Node<string> node_str5("is");
-    // Node<string> node_str6("a");
-    // Node<string> node_str7("gui");
-    // Node<string> node_str8("for");
-    // Node<string> node_str9("the");
-    // Node<string> node_str10("tree");
+    // checking the generic tree for string but has 3 children each node
+    Node<string> node_str1("chanan");
+    Node<string> node_str2("hello");
+    Node<string> node_str3("world");
+    Node<string> node_str4("this");
+    Node<string> node_str5("is");
+    Node<string> node_str6("a");
+    Node<string> node_str7("gui");
+    Node<string> node_str8("for");
+    Node<string> node_str9("the");
+    Node<string> node_str10("tree");
 
-    // Tree<string, 3> tree_str; // declearing the tree after the nodes
+    Tree<string, 3> tree_str; // declearing the tree after the nodes
 
-    // tree_str.add_root(&node_str1);
-    // tree_str.add_sub_node(&node_str1, &node_str2);
-    // tree_str.add_sub_node(&node_str1, &node_str3);
-    // tree_str.add_sub_node(&node_str1, &node_str4);
-    // // tree_str.add_sub_node(&node_str1, &node_str5); // should throw an exception
-    // tree_str.add_sub_node(&node_str2, &node_str5);
-    // tree_str.add_sub_node(&node_str2, &node_str6);
-    // tree_str.add_sub_node(&node_str2, &node_str7);
+    tree_str.add_root(&node_str1);
+    tree_str.add_sub_node(&node_str1, &node_str2);
+    tree_str.add_sub_node(&node_str1, &node_str3);
+    tree_str.add_sub_node(&node_str1, &node_str4);
+    // tree_str.add_sub_node(&node_str1, &node_str5); // should throw an exception
+    tree_str.add_sub_node(&node_str2, &node_str5);
+    tree_str.add_sub_node(&node_str2, &node_str6);
+    tree_str.add_sub_node(&node_str2, &node_str7);
 
-    // tree_str.add_sub_node(&node_str4, &node_str8);
-    // tree_str.add_sub_node(&node_str4, &node_str9);
-    // tree_str.add_sub_node(&node_str4, &node_str10);
+    tree_str.add_sub_node(&node_str4, &node_str8);
+    tree_str.add_sub_node(&node_str4, &node_str9);
+    tree_str.add_sub_node(&node_str4, &node_str10);
 
-    // // The tree should look like this:
-    // //        1
-    // //     /  |  |
-    // //    2   3  4
-    // //   /|\.   /|\.
-    // //  5 6 7   8 9 10
+    // The tree should look like this:
+    //        1
+    //     /  |  |
+    //    2   3  4
+    //   /|\.   /|\.
+    //  5 6 7   8 9 10
 
-    // cout << "Looping BFS for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_BFS(); it != tree_str.end_BFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping BFS for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_BFS(); it != tree_str.end_BFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping DFS for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_DFS(); it != tree_str.end_DFS(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping DFS for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_DFS(); it != tree_str.end_DFS(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Pre order for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_pre_order(); it != tree_str.end_pre_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Pre order for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_pre_order(); it != tree_str.end_pre_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping In order for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_in_order(); it != tree_str.end_in_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
+    cout << "Looping In order for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_in_order(); it != tree_str.end_in_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
 
-    // cout << endl;
+    cout << endl;
 
-    // cout << "Looping Post order for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_post_order(); it != tree_str.end_post_order(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
-    // cout << endl;
+    cout << "Looping Post order for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_post_order(); it != tree_str.end_post_order(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
+    cout << endl;
 
-    // cout << "Looping Tree to Heap for string with 3 children:" << endl;
-    // for (auto it = tree_str.begin_TreeToHeap(); it != tree_str.end_TreeToHeap(); ++it)
-    // {
-    //     cout << (it)->get_value() << " ";
-    // }
+    cout << "Looping Tree to Heap for string with 3 children:" << endl;
+    for (auto it = tree_str.begin_TreeToHeap(); it != tree_str.end_TreeToHeap(); ++it)
+    {
+        cout << (it)->get_value() << " ";
+    }
 
-    // cout << endl;
+    cout << endl;
 
-    // cout << tree_str << endl;
+    cout << tree_str << endl;
 
 
     // Allocating the tree on the heap
-    Tree <int> tree;
-    Node<int> *node1 = new Node<int>(1);
-    Node<int> *node2 = new Node<int>(2);
-    Node<int> *node3 = new Node<int>(3);
-    Node<int> *node4 = new Node<int>(4);
-    Node<int> *node5 = new Node<int>(5);
-    Node<int> *node6 = new Node<int>(6);
-    Node<int> *node7 = new Node<int>(7);
-    Node<int> *node8 = new Node<int>(8);
+    Tree <int> tree; // declearing the tree before the nodes
+    Node<int> *node11 = new Node<int>(1);
+    Node<int> *node22 = new Node<int>(2);
+    Node<int> *node33 = new Node<int>(3);
+    Node<int> *node44 = new Node<int>(4);
+    Node<int> *node55 = new Node<int>(5);
+    Node<int> *node66 = new Node<int>(6);
+    Node<int> *node77 = new Node<int>(7);
+    Node<int> *node88 = new Node<int>(8);
 
-    tree.add_root(node1);
-    tree.add_sub_node(node1, node2);
-    tree.add_sub_node(node1, node3);
-    tree.add_sub_node(node2, node4);
-    tree.add_sub_node(node2, node5);
-    tree.add_sub_node(node3, node6);
-    tree.add_sub_node(node3, node7);
-    tree.add_sub_node(node4, node8);
+    tree.add_root(node11);
+    tree.add_sub_node(node11, node22);
+    tree.add_sub_node(node11, node33);
+    tree.add_sub_node(node22, node44);
+    tree.add_sub_node(node22, node55);
+    tree.add_sub_node(node33, node66);
+    tree.add_sub_node(node33, node77);
+    tree.add_sub_node(node44, node88);
 
     cout << "Looping BFS for int with 2 children:" << endl;
     for (auto it = tree.begin_BFS(); it != tree.end_BFS(); ++it)
