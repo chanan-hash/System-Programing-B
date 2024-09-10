@@ -40,24 +40,23 @@ public:
     // class TreeToHeap;
 
     Tree() : root(nullptr), size(0) {}                   // constructor with the root value as initial list
-    Tree(T value) : root(new Node<T>(value)), size(1) {} // constructor with the root value as initial list
 
     ~Tree() // destructor will use the iterators to delete all the nodes
     {
         // we know that tree is connected so we can use the BFS to delete all the nodes
-        BFS_iterator it = begin_BFS();
-        BFS_iterator previous = it;
-        BFS_iterator end = end_BFS();
-        while (it != end)
-        {
-            previous = it;
-            ++it;
-            previous->delete_children(); // delete the children of the node, the vector doing it by itself
-        }
-        root = nullptr;
+        // BFS_iterator it = begin_BFS();
+        // BFS_iterator previous = it;
+        // BFS_iterator end = end_BFS();
+        // while (it != end)
+        // {
+        //     previous = it;
+        //     ++it;
+        //     previous->delete_children(); // delete the children of the node, the vector doing it by itself
+        // }
+        // root = nullptr;
 
         // delete the root
-        delete[] root;
+        delete root;
     }
 
     void add_root(Node<T> *node)

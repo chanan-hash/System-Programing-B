@@ -35,7 +35,10 @@ public:
         // we know that tree is connected so we can use the BFS to delete all the nodes
         for (auto &child : children)
         {
-            delete[] child;
+            if (child != nullptr)
+            {
+                delete child;
+            }
         }
     }
 
